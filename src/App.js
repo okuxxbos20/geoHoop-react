@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import Index from './pages/index'
-import Court from './pages/court'
+import Index from './pages/Index/'
+import Court from './pages/Court/'
 
 const App = () => {
   return (
