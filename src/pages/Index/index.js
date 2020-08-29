@@ -1,9 +1,17 @@
 import React from 'react'
+import './style.scss'
+import Header from '../../component/Header/'
+import SunsetImg from '../../img/sunset.jpg'
 
 const index = () => {
+  const mainStyle = {
+    backgroundImage: `url(${SunsetImg})`
+  }
   return (
     <div>
-      index.js
+      <Header color='#e8ecf1' background='transparent' />
+      <main style={mainStyle}>
+      </main>
     </div>
   )
 }

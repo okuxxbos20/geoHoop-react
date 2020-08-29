@@ -1,11 +1,14 @@
 import React from 'react'
-import Header from '../../component/Header/Header'
+import './style.scss'
+import Header from '../../component/Header/'
 
 const court = () => {
   return (
     <div>
       <Header />
-      court.js
+      <main className="court">
+        <p>court.js</p>
+      </main>
     </div>
   )
 }
