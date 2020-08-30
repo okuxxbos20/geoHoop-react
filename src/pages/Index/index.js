@@ -1,7 +1,7 @@
 import React from 'react'
 import './style.scss'
 import Header from '../../component/Header/'
-import SunsetImg from '../../img/sunset.jpg'
+import SunsetImg from '../../assets/img/sunset.jpg'
 
 const index = () => {
   const mainStyle = {
