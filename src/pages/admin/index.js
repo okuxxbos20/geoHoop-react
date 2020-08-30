@@ -1,46 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import './style.scss'
 import DboardHeader from '../../component/DboardHeader'
 import Avatar from '../../assets/img/avatar.png'
 import { FormIcon, GeoIcon, GraphIcon } from '../../assets/icons/'
+import { AllCourt, Form, Report } from './pages'
 
 const Index = () => {
   const [isAsideFold, setAside] = useState(false)
-  const asideStyle = {
-   left: (!isAsideFold ? '0' : '-240px')
+  const [currentPageComp, setPageComp] = useState(<Form />)
+  const [currentPageName, setPageName] = useState('form')
+  const style = {
+    mainStyle: {
+      marginLeft: (!isAsideFold ? '0' : '-170px')
+  },
+    labelStyle: {
+      color: 'var(--subColor)',
+      fontWeight: '500'
+    }
  }
   return (
    <div className="admin">
-     <DboardHeader setAside={() => setAside(!isAsideFold)}/>
-     <aside style={asideStyle}>
+     <DboardHeader setAside={() => setAside(!isAsideFold)} />
+     <aside>
        <div className="admin-profile">
          <img src={Avatar} alt="avator"/>
          <div className="detail">
-           <p className="name">織田信長</p>
+           <p className="name">徳川家康</p>
            <p className="email">tokugawa@gmail.com</p>
          </div>
        </div>
        <div className="options">
-         <label>
+         <label
+          style={currentPageName === 'form' ? style.labelStyle : {}}
+          onClick={() => {
+            setPageName('form')
+            setPageComp(<Form />)
+          }}
+         >
            <FormIcon />
            <p>フォーム</p>
          </label>
        </div>
        <div className="options">
-         <label>
+         <label
+          style={currentPageName === 'all-court' ? style.labelStyle : {}}
+          onClick={() => {
+            setPageName('all-court')
+            setPageComp(<AllCourt />)
+          }}
+         >
            <GeoIcon />
            <p>コート一覧</p>
          </label>
        </div>
        <div className="options">
-         <label>
+         <label
+          style={currentPageName === 'report' ? style.labelStyle : {}}
+          onClick={() => {
+            setPageName('report')
+            setPageComp(<Report />)
+          }}
+         >
            <GraphIcon />
            <p>レポート</p>
          </label>
        </div>
      </aside>
-     <main>
-       <div>this is main</div>
+     <main style={style.mainStyle}>
+       {currentPageComp}
      </main>
    </div>
  )
