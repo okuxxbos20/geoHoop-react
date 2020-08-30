@@ -1,8 +1,8 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './App.scss'
-import Index from './pages/Index/'
-import Court from './pages/Court/'
+import Index from './pages/index/'
+import Court from './pages/court/'
 
 const App = () => {
   return (
