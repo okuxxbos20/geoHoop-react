@@ -7,12 +7,11 @@ import { AllCourt, Form, Report } from './pages'
 
 const Index = () => {
   const [isAsideFold, setAside] = useState(false)
-  const [currentPageComp, setPageComp] = useState(<Form />)
-  const [currentPageName, setPageName] = useState('form')
+  const [currentPageComp, setPageComp] = useState(<AllCourt />)
+  const [currentPageName, setPageName] = useState('all-court')
   const style = {
     mainStyle: {
-      paddingLeft: (isAsideFold ? '0' : '151px'),
-      transition: '150ms'
+      width: (isAsideFold ? 'calc(100% - 260px)' : 'calc(100% - 108px)')
     },
     labelStyle: {
       color: 'var(--subColor)',
