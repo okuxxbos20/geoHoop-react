@@ -1,0 +1,54 @@
+.dboard-header {
+  background: var(--mainColor);
+  width: 100%;
+  height: 45px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  .hamburger {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin: 5px 8px 0;
+    position: relative;
+    transition: 200ms;
+    &:hover {
+      cursor: pointer;
+      background: rgba(#fff, 0.1);
+    }
+    span {
+      background: var(--subColor);
+      width: 18px;
+      height: 2px;
+      display: block;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      &:before {
+        content: '';
+        background: var(--subColor);
+        width: 18px;
+        height: 2px;
+        position: absolute;
+        top: calc(50% - 6px);
+      }
+      &:after {
+        content: '';
+        background: var(--subColor);
+        width: 18px;
+        height: 2px;
+        position: absolute;
+        top: calc(50% + 4px);
+      }
+    }
+  }
+  .logo {
+    color: var(--subColor);
+    margin-left: 10px;
+  }
+}

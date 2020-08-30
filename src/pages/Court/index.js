@@ -2,7 +2,7 @@ import React from 'react'
 import './style.scss'
 import Header from '../../component/Header/'
 
-const court = () => {
+function Court() {
   return (
     <div>
       <Header />
@@ -13,4 +13,4 @@ const court = () => {
   )
 }
 
-export default court
+export default Court
