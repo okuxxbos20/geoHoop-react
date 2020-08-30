@@ -4,13 +4,16 @@
   aside {
     color: var(--subColor);
     background: var(--mainColor);
-    width: 240px;
+    width: 220px;
     height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 0 5px;
     margin-top: 45px;
+    position: fixed;
+    top: 0;
+    left: 0;
     .admin-profile {
       width: 100%;
       display: flex;
@@ -51,7 +54,10 @@
   }
   main {
     background: var(--subColor);
+    width: calc(100% - 220px);
     margin-top: 45px;
-    transition: 150ms;
+    position: fixed;
+    top: 0;
+    right: 0;
   }
 }

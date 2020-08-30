@@ -11,8 +11,9 @@ const Index = () => {
   const [currentPageName, setPageName] = useState('form')
   const style = {
     mainStyle: {
-      marginLeft: (!isAsideFold ? '0' : '-170px')
-  },
+      paddingLeft: (isAsideFold ? '0' : '151px'),
+      transition: '150ms'
+    },
     labelStyle: {
       color: 'var(--subColor)',
       fontWeight: '500'

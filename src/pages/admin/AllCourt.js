@@ -1,8 +1,9 @@
 import React from 'react'
+import './AllCourt.scss'
 
 const AllCourt = () => {
   return (
-    <div>
+    <div className="all-court">
       <p>this is allcourt.</p>
     </div>
   )
