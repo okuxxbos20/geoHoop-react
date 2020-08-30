@@ -4,14 +4,14 @@ import DboardHeader from '../../component/DboardHeader'
 import Avatar from '../../assets/img/avatar.png'
 import { FormIcon, GeoIcon, GraphIcon } from '../../assets/icons/'
 
-function Index () {
+const Index = () => {
   const [isAsideFold, setAside] = useState(false)
   const asideStyle = {
    left: (!isAsideFold ? '0' : '-240px')
  }
   return (
    <div className="admin">
-     <DboardHeader onClick={() => setAside(!isAsideFold)}/>
+     <DboardHeader setAside={() => setAside(!isAsideFold)}/>
      <aside style={asideStyle}>
        <div className="admin-profile">
          <img src={Avatar} alt="avator"/>
