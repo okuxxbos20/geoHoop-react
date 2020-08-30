@@ -3,7 +3,7 @@ import './style.scss'
 import Header from '../../component/Header/'
 import SunsetImg from '../../assets/img/sunset.jpg'
 
-function Index() {
+const Index = () => {
   const mainStyle = {
     backgroundImage: `url(${SunsetImg})`
   }

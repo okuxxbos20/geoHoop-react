@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './style.scss'
 
-function Header(props) {
+const Header = (props) => {
   const style = {
     header: {
       background: props.background

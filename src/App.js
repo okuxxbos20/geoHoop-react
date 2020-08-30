@@ -5,7 +5,7 @@ import Index from './pages/index/'
 import Court from './pages/court/'
 import Admin from './pages/admin/'
 
-function App() {
+const App = () => {
   return (
     <div>
       <Router>

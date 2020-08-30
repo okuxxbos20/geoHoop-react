@@ -2,7 +2,7 @@ import React from 'react'
 import './style.scss'
 import Header from '../../component/Header/'
 
-function Court() {
+const Court = () => {
   return (
     <div>
       <Header />
