@@ -43,11 +43,16 @@ main {
       }
     }
     button {
-      baclground: #f7f7f7;
+      background: #f7f7f7;
       border: none;
       border-radius: 5px;
       padding: 5px 10px;
       margin: 15px 0;
+    }
+    .google-login {
+      &:hover {
+        cursor: pointer;
+      }
     }
     .switch-method {
       font-size: 14px;

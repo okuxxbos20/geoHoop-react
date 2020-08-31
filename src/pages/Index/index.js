@@ -6,6 +6,8 @@ import { GoogleIcon } from '../../assets/icons'
 
 const Index = () => {
   const [isLoginFormOpen, setLoginForm] = useState(false)
+  const [email, setEmail] = useState(null)
+  const [password, setPassword] = useState(null)
   const mainStyle = {
     backgroundImage: `url(${SunsetImg})`
   }
@@ -23,16 +25,18 @@ const Index = () => {
           <div className="box">
             <div className="input-place">
               <p>メールアドレス</p>
-              <input type="email" />
+              <input type="email" onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div className="input-place">
               <p>パスワード</p>
-              <input type="password" />
+              <input type="password" onChange={(e) => setPassword(e.target.value)} />
             </div>
           </div>
-          <GoogleIcon />
+          <div className="google-login">
+            <GoogleIcon />
+          </div>
           <button>ログイン</button>
-          <p class="switch-method">新規ユーザは<span>こちら</span></p>
+          <p className="switch-method">新規ユーザは<span>こちら</span></p>
         </form>
         }
       </main>
