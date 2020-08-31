@@ -78,28 +78,28 @@ const AllCourt = () => {
           {dammyData.map((v, idx) => {
             return (
               <tr className={`court-data ${idx % 2 !== 0 ? 'odd' : ''}`}>
-              <td className="checkbox-place">
-                <label className="individual-checkbox">
-                  <span className="checkmark"></span>
-                </label>
-              </td>
-              <td><label>{v.name}</label></td>
-              <td><label>{v.prefecture}</label></td>
-              <td><label>{v.city}</label></td>
-              <td><label>{v.likes}</label></td>
-              <td><label>{v.bookmarks}</label></td>
-              <td>
-                <label>
-                  <span className={v.isOutside ? 'outside' : 'inside'}>
-                    {v.isOutside ? '屋外' : '屋内'}
-                  </span>
-                </label>
-              </td>
-              <td><label>{v.createdAt}</label></td>
-              <td>
-                <label className="court-id">{v.id}</label>
-              </td>
-            </tr>
+                <td className="checkbox-place">
+                  <label className="individual-checkbox">
+                    <span className="checkmark"></span>
+                  </label>
+                </td>
+                <td><label>{v.name}</label></td>
+                <td><label>{v.prefecture}</label></td>
+                <td><label>{v.city}</label></td>
+                <td><label>{v.likes}</label></td>
+                <td><label>{v.bookmarks}</label></td>
+                <td>
+                  <label>
+                    <span className={v.isOutside ? 'outside' : 'inside'}>
+                      {v.isOutside ? '屋外' : '屋内'}
+                    </span>
+                  </label>
+                </td>
+                <td><label>{v.createdAt}</label></td>
+                <td>
+                  <label className="court-id">{v.id}</label>
+                </td>
+              </tr>
             )
           })}
         </table>
