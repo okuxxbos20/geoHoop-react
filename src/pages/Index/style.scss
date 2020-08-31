@@ -8,4 +8,57 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  .login-form {
+    color: var(--subColor);
+    background: rgba(#000, 0.75);
+    width: 80%;
+    max-width: 460px;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    .login-title {
+      margin: 20px 0;
+    }
+    .box {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 15px;
+      .input-place {
+        // background: orange;
+        margin: 8px 0;
+        width: 70%;
+        input {
+          width: calc(100% - 20px);
+          height: 20px;
+          border: none;
+          border-radius: 5px;
+          padding: 5px 10px;
+          &:focus { outline: none; }
+        }
+      }
+    }
+    button {
+      baclground: #f7f7f7;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      margin: 15px 0;
+    }
+    .switch-method {
+      font-size: 14px;
+      padding: 0;
+      margin: 0 0 2px;
+      span {
+        &:hover {
+          cursor: pointer;
+          border-bottom: 1px solid #f7f7f7;
+        }
+      }
+    }
+  }
 }
