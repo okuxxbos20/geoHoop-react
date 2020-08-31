@@ -4,6 +4,7 @@ import './App.scss'
 import Index from './pages/index/'
 import Court from './pages/court/'
 import Admin from './pages/admin/'
+import Dashboard from './pages/admin/Dashboard'
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
           <Route exact path="/" component={Index} />
           <Route exact path="/court" component={Court} />
           <Route exact path="/admin" component={Admin} />
+          <Route exact path="/admin/dashboard" component={Dashboard} />
         </Switch>
       </Router>
     </div>
