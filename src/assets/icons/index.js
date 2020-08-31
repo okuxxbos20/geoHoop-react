@@ -1,5 +1,5 @@
-// import ArrowLeftIcon from './ArrowLeftIcon';
-// import ArrowRightIcon from './ArrowRightIcon';
+import ArrowLeftIcon from './ArrowLeftIcon'
+import ArrowRightIcon from './ArrowRightIcon'
 // import BookmarkEmptyIcon from './BookmarkEmptyIcon';
 // import BookmarkIcon from './BookmarkIcon';
 import FormIcon from './FormIcon'
@@ -11,8 +11,8 @@ import GraphIcon from './GraphIcon'
 // import SearchIcon from './SearchIcon';
 
 export {
-  // ArrowLeftIcon,
-  // ArrowRightIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
   // BookmarkEmptyIcon,
   // BookmarkIcon,
   FormIcon,
