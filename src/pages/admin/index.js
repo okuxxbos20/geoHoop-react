@@ -1,76 +1,45 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import './style.scss'
-import DboardHeader from '../../component/DboardHeader'
-import Avatar from '../../assets/img/avatar.png'
-import { FormIcon, GeoIcon, GraphIcon } from '../../assets/icons/'
-import { AllCourt, Form, Report } from './pages'
+import { Link } from 'react-router-dom'
+import Logo from '../../assets/img/geoHoop_01.png'
 
 const Index = () => {
-  const [isAsideFold, setAside] = useState(false)
-  const [currentPageComp, setPageComp] = useState(<AllCourt />)
-  const [currentPageName, setPageName] = useState('all-court')
+  const [isValidationClear, setValidation] = useState(false)
   const style = {
-    mainStyle: {
-      width: (isAsideFold ? 'calc(100% - 260px)' : 'calc(100% - 108px)')
-    },
-    labelStyle: {
+    btnStyle: {
       color: 'var(--subColor)',
-      fontWeight: '500'
+      background: 'var(--mainColor)'
     }
- }
-  return (
-   <div className="admin">
-     <DboardHeader setAside={() => setAside(!isAsideFold)} />
-     <aside>
-       <div className="admin-profile">
-         <img src={Avatar} alt="avator"/>
-         <div className="detail">
-           <p className="name">徳川家康</p>
-           <p className="email">tokugawa@gmail.com</p>
-         </div>
-       </div>
-       <div className="options">
-         <label
-          style={currentPageName === 'form' ? style.labelStyle : {}}
-          onClick={() => {
-            setPageName('form')
-            setPageComp(<Form />)
-          }}
-         >
-           <FormIcon />
-           <p>フォーム</p>
-         </label>
-       </div>
-       <div className="options">
-         <label
-          style={currentPageName === 'all-court' ? style.labelStyle : {}}
-          onClick={() => {
-            setPageName('all-court')
-            setPageComp(<AllCourt />)
-          }}
-         >
-           <GeoIcon />
-           <p>コート一覧</p>
-         </label>
-       </div>
-       <div className="options">
-         <label
-          style={currentPageName === 'report' ? style.labelStyle : {}}
-          onClick={() => {
-            setPageName('report')
-            setPageComp(<Report />)
-          }}
-         >
-           <GraphIcon />
-           <p>レポート</p>
-         </label>
-       </div>
-     </aside>
-     <main style={style.mainStyle}>
-       {currentPageComp}
-     </main>
-   </div>
- )
+  }
+  return (  
+    <div className="index">
+      <header>
+        <img src={Logo} alt="logo" />
+        <Link to="/">
+          <p className="geo-hoop">geoHoop</p>
+        </Link>
+      </header>
+      <form>
+        <p className="admin">管理者ログイン</p>
+        <div className="box">
+          <div className="input-place">
+            <p>メールアドレス</p>
+            <input type="email" />
+          </div>
+          <div className="input-place">
+            <p>パスワード</p>
+            <input type="password" />
+          </div>
+        </div>
+        <button
+          style={isValidationClear ? style.btnStyle : {}}
+          disabled={!isValidationClear}
+        >
+          ログイン
+        </button>
+      </form>
+    </div>
+  )
 }
 
 export default Index
