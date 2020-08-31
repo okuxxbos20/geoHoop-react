@@ -4,7 +4,7 @@ import ArrowRightIcon from './ArrowRightIcon'
 // import BookmarkIcon from './BookmarkIcon';
 import FormIcon from './FormIcon'
 import GeoIcon from './GeoIcon'
-// import GoogleIcon from './GoogleIcon';
+import GoogleIcon from './GoogleIcon'
 import GraphIcon from './GraphIcon'
 // import HeartEmptyIcon from './HeartEmptyIcon';
 // import HeartIcon from './HeartIcon';
@@ -17,7 +17,7 @@ export {
   // BookmarkIcon,
   FormIcon,
   GeoIcon,
-  // GoogleIcon,
+  GoogleIcon,
   GraphIcon,
   // HeartEmptyIcon,
   // HeartIcon,
