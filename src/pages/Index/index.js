@@ -1,32 +1,49 @@
 import React, {useState} from 'react'
 import './style.scss'
 import Header from '../../component/Header/'
-import { Sunset, Court } from '../../assets/img/'
+import { BluePalm, Court, FenceBuildings, GlassBoard, Sunset, YellowPaint } from '../../assets/img/'
 import { GoogleIcon } from '../../assets/icons'
 
 const Index = () => {
-  const [isLoginFormOpen, setLoginForm] = useState(false)
-  const [loginEmail, setEmail] = useState(null)
-  const [loginPassword, setPassword] = useState(null)
+  const [isDialogOpen, setDialog] = useState(false)
+  const [isLoginForm, setLoginForm] = useState(true)
+  const [loginEmail, setLoginEmail] = useState(null)
+  const [loginPassword, setLoginPassword] = useState(null)
+  const [registerEmail, setRegisterEmail] = useState(null)
+  const [registerPassword, setRegisterPassword] = useState(null)
 
-  const checkEmail = (email) => {
-    setEmail(email)
+  const checkLoginEmail = (email) => {
+    setLoginEmail(email)
     console.log(loginEmail)
     if (loginEmail === null || loginEmail === '') {
     }
   }
 
   const checkLoginPassword = (password) => {
-    setPassword(password)
+    setLoginPassword(password)
     if (loginPassword === null || loginPassword === '') {
     }
   }
 
-  const randomImg = [Sunset, Court]
-  const ranNum = Math.floor(Math.random() * randomImg.length)
+  const checkRegisterEmail = (email) => {
+    setRegisterEmail(email)
+    console.log(registerEmail)
+    if (registerEmail === null || registerEmail === '') {
+    }
+  }
+
+  const checkRegisterPassword = (password) => {
+    setRegisterPassword(password)
+    if (registerPassword === null || registerPassword === '') {
+    }
+  }
+  // ここをマウントされた時のみ走るようにする
+  // const randomImg = [BluePalm, Court, FenceBuildings, GlassBoard, Sunset, YellowPaint]
+  // const ranNum = Math.floor(Math.random() * randomImg.length)
   const style = {
     mainStyle : {
-      backgroundImage: `url(${randomImg[ranNum]})`
+      backgroundImage: `url(${FenceBuildings})`
+      // backgroundImage: `url(${randomImg[ranNum]})`
     }
   }
 
@@ -35,30 +52,45 @@ const Index = () => {
       <Header
         color='#e8ecf1'
         background='transparent'
-        setLoginForm={() => setLoginForm(!isLoginFormOpen)}
+        setLoginForm={() => setDialog(!isDialogOpen)}
       />
       <main style={style.mainStyle}>
-        {isLoginFormOpen &&
+        {isDialogOpen &&
           <form className="login-form">
-          <p className="login-title">ログイン</p>
+          <p className="login-title">{isLoginForm ? 'ログイン' : 'アカウント登録'}</p>
           <div className="box">
             <div className="input-place">
               <p>メールアドレス</p>
-              <input type="email" onChange={(e) => checkEmail(e.target.value)} />
+              {isLoginForm ?
+                <input type="email" onChange={(e) => checkLoginEmail(e.target.value)} />:
+                <input type="email" onChange={(e) => checkRegisterEmail(e.target.value)} />
+              }
             </div>
             <div className="input-place">
               <p>パスワード</p>
-              <input type="password" onChange={(e) => checkLoginPassword(e.target.value)} />
+              {isLoginForm ?
+                <input type="password" onChange={(e) => checkLoginPassword(e.target.value)} />:
+                <input type="password" onChange={(e) => checkRegisterPassword(e.target.value)} />
+              }
             </div>
           </div>
           <div className="google-login">
             <GoogleIcon />
           </div>
-          <button>ログイン</button>
-          <p className="switch-method">新規ユーザは<span>こちら</span></p>
+          {isLoginForm ?
+            <button>ログイン</button>:
+            <button>アカウント作成</button>
+          }
+          <p className="switch-method">
+            {isLoginForm ? '新規ユーザは' : 'ログインは'}
+            <span onClick={() => setLoginForm(!isLoginForm)}>こちら</span>
+          </p>
         </form>
         }
       </main>
+      <div className="recommend">
+        <p>this is recommend.</p>
+      </div>
     </div>
   )
 }
