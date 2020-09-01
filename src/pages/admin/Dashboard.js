@@ -9,6 +9,11 @@ const DashBoard = () => {
   const [isAsideFold, setAside] = useState(false)
   const [currentPageComp, setPageComp] = useState(<AllCourt />)
   const [currentPageName, setPageName] = useState('all-court')
+
+  const changePage = (to, comp) => {
+    setPageName(to)
+    setPageComp(comp)
+  }
   const style = {
     mainStyle: {
       width: (isAsideFold ? 'calc(100% - 260px)' : 'calc(100% - 108px)')
@@ -32,10 +37,7 @@ const DashBoard = () => {
        <div className="options">
          <label
           style={currentPageName === 'form' ? style.labelStyle : {}}
-          onClick={() => {
-            setPageName('form')
-            setPageComp(<Form />)
-          }}
+          onClick={() => changePage('from', <Form />)}
          >
            <FormIcon />
            <p>フォーム</p>
@@ -44,10 +46,7 @@ const DashBoard = () => {
        <div className="options">
          <label
           style={currentPageName === 'all-court' ? style.labelStyle : {}}
-          onClick={() => {
-            setPageName('all-court')
-            setPageComp(<AllCourt />)
-          }}
+          onClick={() => changePage('all-court', <AllCourt />)}
          >
            <GeoIcon />
            <p>コート一覧</p>
@@ -56,10 +55,7 @@ const DashBoard = () => {
        <div className="options">
          <label
           style={currentPageName === 'report' ? style.labelStyle : {}}
-          onClick={() => {
-            setPageName('report')
-            setPageComp(<Report />)
-          }}
+          onClick={() => changePage('report', <Report />)}
          >
            <GraphIcon />
            <p>レポート</p>
