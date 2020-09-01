@@ -8,7 +8,7 @@ import GoogleIcon from './GoogleIcon'
 import GraphIcon from './GraphIcon'
 // import HeartEmptyIcon from './HeartEmptyIcon';
 // import HeartIcon from './HeartIcon';
-// import SearchIcon from './SearchIcon';
+import SearchIcon from './SearchIcon'
 
 export {
   ArrowLeftIcon,
@@ -21,5 +21,5 @@ export {
   GraphIcon,
   // HeartEmptyIcon,
   // HeartIcon,
-  // SearchIcon,
+  SearchIcon
 }
