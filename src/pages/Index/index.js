@@ -1,16 +1,35 @@
 import React, {useState} from 'react'
 import './style.scss'
 import Header from '../../component/Header/'
-import SunsetImg from '../../assets/img/sunset.jpg'
+import { Sunset, Court } from '../../assets/img/'
 import { GoogleIcon } from '../../assets/icons'
 
 const Index = () => {
   const [isLoginFormOpen, setLoginForm] = useState(false)
-  const [email, setEmail] = useState(null)
-  const [password, setPassword] = useState(null)
-  const mainStyle = {
-    backgroundImage: `url(${SunsetImg})`
+  const [loginEmail, setEmail] = useState(null)
+  const [loginPassword, setPassword] = useState(null)
+
+  const checkEmail = (email) => {
+    setEmail(email)
+    console.log(loginEmail)
+    if (loginEmail === null || loginEmail === '') {
+    }
   }
+
+  const checkLoginPassword = (password) => {
+    setPassword(password)
+    if (loginPassword === null || loginPassword === '') {
+    }
+  }
+
+  const randomImg = [Sunset, Court]
+  const ranNum = Math.floor(Math.random() * randomImg.length)
+  const style = {
+    mainStyle : {
+      backgroundImage: `url(${randomImg[ranNum]})`
+    }
+  }
+
   return (
     <div>
       <Header
@@ -18,18 +37,18 @@ const Index = () => {
         background='transparent'
         setLoginForm={() => setLoginForm(!isLoginFormOpen)}
       />
-      <main style={mainStyle}>
+      <main style={style.mainStyle}>
         {isLoginFormOpen &&
           <form className="login-form">
           <p className="login-title">ログイン</p>
           <div className="box">
             <div className="input-place">
               <p>メールアドレス</p>
-              <input type="email" onChange={(e) => setEmail(e.target.value)} />
+              <input type="email" onChange={(e) => checkEmail(e.target.value)} />
             </div>
             <div className="input-place">
               <p>パスワード</p>
-              <input type="password" onChange={(e) => setPassword(e.target.value)} />
+              <input type="password" onChange={(e) => checkLoginPassword(e.target.value)} />
             </div>
           </div>
           <div className="google-login">

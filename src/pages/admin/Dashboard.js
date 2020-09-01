@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './Dashboard.scss'
 import DboardHeader from '../../component/DboardHeader'
-import Avatar from '../../assets/img/avatar.png'
+import { Avatar } from '../../assets/img/'
 import { FormIcon, GeoIcon, GraphIcon } from '../../assets/icons'
 import { AllCourt, Form, Report } from './pages'
 
@@ -23,7 +23,7 @@ const DashBoard = () => {
      <DboardHeader setAside={() => setAside(!isAsideFold)} />
      <aside>
        <div className="admin-profile">
-         <img src={Avatar} alt="avator"/>
+         <img src={Avatar} alt="avatar"/>
          <div className="detail">
            <p className="name">徳川家康</p>
            <p className="email">tokugawa@gmail.com</p>
