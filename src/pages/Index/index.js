@@ -9,34 +9,41 @@ const Index = () => {
   const [isDialogOpen, setDialog] = useState(false)
   const [isOnFocus, setOnFocus] = useState(false)
   const [isLoginForm, setLoginForm] = useState(true)
-  const [loginEmail, setLoginEmail] = useState(null)
-  const [loginPassword, setLoginPassword] = useState(null)
-  const [registerEmail, setRegisterEmail] = useState(null)
-  const [registerPassword, setRegisterPassword] = useState(null)
+  // login
+  const [loginEmail, setLoginEmail] = useState({ email: '', error: '' })
+  const [loginPassword, setLoginPassword] = useState({ password: '', error: '' })
+  // register
+  const [registerEmail, setRegisterEmail] = useState({ email: '', error: '' })
+  const [registerPassword, setRegisterPassword] = useState({ password: '', error: '' })
 
   const checkLoginEmail = (email) => {
-    setLoginEmail(email)
+    setLoginEmail({ email: email })
+    console.log(email)
     console.log(loginEmail)
-    if (loginEmail === null || loginEmail === '') {
+    if (loginEmail.email === '') {
+      setLoginEmail({ error: 'メールアドレスを入力してください' })
     }
   }
 
   const checkLoginPassword = (password) => {
     setLoginPassword(password)
-    if (loginPassword === null || loginPassword === '') {
+    if (loginPassword.password === '') {
+      setLoginPassword({ error: 'パスワードを入力してください' })
     }
   }
 
   const checkRegisterEmail = (email) => {
     setRegisterEmail(email)
     console.log(registerEmail)
-    if (registerEmail === null || registerEmail === '') {
+    if (registerEmail.email === '') {
+      setRegisterEmail({ error: 'メールアドレスを入力してください' })
     }
   }
 
   const checkRegisterPassword = (password) => {
     setRegisterPassword(password)
-    if (registerPassword === null || registerPassword === '') {
+    if (registerPassword.password === '') {
+      setRegisterPassword({ error: 'パスワードを入力してください' })
     }
   }
   // ここをマウントされた時のみ走るようにする
@@ -85,17 +92,20 @@ const Index = () => {
             <div className="box">
               <div className="input-place">
                 <p>メールアドレス</p>
-                {isLoginForm ?
-                  <input type="email" onChange={(e) => checkLoginEmail(e.target.value)} />:
-                  <input type="email" onChange={(e) => checkRegisterEmail(e.target.value)} />
-                }
+                <input
+                  type="email"
+                  value={isLoginForm ? loginEmail.email : registerEmail.email}
+                  onChange={isLoginForm ? (e) => checkLoginEmail(e.target.value) : (e) => checkRegisterEmail(e.target.value)}
+                  autoFocus
+                />
               </div>
               <div className="input-place">
                 <p>パスワード</p>
-                {isLoginForm ?
-                  <input type="password" onChange={(e) => checkLoginPassword(e.target.value)} />:
-                  <input type="password" onChange={(e) => checkRegisterPassword(e.target.value)} />
-                }
+                <input
+                  type="password"
+                  value={isLoginForm ? loginPassword.password : registerPassword.password}
+                  onChange={isLoginForm ? (e) => checkLoginPassword(e.target.value) : (e) => checkRegisterPassword(e.target.value)}
+                />
               </div>
             </div>
             <div className="google-login">
