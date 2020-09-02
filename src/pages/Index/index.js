@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './style.scss'
 import Header from '../../component/Header/'
 import { BluePalm, Court, FenceBuildings, GlassBoard, Sunset, YellowPaint } from '../../assets/img/'
@@ -6,7 +6,7 @@ import { GoogleIcon, SearchIcon } from '../../assets/icons'
 import Prefecture from '../../assets/json/prefectureTest.json'
 
 const Index = () => {
-  const [isDialogOpen, setDialog] = useState(false)
+  const [isDialogOpen, setDialog] = useState(true)
   const [isOnFocus, setOnFocus] = useState(false)
   const [isLoginForm, setLoginForm] = useState(true)
   // login
@@ -16,14 +16,16 @@ const Index = () => {
   const [registerEmail, setRegisterEmail] = useState({ email: '', error: '' })
   const [registerPassword, setRegisterPassword] = useState({ password: '', error: '' })
 
-  const checkLoginEmail = (email) => {
-    setLoginEmail({ email: email })
-    console.log(email)
-    console.log(loginEmail)
-    if (loginEmail.email === '') {
-      setLoginEmail({ error: 'メールアドレスを入力してください' })
-    }
+  const checkLoginEmail = (e) => {
+    setLoginEmail({ email: e.target.value })
   }
+
+  useEffect(() => {
+    if (loginEmail.email === '') {
+      setLoginEmail(loginEmail.error = 'メールアドレスを入力してください')
+    }
+    console.log(loginEmail)
+  }, [loginEmail])
 
   const checkLoginPassword = (password) => {
     setLoginPassword(password)
@@ -34,7 +36,6 @@ const Index = () => {
 
   const checkRegisterEmail = (email) => {
     setRegisterEmail(email)
-    console.log(registerEmail)
     if (registerEmail.email === '') {
       setRegisterEmail({ error: 'メールアドレスを入力してください' })
     }
@@ -94,8 +95,9 @@ const Index = () => {
                 <p>メールアドレス</p>
                 <input
                   type="email"
+                  name="email"
                   value={isLoginForm ? loginEmail.email : registerEmail.email}
-                  onChange={isLoginForm ? (e) => checkLoginEmail(e.target.value) : (e) => checkRegisterEmail(e.target.value)}
+                  onChange={isLoginForm ? (e) => checkLoginEmail(e) : (e) => checkRegisterEmail(e)}
                   autoFocus
                 />
               </div>
@@ -103,8 +105,9 @@ const Index = () => {
                 <p>パスワード</p>
                 <input
                   type="password"
+                  name="password"
                   value={isLoginForm ? loginPassword.password : registerPassword.password}
-                  onChange={isLoginForm ? (e) => checkLoginPassword(e.target.value) : (e) => checkRegisterPassword(e.target.value)}
+                  onChange={isLoginForm ? (e) => checkLoginPassword(e) : (e) => checkRegisterPassword(e)}
                 />
               </div>
             </div>
