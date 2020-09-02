@@ -17,15 +17,10 @@ const Index = () => {
   const [registerPassword, setRegisterPassword] = useState({ password: '', error: '' })
 
   const checkLoginEmail = (e) => {
-    setLoginEmail({ email: e.target.value })
-  }
-
-  useEffect(() => {
+    setLoginEmail({ ...loginEmail, email: e.target.value })
     if (loginEmail.email === '') {
-      setLoginEmail(loginEmail.error = 'メールアドレスを入力してください')
     }
-    console.log(loginEmail)
-  }, [loginEmail])
+  }
 
   const checkLoginPassword = (password) => {
     setLoginPassword(password)
@@ -56,7 +51,7 @@ const Index = () => {
       // backgroundImage: `url(${randomImg[ranNum]})`
     }
   }
-
+  console.log(loginEmail)
   return (
     <div>
       <Header
@@ -88,7 +83,7 @@ const Index = () => {
             }
           </div>
           :
-          <form className="login-form">
+          <form className="login-form" onSubmit={() => alert('yo')}>
             <p className="login-title">{isLoginForm ? 'ログイン' : 'アカウント登録'}</p>
             <div className="box">
               <div className="input-place">
@@ -96,8 +91,9 @@ const Index = () => {
                 <input
                   type="email"
                   name="email"
+                  placeholder="email"
                   value={isLoginForm ? loginEmail.email : registerEmail.email}
-                  onChange={isLoginForm ? (e) => checkLoginEmail(e) : (e) => checkRegisterEmail(e)}
+                  onChange={isLoginForm ? checkLoginEmail : checkRegisterEmail}
                   autoFocus
                 />
               </div>
@@ -106,8 +102,9 @@ const Index = () => {
                 <input
                   type="password"
                   name="password"
+                  placeholder="password"
                   value={isLoginForm ? loginPassword.password : registerPassword.password}
-                  onChange={isLoginForm ? (e) => checkLoginPassword(e) : (e) => checkRegisterPassword(e)}
+                  onChange={isLoginForm ? checkLoginPassword : checkRegisterPassword}
                 />
               </div>
             </div>
@@ -125,7 +122,7 @@ const Index = () => {
           </form>
         }
       </main>
-      <div className="recommend">
+      <div type="submit" className="recommend">
         <p>this is recommend.</p>
       </div>
     </div>

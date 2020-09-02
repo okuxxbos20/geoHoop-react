@@ -93,6 +93,14 @@ main {
           border-radius: 3px;
           padding: 5px 10px;
           &:focus { outline: none; }
+          &::-webkit-input-placeholder {
+            color: var(--subColor);
+            opacity: 0.5;
+          }
+          &::-moz-placeholder {
+            color: var(--subColor);
+            opacity: 0.5;
+          }
         }
       }
     }
