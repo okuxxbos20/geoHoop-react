@@ -17,15 +17,11 @@ const Index = () => {
   const [registerPassword, setRegisterPassword] = useState({ password: '', error: '' })
 
   const checkLoginEmail = (e) => {
-    setLoginEmail({ email: e.target.value })
+    console.log(e.target.value)
+    setLoginEmail((prev, e) => {
+      return {...prev, email: e.target.value}
+    })
   }
-
-  useEffect(() => {
-    if (loginEmail.email === '') {
-      setLoginEmail(loginEmail.error = 'メールアドレスを入力してください')
-    }
-    console.log(loginEmail)
-  }, [loginEmail])
 
   const checkLoginPassword = (password) => {
     setLoginPassword(password)
@@ -96,8 +92,9 @@ const Index = () => {
                 <input
                   type="email"
                   name="email"
+                  placeholder="email"
                   value={isLoginForm ? loginEmail.email : registerEmail.email}
-                  onChange={isLoginForm ? (e) => checkLoginEmail(e) : (e) => checkRegisterEmail(e)}
+                  onChange={isLoginForm ? checkLoginEmail : checkRegisterEmail}
                   autoFocus
                 />
               </div>
@@ -106,8 +103,9 @@ const Index = () => {
                 <input
                   type="password"
                   name="password"
+                  placeholder="password"
                   value={isLoginForm ? loginPassword.password : registerPassword.password}
-                  onChange={isLoginForm ? (e) => checkLoginPassword(e) : (e) => checkRegisterPassword(e)}
+                  onChange={isLoginForm ? checkLoginPassword : checkRegisterPassword}
                 />
               </div>
             </div>
