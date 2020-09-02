@@ -77,7 +77,7 @@ const AllCourt = () => {
           </tr>
           {dammyData.map((v, idx) => {
             return (
-              <tr className={`court-data ${idx % 2 !== 0 ? 'odd' : ''}`}>
+              <tr className={`court-data ${idx % 2 !== 0 ? 'odd' : ''}`} key={idx}>
                 <td className="checkbox-place">
                   <label className="individual-checkbox">
                     <span className="checkmark"></span>

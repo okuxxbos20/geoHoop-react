@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './style.scss'
 import Header from '../../component/Header/'
 import { BluePalm, Court, FenceBuildings, GlassBoard, Sunset, YellowPaint } from '../../assets/img/'
@@ -6,37 +6,77 @@ import { GoogleIcon, SearchIcon } from '../../assets/icons'
 import Prefecture from '../../assets/json/prefectureTest.json'
 
 const Index = () => {
-  const [isDialogOpen, setDialog] = useState(false)
+  const [isDialogOpen, setDialog] = useState(true)
   const [isOnFocus, setOnFocus] = useState(false)
   const [isLoginForm, setLoginForm] = useState(true)
-  const [loginEmail, setLoginEmail] = useState(null)
-  const [loginPassword, setLoginPassword] = useState(null)
-  const [registerEmail, setRegisterEmail] = useState(null)
-  const [registerPassword, setRegisterPassword] = useState(null)
 
-  const checkLoginEmail = (email) => {
-    setLoginEmail(email)
-    console.log(loginEmail)
-    if (loginEmail === null || loginEmail === '') {
-    }
+
+  // login
+  const [loginInfo, setLoginInfo] = useState({ email: '', password: '' })
+  const inputLoginInfo = (e) => {
+    setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value })
   }
 
-  const checkLoginPassword = (password) => {
-    setLoginPassword(password)
-    if (loginPassword === null || loginPassword === '') {
-    }
+  // register
+  const [registerInfo, setRegisterInfo] = useState({ email: '', password: '' })
+  const inputRegisterInfo = (e) => {
+    setRegisterInfo({ ...registerInfo, [e.target.name]: e.target.value })
   }
 
-  const checkRegisterEmail = (email) => {
-    setRegisterEmail(email)
-    console.log(registerEmail)
-    if (registerEmail === null || registerEmail === '') {
+  // validation
+  const validation = () => {
+    let loginErr = {}
+    let registerErr = {}
+
+    if (isLoginForm) {
+      if (loginInfo.email === '') {
+        loginErr.email = '*メールアドレスを入力してください'
+      }
+      if (loginInfo.password === '') {
+        loginErr.password = '*パスワードを入力してください'
+      }
+    } else {
+      if (registerInfo.email === '') {
+        registerErr.email = '*メールアドレスを入力してください'
+      }
+      if (registerInfo.password === '') {
+        registerErr.password = '*パスワードを入力してください'
+      }
     }
+
+    return { loginErr, registerErr }
   }
 
-  const checkRegisterPassword = (password) => {
-    setRegisterPassword(password)
-    if (registerPassword === null || registerPassword === '') {
+  // showErr
+  const showErr = (errObj) => {
+    let errMsg = ''
+    for (let err in errObj) {
+      errMsg += `${errObj[err]}. `
+    }
+    alert(`Errors ${errMsg}`)
+  }
+
+  // submit
+  const submitInfo = (e) => {
+    e.preventDefault()
+    const errs = validation()
+
+    if (isLoginForm) {
+      if (Object.keys(errs.loginErr).length === 0) {
+        // ここでfirebaseにemailとpassを投げる
+        alert(`loginInfo: ${loginInfo.email}, ${loginInfo.password}`)
+        setLoginInfo({ email: '', password: '' })
+      } else {
+        showErr(errs.loginErr)
+      }
+    } else {
+      if (Object.keys(errs.registerErr).length === 0) {
+        // ここでfirebaseにemailとpassを投げる
+        alert(`registerInfo: ${registerInfo.email}, ${registerInfo.password}`)
+        setRegisterInfo({ email: '', password: '' })
+      } else {
+        showErr(errs.registerErr)
+      }
     }
   }
   // ここをマウントされた時のみ走るようにする
@@ -48,7 +88,8 @@ const Index = () => {
       // backgroundImage: `url(${randomImg[ranNum]})`
     }
   }
-
+  console.log(loginInfo)
+  console.log(registerInfo)
   return (
     <div>
       <Header
@@ -80,22 +121,29 @@ const Index = () => {
             }
           </div>
           :
-          <form className="login-form">
+          <form className="login-form" onSubmit={submitInfo}>
             <p className="login-title">{isLoginForm ? 'ログイン' : 'アカウント登録'}</p>
             <div className="box">
               <div className="input-place">
                 <p>メールアドレス</p>
-                {isLoginForm ?
-                  <input type="email" onChange={(e) => checkLoginEmail(e.target.value)} />:
-                  <input type="email" onChange={(e) => checkRegisterEmail(e.target.value)} />
-                }
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="email"
+                  value={isLoginForm ? loginInfo.email : registerInfo.email}
+                  onChange={isLoginForm ? inputLoginInfo : inputRegisterInfo}
+                  autoFocus
+                />
               </div>
               <div className="input-place">
                 <p>パスワード</p>
-                {isLoginForm ?
-                  <input type="password" onChange={(e) => checkLoginPassword(e.target.value)} />:
-                  <input type="password" onChange={(e) => checkRegisterPassword(e.target.value)} />
-                }
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="password"
+                  value={isLoginForm ? loginInfo.password : registerInfo.password}
+                  onChange={isLoginForm ? inputLoginInfo : inputRegisterInfo}
+                />
               </div>
             </div>
             <div className="google-login">
@@ -112,7 +160,7 @@ const Index = () => {
           </form>
         }
       </main>
-      <div className="recommend">
+      <div type="submit" className="recommend">
         <p>this is recommend.</p>
       </div>
     </div>
