@@ -9,37 +9,74 @@ const Index = () => {
   const [isDialogOpen, setDialog] = useState(true)
   const [isOnFocus, setOnFocus] = useState(false)
   const [isLoginForm, setLoginForm] = useState(true)
+
+
   // login
-  const [loginEmail, setLoginEmail] = useState({ email: '', error: '' })
-  const [loginPassword, setLoginPassword] = useState({ password: '', error: '' })
+  const [loginInfo, setLoginInfo] = useState({ email: '', password: '' })
+  const inputLoginInfo = (e) => {
+    setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value })
+  }
+
   // register
-  const [registerEmail, setRegisterEmail] = useState({ email: '', error: '' })
-  const [registerPassword, setRegisterPassword] = useState({ password: '', error: '' })
-
-  const checkLoginEmail = (e) => {
-    setLoginEmail({ ...loginEmail, email: e.target.value })
-    if (loginEmail.email === '') {
-    }
+  const [registerInfo, setRegisterInfo] = useState({ email: '', password: '' })
+  const inputRegisterInfo = (e) => {
+    setRegisterInfo({ ...registerInfo, [e.target.name]: e.target.value })
   }
 
-  const checkLoginPassword = (password) => {
-    setLoginPassword(password)
-    if (loginPassword.password === '') {
-      setLoginPassword({ error: 'パスワードを入力してください' })
+  // validation
+  const validation = () => {
+    let loginErr = {}
+    let registerErr = {}
+
+    if (isLoginForm) {
+      if (loginInfo.email === '') {
+        loginErr.email = '*メールアドレスを入力してください'
+      }
+      if (loginInfo.password === '') {
+        loginErr.password = '*パスワードを入力してください'
+      }
+    } else {
+      if (registerInfo.email === '') {
+        registerErr.email = '*メールアドレスを入力してください'
+      }
+      if (registerInfo.password === '') {
+        registerErr.password = '*パスワードを入力してください'
+      }
     }
+
+    return { loginErr, registerErr }
   }
 
-  const checkRegisterEmail = (email) => {
-    setRegisterEmail(email)
-    if (registerEmail.email === '') {
-      setRegisterEmail({ error: 'メールアドレスを入力してください' })
+  // showErr
+  const showErr = (errObj) => {
+    let errMsg = ''
+    for (let err in errObj) {
+      errMsg += `${errObj[err]}. `
     }
+    alert(`Errors ${errMsg}`)
   }
 
-  const checkRegisterPassword = (password) => {
-    setRegisterPassword(password)
-    if (registerPassword.password === '') {
-      setRegisterPassword({ error: 'パスワードを入力してください' })
+  // submit
+  const submitInfo = (e) => {
+    e.preventDefault()
+    const errs = validation()
+
+    if (isLoginForm) {
+      if (Object.keys(errs.loginErr).length === 0) {
+        // ここでfirebaseにemailとpassを投げる
+        alert(`loginInfo: ${loginInfo.email}, ${loginInfo.password}`)
+        setLoginInfo({ email: '', password: '' })
+      } else {
+        showErr(errs.loginErr)
+      }
+    } else {
+      if (Object.keys(errs.registerErr).length === 0) {
+        // ここでfirebaseにemailとpassを投げる
+        alert(`registerInfo: ${registerInfo.email}, ${registerInfo.password}`)
+        setRegisterInfo({ email: '', password: '' })
+      } else {
+        showErr(errs.registerErr)
+      }
     }
   }
   // ここをマウントされた時のみ走るようにする
@@ -51,7 +88,8 @@ const Index = () => {
       // backgroundImage: `url(${randomImg[ranNum]})`
     }
   }
-  console.log(loginEmail)
+  console.log(loginInfo)
+  console.log(registerInfo)
   return (
     <div>
       <Header
@@ -83,7 +121,7 @@ const Index = () => {
             }
           </div>
           :
-          <form className="login-form" onSubmit={() => alert('yo')}>
+          <form className="login-form" onSubmit={submitInfo}>
             <p className="login-title">{isLoginForm ? 'ログイン' : 'アカウント登録'}</p>
             <div className="box">
               <div className="input-place">
@@ -92,8 +130,8 @@ const Index = () => {
                   type="email"
                   name="email"
                   placeholder="email"
-                  value={isLoginForm ? loginEmail.email : registerEmail.email}
-                  onChange={isLoginForm ? checkLoginEmail : checkRegisterEmail}
+                  value={isLoginForm ? loginInfo.email : registerInfo.email}
+                  onChange={isLoginForm ? inputLoginInfo : inputRegisterInfo}
                   autoFocus
                 />
               </div>
@@ -103,8 +141,8 @@ const Index = () => {
                   type="password"
                   name="password"
                   placeholder="password"
-                  value={isLoginForm ? loginPassword.password : registerPassword.password}
-                  onChange={isLoginForm ? checkLoginPassword : checkRegisterPassword}
+                  value={isLoginForm ? loginInfo.password : registerInfo.password}
+                  onChange={isLoginForm ? inputLoginInfo : inputRegisterInfo}
                 />
               </div>
             </div>
