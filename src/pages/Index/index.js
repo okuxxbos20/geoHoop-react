@@ -17,10 +17,9 @@ const Index = () => {
   const [registerPassword, setRegisterPassword] = useState({ password: '', error: '' })
 
   const checkLoginEmail = (e) => {
-    console.log(e.target.value)
-    setLoginEmail((prev, e) => {
-      return {...prev, email: e.target.value}
-    })
+    setLoginEmail({ ...loginEmail, email: e.target.value })
+    if (loginEmail.email === '') {
+    }
   }
 
   const checkLoginPassword = (password) => {
@@ -52,7 +51,7 @@ const Index = () => {
       // backgroundImage: `url(${randomImg[ranNum]})`
     }
   }
-
+  console.log(loginEmail)
   return (
     <div>
       <Header
@@ -84,7 +83,7 @@ const Index = () => {
             }
           </div>
           :
-          <form className="login-form">
+          <form className="login-form" onSubmit={() => alert('yo')}>
             <p className="login-title">{isLoginForm ? 'ログイン' : 'アカウント登録'}</p>
             <div className="box">
               <div className="input-place">
@@ -123,7 +122,7 @@ const Index = () => {
           </form>
         }
       </main>
-      <div className="recommend">
+      <div type="submit" className="recommend">
         <p>this is recommend.</p>
       </div>
     </div>
