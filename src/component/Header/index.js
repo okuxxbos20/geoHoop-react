@@ -9,6 +9,9 @@ const Header = (props) => {
     },
     geoTitle: {
       color: props.color
+    },
+    login: {
+      color: props.color
     }
   }
   return (
@@ -16,7 +19,13 @@ const Header = (props) => {
       <Link to="/">
         <p className="geo-title" style={style.geoTitle}>geoHoop</p>
       </Link>
-      <p className="login" onClick={() => {props.setLoginForm()}}>Login</p>
+      <p
+        className="login"
+        style={style.login}
+        onClick={() => {props.setLoginForm()}}
+      >
+        Login
+      </p>
     </div>
   )
 }
