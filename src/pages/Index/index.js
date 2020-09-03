@@ -9,7 +9,13 @@ const Index = () => {
   const [isDialogOpen, setDialog] = useState(true)
   const [isOnFocus, setOnFocus] = useState(false)
   const [isLoginForm, setLoginForm] = useState(true)
+  const randomImg = [BluePalm, Court, FenceBuildings, GlassBoard, Sunset, YellowPaint]
+  const [ranNum, setRunNum] = useState(0)
 
+  useEffect(() => {
+    console.log('yoyo')
+    setRunNum(Math.floor(Math.random() * randomImg.length))
+  }, [randomImg.length])　
 
   // login
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' })
@@ -79,13 +85,10 @@ const Index = () => {
       }
     }
   }
-  // ここをマウントされた時のみ走るようにする
-  // const randomImg = [BluePalm, Court, FenceBuildings, GlassBoard, Sunset, YellowPaint]
-  // const ranNum = Math.floor(Math.random() * randomImg.length)
+
   const style = {
     mainStyle : {
-      backgroundImage: `url(${FenceBuildings})`
-      // backgroundImage: `url(${randomImg[ranNum]})`
+      backgroundImage: `url(${randomImg[ranNum]})`
     }
   }
   console.log(loginInfo)
