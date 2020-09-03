@@ -58,7 +58,7 @@ main {
         &:hover {
           cursor: pointer;
           color: #f7f7f7;
-          background: grey;
+          background: rgba(grey, 0.8);
         }
         li { padding-left: 10px; }
       }
