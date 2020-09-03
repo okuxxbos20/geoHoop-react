@@ -6,7 +6,7 @@ import Search from './search'
 import { BluePalm, Court, FenceBuildings, GlassBoard, Sunset, YellowPaint } from '../../assets/img/'
 
 const Index = () => {
-  const [isDialogOpen, setDialog] = useState(true)
+  const [isDialogOpen, setDialog] = useState(false)
   const [isOnFocus, setOnFocus] = useState(false)
   const [isLoginForm, setLoginForm] = useState(true)
   const randomImg = [BluePalm, Court, FenceBuildings, GlassBoard, Sunset, YellowPaint]
