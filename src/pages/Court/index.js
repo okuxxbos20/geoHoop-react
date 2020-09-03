@@ -33,9 +33,9 @@ const CourtData = () => {
               </div>
             </div>
             <div className="box-footer">
-            <div class="upper-row">
-              <p class="pre-city">#{dammydata.prefecture} #{dammydata.city}</p>
-              <div class="likes-bookmarks">
+            <div className="upper-row">
+              <p className="pre-city">#{dammydata.prefecture} #{dammydata.city}</p>
+              <div className="likes-bookmarks">
                 <label>
                   <HeartEmptyIcon />
                   <span>{dammydata.likes}</span>
@@ -49,28 +49,28 @@ const CourtData = () => {
             </div>
           </div>
           <div className="right">
-            <h5 class="table-title">コート情報</h5>
-            <div class="table-wrapper">
+            <h5 className="table-title">コート情報</h5>
+            <div className="table-wrapper">
             <table>
               <tr>
-                <td class="name">住所</td>
-                <td class="right">{dammydata.address}</td>
+                <td className="name">住所</td>
+                <td className="right">{dammydata.address}</td>
               </tr>
-              <tr class="odd">
-                <td class="name">Google Maps</td>
-                <td class="right">
+              <tr className="odd">
+                <td className="name">Google Maps</td>
+                <td className="right">
                   <a href={dammydata.googleMapsUrl}>Google Mapsへ</a>
                 </td>
               </tr>
               <tr>
-                <td class="name">参考URL</td>
-                <td class="right">
+                <td className="name">参考URL</td>
+                <td className="right">
                   <a href={dammydata.refUrl}>{dammydata.refUrl}</a>
                 </td>
               </tr>
-              <tr class="odd">
-                <td class="name">コートタイプ</td>
-                <td class="right">{dammydata.isOutside}</td>
+              <tr className="odd">
+                <td className="name">コートタイプ</td>
+                <td className="right">{dammydata.isOutside}</td>
               </tr>
             </table>
           </div>
