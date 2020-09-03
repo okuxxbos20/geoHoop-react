@@ -13,7 +13,6 @@ const Index = () => {
   const [ranNum, setRunNum] = useState(0)
 
   useEffect(() => {
-    console.log('yoyo')
     setRunNum(Math.floor(Math.random() * randomImg.length))
   }, [randomImg.length])　
 
@@ -153,8 +152,8 @@ const Index = () => {
               <GoogleIcon />
             </div>
             {isLoginForm ?
-              <button>ログイン</button>:
-              <button>アカウント作成</button>
+              <button type="submit">ログイン</button>:
+              <button type="submit">アカウント作成</button>
             }
             <p className="switch-method">
               {isLoginForm ? '新規ユーザは' : 'ログインは'}
@@ -163,7 +162,7 @@ const Index = () => {
           </form>
         }
       </main>
-      <div type="submit" className="recommend">
+      <div className="recommend">
         <p>this is recommend.</p>
       </div>
     </div>

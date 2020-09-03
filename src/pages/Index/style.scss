@@ -115,6 +115,7 @@ main {
         cursor: pointer;
         transform: scale(1.1);
       }
+      &:focus { outline: none; }
     }
     .google-login {
       &:hover { cursor: pointer; }
