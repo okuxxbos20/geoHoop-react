@@ -16,10 +16,10 @@ const Search = (props) => {
       </div>
       {props.isOnFocus &&
         <div className="search-suggest">
-        {Prefecture.map((v, key) => {
+        {Prefecture.map((v) => {
           return (
-            <div className="region-box">
-              <li id={key}>{v.name}</li>
+            <div key={v.code} className="region-box">
+              <li>{v.name}</li>
             </div>
           )
         })}
