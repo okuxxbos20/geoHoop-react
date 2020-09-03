@@ -22,7 +22,7 @@ const Header = (props) => {
       <p
         className="login"
         style={style.login}
-        onClick={() => {props.setLoginForm()}}
+        onClick={() => {props.setDialog()}}
       >
         Login
       </p>
