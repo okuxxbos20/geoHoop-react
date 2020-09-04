@@ -1,9 +1,10 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { GoogleIcon } from '../../assets/icons'
 import './style.scss'
 
 const Login = (props) => {
   const isLoginForm = props.isLoginForm
+
   // login
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' })
   const inputLoginInfo = (e) => {
