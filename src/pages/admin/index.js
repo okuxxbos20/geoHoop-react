@@ -4,16 +4,47 @@ import { Link } from 'react-router-dom'
 import Logo from '../../assets/img/geoHoop_01.png'
 
 const Index = () => {
-  const [email, setEmail] = useState(null)
-  const [password, setPassword] = useState(null)
-  // eslint-disable-next-line
-  const [isValidationClear, setValidation] = useState(false)
-  const style = {
-    btnStyle: {
-      color: 'var(--subColor)',
-      background: 'var(--mainColor)'
+  const [admin, setAdmin] = useState({ email: '', password: '' })
+  const [err, setErr] = useState({ email: '', password: '' })
+
+  const inputAdmin = (e) => {
+    setAdmin({ ...admin, [e.target.name]: e.target.value })
+    console.log(admin)
+  }
+
+  const validation = () => {
+    console.log(`admin :${admin}`)
+    if (admin.email === '') {
+      setErr({ ...err, email: '*メールアドレスを入力してください' })
+      console.log(1)
+      console.log(err)
+    } else {
+      setErr({ email: '', password: '' })
+      console.log(2)
+    }
+    console.log(err)
+    if (admin.password === '') {
+      setErr({ ...err, password: '*パスワードを入力してください' })
+      console.log(3)
+    } else {
+      setErr({ email: '', password: '' })
+      console.log(4)
+    }
+    console.log(err)
+  }
+
+  const submitInfo = (e) => {
+    e.preventDefault()
+    validation()
+    if (err.email === '' && err.password === '') {
+      // ここでfirebaseにemailとpassを投げる
+      alert(`success: ${admin.email}, ${admin.password}`)
+      setAdmin({ email: '', password: '' })
+    } else {
+      alert(`Error: ${err.email}, ${err.password}`)
     }
   }
+
   return (  
     <div className="index">
       <header>
@@ -22,32 +53,33 @@ const Index = () => {
           <p className="geo-hoop">geoHoop</p>
         </Link>
       </header>
-      <form>
+      <form onSubmit={submitInfo}>
         <p className="admin">管理者ログイン</p>
         <div className="box">
           <div className="input-place">
-            <p>メールアドレス</p>
+            <p className={err.email === '' ? 'nomal-sentence' : 'nomal-sentence'}>
+              {err.email === '' ? 'メールアドレス' : err.email}
+            </p>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+              value={admin.email}
+              onChange={inputAdmin}
             />
           </div>
           <div className="input-place">
-            <p>パスワード</p>
+            <p className={err.password === '' ? 'nomal-sentence' : 'err-sentence'}>
+              {err.password === '' ? 'パスワード' : err.password}
+            </p>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              value={admin.password}
+              onChange={inputAdmin}
             />
           </div>
         </div>
-        <button
-          style={isValidationClear ? style.btnStyle : {}}
-          disabled={!isValidationClear}
-        >
-          ログイン
-        </button>
+        <button type="submit">ログイン</button>
       </form>
     </div>
   )
