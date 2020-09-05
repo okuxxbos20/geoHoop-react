@@ -55,12 +55,14 @@ const AllCourt = () => {
         return b.likes - a.likes;
       })
       setDammyData(newDammyData)
+      setBookmarksAsc(null)
       setLikesAsc(false)
     } else if (!isLikesAsc) {
       const newDammyData = dammyData.sort((a, b) => {
         return a.likes - b.likes;
       })
       setDammyData(newDammyData)
+      setBookmarksAsc(null)
       setLikesAsc(true)
     }
   }
@@ -71,12 +73,14 @@ const AllCourt = () => {
         return b.bookmarks - a.bookmarks
       })
       setDammyData(newDammyData)
+      setLikesAsc(null)
       setBookmarksAsc(false)
     } else if (!isBookmarksAsc) {
       const newDammyData = dammyData.sort((a, b) => {
         return a.bookmarks - b.bookmarks
       })
       setDammyData(newDammyData)
+      setLikesAsc(null)
       setBookmarksAsc(true)
     }
   }
