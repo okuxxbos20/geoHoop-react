@@ -3,9 +3,7 @@ import './AllCourt.scss'
 import { ArrowLeftIcon, ArrowRightIcon } from '../../assets/icons/'
 
 const AllCourt = () => {
-  const [isAllCourtChecked, setAllCourtChecked] = useState(false)
-  const [isIndeterminate, setIndeterminate] = useState(false)
-  const dammyData = [
+  const dammy = [
     {
       name: 'aaa',
       prefecture: '東京都',
@@ -44,6 +42,45 @@ const AllCourt = () => {
       id: '9jsaha63h'
     }
   ]
+
+  const [isAllCourtChecked, setAllCourtChecked] = useState(false)
+  const [isIndeterminate, setIndeterminate] = useState(false)
+  const [dammyData, setDammyData] = useState(dammy)
+  const [isLikesAsc, setLikesAsc] = useState(false)
+  const [isBookmarksAsc, setBookmarksAsc] = useState(false)
+
+  const changeLikesOrder = () => {
+    if (isLikesAsc) {
+       const newDammyData = dammyData.sort((a, b) => {
+        return b.likes - a.likes;
+      })
+      setDammyData(newDammyData)
+      setLikesAsc(false)
+    } else if (!isLikesAsc) {
+      const newDammyData = dammyData.sort((a, b) => {
+        return a.likes - b.likes;
+      })
+      setDammyData(newDammyData)
+      setLikesAsc(true)
+    }
+  }
+
+  const changeBookmarkOrder = () => {
+    if (isBookmarksAsc) {
+      const newDammyData = dammyData.sort((a, b) => {
+        return b.bookmarks - a.bookmarks
+      })
+      setDammyData(newDammyData)
+      setBookmarksAsc(false)
+    } else if (!isBookmarksAsc) {
+      const newDammyData = dammyData.sort((a, b) => {
+        return a.bookmarks - b.bookmarks
+      })
+      setDammyData(newDammyData)
+      setBookmarksAsc(true)
+    }
+  }
+
   return (
     <div className="all-court">
       <header>
@@ -54,27 +91,34 @@ const AllCourt = () => {
           <p>フィルター</p>
         </div>
         <table>
-          <tr className="column-name">
-            <td className="checkbox-place">
-              <label
-                className="all-checkbox"
-                onClick={() => setAllCourtChecked(!isAllCourtChecked)}
-              >
-                <span
-                  className={`${isAllCourtChecked ? 'allSelect' : ''} ${isIndeterminate ? 'indeterminate' : ''}`}
+          <thead>
+            <tr className="column-name">
+              <td className="checkbox-place">
+                <label
+                  className="all-checkbox"
+                  onClick={() => setAllCourtChecked(!isAllCourtChecked)}
                 >
-                </span>
-              </label>
-            </td>
-            <td><label>コート名</label></td>
-            <td><label>都道府県</label></td>
-            <td><label>市町村区</label></td>
-            <td className="add-triangle"><label>Likes</label></td>
-            <td className="add-triangle"><label>Bookmarks</label></td>
-            <td><label>コートタイプ</label></td>
-            <td><label>登録日</label></td>
-            <td><label>id</label></td>
-          </tr>
+                  <span
+                    className={`${isAllCourtChecked ? 'allSelect' : ''} ${isIndeterminate ? 'indeterminate' : ''}`}
+                  >
+                  </span>
+                </label>
+              </td>
+              <td><label>コート名</label></td>
+              <td><label>都道府県</label></td>
+              <td><label>市町村区</label></td>
+              <td className="add-triangle" onClick={() => changeLikesOrder()}>
+                <label>Likes</label>
+              </td>
+              <td className="add-triangle" onClick={() => changeBookmarkOrder()}>
+                <label>Bookmarks</label>
+              </td>
+              <td><label>コートタイプ</label></td>
+              <td><label>登録日</label></td>
+              <td><label>id</label></td>
+            </tr>
+          </thead>
+          <tbody>
           {dammyData.map((v, idx) => {
             return (
               <tr className={`court-data ${idx % 2 !== 0 ? 'odd' : ''}`} key={idx}>
@@ -102,6 +146,7 @@ const AllCourt = () => {
               </tr>
             )
           })}
+          </tbody>
         </table>
         <div className="table-footer">
           <p>4件中4件のデータを表示中</p>
