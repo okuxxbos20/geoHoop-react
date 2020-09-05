@@ -34,20 +34,20 @@
         td {
           label { margin: 0 10px; }
         }
+        @mixin traiangle($top) {
+          content: '';
+          width: 7px;
+          height: 7px;
+          position: absolute;
+          top: $top;
+          right: -1px;
+          margin: auto;
+          box-sizing: border-box;
+          border: 4px solid transparent;
+        }
         .add-triangle {
           position: relative;
           &:hover { cursor: pointer; }
-          @mixin traiangle($top) {
-            content: '';
-            width: 7px;
-            height: 7px;
-            position: absolute;
-            top: $top;
-            right: -1px;
-            margin: auto;
-            box-sizing: border-box;
-            border: 4px solid transparent;
-          }
           &:before {
             @include traiangle(30%);
             border-bottom: 4px solid #bdc3c7;
@@ -55,6 +55,18 @@
           &:after {
             @include traiangle(54%);
             border-top: 4px solid #bdc3c7;
+          }
+        }
+        .triangle-asc {
+          &:before {
+            @include traiangle(30%);
+            border-bottom: 4px solid #666;
+          }
+        }
+        .triangle-desc {
+          &:after {
+            @include traiangle(54%);
+            border-top: 4px solid #666;
           }
         }
       }

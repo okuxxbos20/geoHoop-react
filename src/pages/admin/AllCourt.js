@@ -46,11 +46,11 @@ const AllCourt = () => {
   const [isAllCourtChecked, setAllCourtChecked] = useState(false)
   const [isIndeterminate, setIndeterminate] = useState(false)
   const [dammyData, setDammyData] = useState(dammy)
-  const [isLikesAsc, setLikesAsc] = useState(false)
-  const [isBookmarksAsc, setBookmarksAsc] = useState(false)
+  const [isLikesAsc, setLikesAsc] = useState(null)
+  const [isBookmarksAsc, setBookmarksAsc] = useState(null)
 
   const changeLikesOrder = () => {
-    if (isLikesAsc) {
+    if (isLikesAsc || isLikesAsc === null) {
        const newDammyData = dammyData.sort((a, b) => {
         return b.likes - a.likes;
       })
@@ -66,7 +66,7 @@ const AllCourt = () => {
   }
 
   const changeBookmarkOrder = () => {
-    if (isBookmarksAsc) {
+    if (isBookmarksAsc || isBookmarksAsc === null) {
       const newDammyData = dammyData.sort((a, b) => {
         return b.bookmarks - a.bookmarks
       })
@@ -107,10 +107,16 @@ const AllCourt = () => {
               <td><label>コート名</label></td>
               <td><label>都道府県</label></td>
               <td><label>市町村区</label></td>
-              <td className="add-triangle" onClick={() => changeLikesOrder()}>
+              <td
+                className={`add-triangle ${isLikesAsc === null ? '' : (isLikesAsc ? 'triangle-asc' : 'triangle-desc')}`}
+                onClick={() => changeLikesOrder()}
+              >
                 <label>Likes</label>
               </td>
-              <td className="add-triangle" onClick={() => changeBookmarkOrder()}>
+              <td
+                className={`add-triangle ${isBookmarksAsc === null ? '' : (isBookmarksAsc ? 'triangle-asc' : 'triangle-desc')}`}
+                onClick={() => changeBookmarkOrder()}
+              >
                 <label>Bookmarks</label>
               </td>
               <td><label>コートタイプ</label></td>
