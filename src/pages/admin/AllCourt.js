@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import './AllCourt.scss'
 import { ArrowLeftIcon, ArrowRightIcon } from '../../assets/icons/'
 
 const AllCourt = () => {
-  const dammy = [
+  let dammy = [
     {
       name: 'aaa',
       prefecture: '東京都',
@@ -42,6 +42,8 @@ const AllCourt = () => {
       id: '9jsaha63h'
     }
   ]
+
+  dammy.map((v) => v.isChecked = false)
 
   const [isAllCourtChecked, setAllCourtChecked] = useState(false)
   const [isIndeterminate, setIndeterminate] = useState(false)
@@ -85,6 +87,14 @@ const AllCourt = () => {
     }
   }
 
+  const checkIndividualBox = (idx) => {
+    const newDammyData = dammyData.map((v, i) => {
+      v.isChecked = i === idx ? !v.isChecked : v.isChecked
+      return v
+    })
+    setDammyData(newDammyData)
+  }
+
   return (
     <div className="all-court">
       <header>
@@ -98,6 +108,7 @@ const AllCourt = () => {
           <thead>
             <tr className="column-name">
               <td className="checkbox-place">
+                {/* 全体のチェックボックス */}
                 <label
                   className="all-checkbox"
                   onClick={() => setAllCourtChecked(!isAllCourtChecked)}
@@ -107,6 +118,7 @@ const AllCourt = () => {
                   >
                   </span>
                 </label>
+                {/* 全体のチェックボックス */}
               </td>
               <td><label>コート名</label></td>
               <td><label>都道府県</label></td>
@@ -132,11 +144,16 @@ const AllCourt = () => {
           {dammyData.map((v, idx) => {
             return (
               <tr className={`court-data ${idx % 2 !== 0 ? 'odd' : ''}`} key={idx}>
+                {/* 個別のチェックボックス */}
                 <td className="checkbox-place">
-                  <label className="individual-checkbox">
-                    <span className="checkmark"></span>
+                  <label
+                    className="individual-checkbox"
+                    onClick={() => checkIndividualBox(idx)}
+                  >
+                    <span className={`checkmark ${v.isChecked ? 'allSelect' : ''}`}></span>
                   </label>
                 </td>
+                {/* 個別のチェックボックス */}
                 <td><label>{v.name}</label></td>
                 <td><label>{v.prefecture}</label></td>
                 <td><label>{v.city}</label></td>
