@@ -72,7 +72,6 @@
       }
       .court-data {
         height: 40px;
-        // &:hover { cursor: pointer; }
         td {
           label { margin: 0 8px; }
           .outside {
@@ -101,6 +100,21 @@
       .odd { background: #e8ecf1; }
       .checkbox-place {
         width: 100px;
+        @mixin checkmark {
+          background: #6c7a89;
+          &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: -1px;
+            left: 3px;
+            width: 6px;
+            height: 11px;
+            transform: rotate(40deg);
+            border-bottom: 2px solid #eee;
+            border-right: 2px solid #eee;
+          }
+        }
         .all-checkbox {
           margin: 0 20px 0;
           display: flex;
@@ -115,21 +129,7 @@
             border-radius: 4px;
             position: relative;
           }
-          .allSelect {
-            background: #6c7a89;
-            &:after {
-              content: '';
-              display: block;
-              position: absolute;
-              top: -1px;
-              left: 3px;
-              width: 7px;
-              height: 12px;
-              transform: rotate(40deg);
-              border-bottom: 2px solid #eee;
-              border-right: 2px solid #eee;
-            }
-          }
+          .all-select { @include checkmark; }
           .indeterminate {
             background: #6c7a89;
             &:after {
@@ -139,8 +139,8 @@
               width: 11px;
               top: 50%;
               left: 50%;
-              -webkit-transform: translate(-52%,-50%);
-              transform: translate(-52%,-50%);
+              -webkit-transform: translate(-50%,-50%);
+              transform: translate(-50%,-50%);
               border-bottom: 2px solid #eee;
             }
           }
@@ -151,35 +151,15 @@
           flex-direction: column;
           justify-content: center;
           &:hover { cursor: pointer; }
-          input[type='checkbox'] { display: none; }
-          .checkmark {
+          span {
+            width: 14px;
+            height: 14px;
+            display: block;
+            border: 2px solid #6c7a89;
+            border-radius: 4px;
             position: relative;
-            &:before {
-              content: '';
-              position: absolute;
-              top: -7px;
-              left: 0;
-              width: 14px;
-              height: 14px;
-              border: 2px solid #6c7a89;
-              border-radius: 4px;
-            }
           }
-          input[type='checkbox']:checked + .checkmark {
-            &:before { background: #6c7a89; }
-            &:after {
-              content: '';
-              display: block;
-              position: absolute;
-              top: -6px;
-              left: 5px;
-              width: 7px;
-              height: 12px;
-              transform: rotate(40deg);
-              border-bottom: 2px solid #eee;
-              border-right: 2px solid #eee;
-            }
-          }
+          .checked { @include checkmark; }
         }
       }
     }
@@ -199,7 +179,6 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          // padding-bottom: 7px;
           transition: 200ms;
           &:hover {
             background: #e8ecf1;

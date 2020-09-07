@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import './AllCourt.scss'
 import { ArrowLeftIcon, ArrowRightIcon } from '../../assets/icons/'
 
 const AllCourt = () => {
-  const dammy = [
+  let dammy = [
     {
       name: 'aaa',
       prefecture: '東京都',
@@ -43,9 +43,12 @@ const AllCourt = () => {
     }
   ]
 
+  dammy.map((v) => v.isChecked = false)
+
   const [isAllCourtChecked, setAllCourtChecked] = useState(false)
   const [isIndeterminate, setIndeterminate] = useState(false)
   const [dammyData, setDammyData] = useState(dammy)
+  const [selectedArr, setSelectedArr] = useState([])
   const [isLikesAsc, setLikesAsc] = useState(null)
   const [isBookmarksAsc, setBookmarksAsc] = useState(null)
 
@@ -85,6 +88,46 @@ const AllCourt = () => {
     }
   }
 
+  const checkAll = () => {
+    setIndeterminate(false)
+    let newDammyData = []
+    if (!isAllCourtChecked) {
+      setAllCourtChecked(true)
+      newDammyData = dammyData.map((v) => {
+        v.isChecked = true
+        return v
+      })
+    } else if (isAllCourtChecked) {
+      setAllCourtChecked(false)
+      newDammyData = dammyData.map((v) => {
+        v.isChecked = false
+        return v
+      })
+    }
+    setDammyData(newDammyData)
+  }
+
+  const checkIndividualBox = (idx) => {
+    const newDammyData = dammyData.map((v, i) => {
+      v.isChecked = i === idx ? !v.isChecked : v.isChecked
+      return v
+    })
+    const newSelectedArr = newDammyData.filter((v) => v.isChecked)
+    setDammyData(newDammyData)
+    setSelectedArr(newSelectedArr)
+
+    if (newSelectedArr.length === 0) {
+      setIndeterminate(false)
+      setAllCourtChecked(false)
+    } else if (newSelectedArr.length === dammyData.length) {
+      setIndeterminate(false)
+      setAllCourtChecked(true)
+    } else {
+      setIndeterminate(true)
+      setAllCourtChecked(false)
+    }
+  }
+
   return (
     <div className="all-court">
       <header>
@@ -92,19 +135,13 @@ const AllCourt = () => {
       </header>
       <div className="box">
         <div className="controller">
-          <p>フィルター</p>
         </div>
         <table>
           <thead>
             <tr className="column-name">
               <td className="checkbox-place">
-                <label
-                  className="all-checkbox"
-                  onClick={() => setAllCourtChecked(!isAllCourtChecked)}
-                >
-                  <span
-                    className={`${isAllCourtChecked ? 'allSelect' : ''} ${isIndeterminate ? 'indeterminate' : ''}`}
-                  >
+                <label className="all-checkbox" onClick={() => checkAll()}>
+                  <span　className={`${isAllCourtChecked ? 'all-select' : ''} ${isIndeterminate ? 'indeterminate' : ''}`}>
                   </span>
                 </label>
               </td>
@@ -131,10 +168,13 @@ const AllCourt = () => {
           <tbody>
           {dammyData.map((v, idx) => {
             return (
-              <tr className={`court-data ${idx % 2 !== 0 ? 'odd' : ''}`} key={idx}>
+              <tr className={`court-data ${idx % 2 !== 0 ? 'odd' : ''}`} key={v.id}>
                 <td className="checkbox-place">
-                  <label className="individual-checkbox">
-                    <span className="checkmark"></span>
+                  <label
+                    className="individual-checkbox"
+                    onClick={() => checkIndividualBox(idx)}
+                  >
+                    <span className={`checkmark ${v.isChecked ? 'checked' : ''}`}></span>
                   </label>
                 </td>
                 <td><label>{v.name}</label></td>
@@ -159,7 +199,7 @@ const AllCourt = () => {
           </tbody>
         </table>
         <div className="table-footer">
-          <p>4件中4件のデータを表示中</p>
+          <p>{dammyData.length}件中{dammyData.length}件のデータを表示中</p>
           <div className="pagenation">
             <label>
               <ArrowLeftIcon />
@@ -169,8 +209,6 @@ const AllCourt = () => {
             </label>
           </div>
         </div>
-        {/* 仮のボタン */}
-        <button onClick={() => setIndeterminate(!isIndeterminate)}>intermidiate</button>
       </div>
     </div>
   )
