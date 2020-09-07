@@ -88,6 +88,25 @@ const AllCourt = () => {
     }
   }
 
+  const checkAll = () => {
+    setIndeterminate(false)
+    let newDammyData = []
+    if (!isAllCourtChecked) {
+      setAllCourtChecked(true)
+      newDammyData = dammyData.map((v) => {
+        v.isChecked = true
+        return v
+      })
+    } else if (isAllCourtChecked) {
+      setAllCourtChecked(false)
+      newDammyData = dammyData.map((v) => {
+        v.isChecked = false
+        return v
+      })
+    }
+    setDammyData(newDammyData)
+  }
+
   const checkIndividualBox = (idx) => {
     const newDammyData = dammyData.map((v, i) => {
       v.isChecked = i === idx ? !v.isChecked : v.isChecked
@@ -96,6 +115,17 @@ const AllCourt = () => {
     const newSelectedArr = newDammyData.filter((v) => v.isChecked)
     setDammyData(newDammyData)
     setSelectedArr(newSelectedArr)
+
+    if (newSelectedArr.length === 0) {
+      setIndeterminate(false)
+      setAllCourtChecked(false)
+    } else if (newSelectedArr.length === dammyData.length) {
+      setIndeterminate(false)
+      setAllCourtChecked(true)
+    } else {
+      setIndeterminate(true)
+      setAllCourtChecked(false)
+    }
   }
 
   return (
@@ -105,17 +135,13 @@ const AllCourt = () => {
       </header>
       <div className="box">
         <div className="controller">
-        <p>{selectedArr.length}</p>
         </div>
         <table>
           <thead>
             <tr className="column-name">
               <td className="checkbox-place">
-                <label
-                  className="all-checkbox"
-                  onClick={() => setAllCourtChecked(!isAllCourtChecked)}
-                >
-                  <span　className={`${isAllCourtChecked ? 'allSelect' : ''} ${isIndeterminate ? 'indeterminate' : ''}`}>
+                <label className="all-checkbox" onClick={() => checkAll()}>
+                  <span　className={`${isAllCourtChecked ? 'all-select' : ''} ${isIndeterminate ? 'indeterminate' : ''}`}>
                   </span>
                 </label>
               </td>
@@ -143,16 +169,14 @@ const AllCourt = () => {
           {dammyData.map((v, idx) => {
             return (
               <tr className={`court-data ${idx % 2 !== 0 ? 'odd' : ''}`} key={v.id}>
-                {/* 個別のチェックボックス */}
                 <td className="checkbox-place">
                   <label
                     className="individual-checkbox"
                     onClick={() => checkIndividualBox(idx)}
                   >
-                    <span className={`checkmark ${v.isChecked ? 'allSelect' : ''}`}></span>
+                    <span className={`checkmark ${v.isChecked ? 'checked' : ''}`}></span>
                   </label>
                 </td>
-                {/* 個別のチェックボックス */}
                 <td><label>{v.name}</label></td>
                 <td><label>{v.prefecture}</label></td>
                 <td><label>{v.city}</label></td>
@@ -175,7 +199,7 @@ const AllCourt = () => {
           </tbody>
         </table>
         <div className="table-footer">
-          <p>4件中4件のデータを表示中</p>
+          <p>{dammyData.length}件中{dammyData.length}件のデータを表示中</p>
           <div className="pagenation">
             <label>
               <ArrowLeftIcon />
@@ -185,8 +209,6 @@ const AllCourt = () => {
             </label>
           </div>
         </div>
-        {/* 仮のボタン */}
-        <button onClick={() => setIndeterminate(!isIndeterminate)}>intermidiate</button>
       </div>
     </div>
   )
