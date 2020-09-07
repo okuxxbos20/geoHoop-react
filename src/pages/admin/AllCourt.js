@@ -48,6 +48,7 @@ const AllCourt = () => {
   const [isAllCourtChecked, setAllCourtChecked] = useState(false)
   const [isIndeterminate, setIndeterminate] = useState(false)
   const [dammyData, setDammyData] = useState(dammy)
+  const [selectedArr, setSelectedArr] = useState([])
   const [isLikesAsc, setLikesAsc] = useState(null)
   const [isBookmarksAsc, setBookmarksAsc] = useState(null)
 
@@ -92,7 +93,9 @@ const AllCourt = () => {
       v.isChecked = i === idx ? !v.isChecked : v.isChecked
       return v
     })
+    const newSelectedArr = newDammyData.filter((v) => v.isChecked)
     setDammyData(newDammyData)
+    setSelectedArr(newSelectedArr)
   }
 
   return (
@@ -102,23 +105,19 @@ const AllCourt = () => {
       </header>
       <div className="box">
         <div className="controller">
-          <p>フィルター</p>
+        <p>{selectedArr.length}</p>
         </div>
         <table>
           <thead>
             <tr className="column-name">
               <td className="checkbox-place">
-                {/* 全体のチェックボックス */}
                 <label
                   className="all-checkbox"
                   onClick={() => setAllCourtChecked(!isAllCourtChecked)}
                 >
-                  <span
-                    className={`${isAllCourtChecked ? 'allSelect' : ''} ${isIndeterminate ? 'indeterminate' : ''}`}
-                  >
+                  <span　className={`${isAllCourtChecked ? 'allSelect' : ''} ${isIndeterminate ? 'indeterminate' : ''}`}>
                   </span>
                 </label>
-                {/* 全体のチェックボックス */}
               </td>
               <td><label>コート名</label></td>
               <td><label>都道府県</label></td>
@@ -143,7 +142,7 @@ const AllCourt = () => {
           <tbody>
           {dammyData.map((v, idx) => {
             return (
-              <tr className={`court-data ${idx % 2 !== 0 ? 'odd' : ''}`} key={idx}>
+              <tr className={`court-data ${idx % 2 !== 0 ? 'odd' : ''}`} key={v.id}>
                 {/* 個別のチェックボックス */}
                 <td className="checkbox-place">
                   <label
