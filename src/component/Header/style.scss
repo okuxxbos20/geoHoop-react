@@ -12,6 +12,9 @@
   .geo-title {
     color: var(--subColor);
     margin-left: 20px;
+    &:hover {
+      cursor: pointer;
+    }
   }
   .profile-img {
     width: 30px;

@@ -1,11 +1,14 @@
 const initialState = {
   users: {
     isLogin: false,
-    uid: '',
-    name: '',
+    bookmarks: [],
+    createdAt: '',
+    email: '',
     img: '',
+    lastLogin: '',
     likes: [],
-    bookmarks: []
+    name: '',
+    uid: ''
   }
 }
 
