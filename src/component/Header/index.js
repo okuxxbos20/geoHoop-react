@@ -1,7 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import './style.scss'
 import { useDispatch, useSelector } from 'react-redux'
+import { push } from 'connected-react-router'
 import Avatar from '../../assets/img/avatar.png'
 
 const Header = (props) => {
@@ -9,6 +9,7 @@ const Header = (props) => {
   const selector = useSelector((state) => state)
   const user = selector.users
   console.log(user)
+  console.log(selector)
 
   const style = {
     header: {
@@ -23,9 +24,13 @@ const Header = (props) => {
   }
   return (
     <div className="header" style={style.header}>
-      <Link to="/">
-        <p className="geo-title" style={style.geoTitle}>geoHoop</p>
-      </Link>
+      <p
+        className="geo-title"
+        style={style.geoTitle}
+        onClick={() => dispatch(push('/'))}
+      >
+        geoHoop
+      </p>
       {user.isLogin ?
       <img
         src={Avatar}

@@ -52,26 +52,28 @@ const CourtData = () => {
             <h5 className="table-title">コート情報</h5>
             <div className="table-wrapper">
             <table>
-              <tr>
-                <td className="name">住所</td>
-                <td className="right">{dammydata.address}</td>
-              </tr>
-              <tr className="odd">
-                <td className="name">Google Maps</td>
-                <td className="right">
-                  <a href={dammydata.googleMapsUrl}>Google Mapsへ</a>
-                </td>
-              </tr>
-              <tr>
-                <td className="name">参考URL</td>
-                <td className="right">
-                  <a href={dammydata.refUrl}>{dammydata.refUrl}</a>
-                </td>
-              </tr>
-              <tr className="odd">
-                <td className="name">コートタイプ</td>
-                <td className="right">{dammydata.isOutside}</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td className="name">住所</td>
+                  <td className="right">{dammydata.address}</td>
+                </tr>
+                <tr className="odd">
+                  <td className="name">Google Maps</td>
+                  <td className="right">
+                    <a href={dammydata.googleMapsUrl}>Google Mapsへ</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="name">参考URL</td>
+                  <td className="right">
+                    <a href={dammydata.refUrl}>{dammydata.refUrl}</a>
+                  </td>
+                </tr>
+                <tr className="odd">
+                  <td className="name">コートタイプ</td>
+                  <td className="right">{dammydata.isOutside}</td>
+                </tr>
+              </tbody>
             </table>
           </div>
           </div>
