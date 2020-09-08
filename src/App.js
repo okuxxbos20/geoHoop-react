@@ -1,11 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './App.scss'
-import Admin from './pages/admin/'
-import Court from './pages/court/'
-import Dashboard from './pages/admin/Dashboard'
-import Index from './pages/index/'
-import Profile from './pages/profile/'
+import { Admin, Court, Index, Profile, Dashboard } from './pages'
 
 const App = () => {
   return (
