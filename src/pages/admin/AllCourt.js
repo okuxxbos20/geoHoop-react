@@ -48,6 +48,7 @@ const AllCourt = () => {
   const [isAllCourtChecked, setAllCourtChecked] = useState(false)
   const [isIndeterminate, setIndeterminate] = useState(false)
   const [dammyData, setDammyData] = useState(dammy)
+  // eslint-disable-next-line
   const [selectedArr, setSelectedArr] = useState([])
   const [isLikesAsc, setLikesAsc] = useState(null)
   const [isBookmarksAsc, setBookmarksAsc] = useState(null)
