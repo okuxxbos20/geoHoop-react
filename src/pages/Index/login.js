@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { GoogleIcon } from '../../assets/icons'
 import './style.scss'
+import { register } from '../../redux/users/operations'
+import { useDispatch } from 'react-redux'
 
 const Login = (props) => {
   const isLoginForm = props.isLoginForm
-
+  const dispatch = useDispatch()
   // login
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' })
   const inputLoginInfo = (e) => {
@@ -65,8 +67,7 @@ const Login = (props) => {
       }
     } else {
       if (Object.keys(errs.registerErr).length === 0) {
-        // ここでfirebaseにemailとpassを投げる
-        alert(`registerInfo: ${registerInfo.email}, ${registerInfo.password}`)
+        dispatch(register(registerInfo.email, registerInfo.password))
         setRegisterInfo({ email: '', password: '' })
       } else {
         showErr(errs.registerErr)
