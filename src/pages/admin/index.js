@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './style.scss'
+import './scss/style.scss'
 import { Link } from 'react-router-dom'
 import Logo from '../../assets/img/geoHoop_01.png'
 

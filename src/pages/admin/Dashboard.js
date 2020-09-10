@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './Dashboard.scss'
+import './scss/Dashboard.scss'
 import DboardHeader from '../../component/DboardHeader'
 import { Avatar } from '../../assets/img/'
 import { FormIcon, GeoIcon, GraphIcon, UsersIcon } from '../../assets/icons'
