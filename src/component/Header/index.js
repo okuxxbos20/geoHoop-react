@@ -8,8 +8,8 @@ const Header = (props) => {
   const dispatch = useDispatch()
   const selector = useSelector((state) => state)
   const user = selector.users
-  console.log(user)
-  console.log(selector)
+  // console.log(user)
+  // console.log(selector)
 
   const style = {
     header: {
