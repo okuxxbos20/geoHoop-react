@@ -4,16 +4,25 @@ export const LoginAction = (userState) => {
   return {
     type: 'LOG_IN',
     payload: {
-      isSignedIn: true,
-      uid: userState.id,
-      name: userState.name
+      isLogin: true,
+      bookmarks: userState.bookmarks,
+      createdAt: userState.createdAt,
+      email: userState.email,
+      img: userState.img,
+      lastLogin: userState.lastLogin,
+      loginCount: userState.loginCount,
+      likes: userState.likes,
+      uid: userState.uid,
+      isAdmin: userState.isAdmin,
+      updatedAt: userState.updatedAt,
+      name: userState.name,
     }
   }
 }
 
-export const SIGN_OUT = 'LOG_OUT'
+export const LOG_OUT = 'LOG_OUT'
 
-export const signOutAction = () => {
+export const LogOutAction = () => {
   return {
     type: 'LOG_OUT',
     payload: {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { GoogleIcon } from '../../assets/icons'
 import './style.scss'
-import { RegisterWithEmail } from '../../redux/users/operations'
+import { LoginWithEmail, RegisterWithEmail } from '../../redux/users/operations'
 import { useDispatch } from 'react-redux'
 
 const Login = (props) => {
@@ -62,8 +62,7 @@ const Login = (props) => {
 
     if (isLoginForm) {
       if (Object.keys(errs.loginErr).length === 0) {
-        // ここでfirebaseにemailとpassを投げる
-        alert(`loginInfo: ${loginInfo.email}, ${loginInfo.password}`)
+        dispatch(LoginWithEmail(loginInfo.email, loginInfo.password))
         setLoginInfo({ email: '', password: '' })
       } else {
         showErr(errs.loginErr)
@@ -77,7 +76,6 @@ const Login = (props) => {
       }
     }
   }
-  console.log(registerInfo)
   return (
     <form className="login-form" onSubmit={submitInfo}>
     <p className="login-title">{isLoginForm ? 'ログイン' : 'アカウント登録'}</p>

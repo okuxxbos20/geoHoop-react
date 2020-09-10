@@ -7,8 +7,11 @@ const initialState = {
     img: '',
     lastLogin: '',
     likes: [],
+    loginCount: null,
+    uid: '',
+    isAdmin: null,
+    updatedAt: '',
     name: '',
-    uid: ''
   }
 }
 

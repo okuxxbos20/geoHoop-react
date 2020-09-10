@@ -1,27 +1,59 @@
-// import { LoginAction } from './actions'
+import { LoginAction } from './actions'
 import { auth, db, FirebaseTimestamp } from '../../firebase/index'
 
-// export const login = (email, password) => {
-//   return async (dispatch, getState) => {
-//     const state = getState()
-//     const isLogin = state.users.isLogin
-//     if (!isLogin) {
-//       ここでfirebaseのlogin処理をする
-//       const userData = await auth
-//       dispatch(LoginAction({
-//         isLogin: true,
-//         bookmarks: [],
-//         createdAt: '',
-//         email: '',
-//         img: '',
-//         lastLogin: '',
-//         likes: [],
-//         name: '',
-//         uid: ''
-//       }))
-//     }
-//   }
-// }
+export const LoginWithEmail = (email, password) => {
+  return async (dispatch) => {
+    if (email === '' || password === '') {
+      alert('必須項目が未入力です')
+      return false
+    }
+    return auth.signInWithEmailAndPassword(email, password).then((result) => {
+      const user = result.user
+      if (user) {
+        const uid = user.uid
+        const timestamp = FirebaseTimestamp.now()
+        var data
+        db.collection('users').doc(uid).get().then((snapshot) => {
+          data = snapshot.data()
+          dispatch(LoginAction({
+            bookmarks: data.bookmarks,
+            createdAt: data.createdAt,
+            email: data.email,
+            img: data.img,
+            lastLogin: timestamp,
+            likes: data.likes,
+            loginCount: data.loginCount,
+            uid: uid,
+            isAdmin: data.isAdmin,
+            updatedAt: data.updatedAt,
+            name: data.name,
+          }))
+        }).catch((err) => {
+          alert(err)
+        })
+
+        const uref = db.collection('users').doc(uid);
+        db.runTransaction((transaction) => {
+          return transaction.get(uref).then((data) => {
+            if (!data) {
+              console.log('data dose not exist.')
+            }
+            transaction.update(uref, {
+              lastLogin: timestamp,
+              loginCount: data.data().loginCount + 1
+            })
+          }).then(() => {
+            console.log('seccess to transaction!')
+          }).catch((err) => {
+            console.log(`err ${err}`)
+          })
+        })
+      }
+    }).catch((err) => {
+      alert(err)
+    })
+  }
+}
 
 export const RegisterWithEmail = (name, email, password) => {
   return async () => {
@@ -29,7 +61,6 @@ export const RegisterWithEmail = (name, email, password) => {
       alert('必須項目が未入力です')
       return false
     }
-    console.log('yo')
     return auth.createUserWithEmailAndPassword(email, password).then((result) => {
       const user = result.user
       if (user) {
@@ -41,6 +72,7 @@ export const RegisterWithEmail = (name, email, password) => {
           email: email,
           img: '',
           lastLogin: timestamp,
+          loginCount: 0,
           likes: [],
           uid: uid,
           isAdmin: false,
@@ -54,6 +86,8 @@ export const RegisterWithEmail = (name, email, password) => {
           alert(err)
         })
       }
+    }).catch((err) => {
+      alert(err)
     })
   }
 }
