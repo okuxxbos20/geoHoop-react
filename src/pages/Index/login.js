@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { GoogleIcon } from '../../assets/icons'
 import './style.scss'
-import { register } from '../../redux/users/operations'
+import { RegisterWithEmail } from '../../redux/users/operations'
 import { useDispatch } from 'react-redux'
 
 const Login = (props) => {
@@ -14,7 +14,7 @@ const Login = (props) => {
   }
 
   // register
-  const [registerInfo, setRegisterInfo] = useState({ email: '', password: '' })
+  const [registerInfo, setRegisterInfo] = useState({ name: '', email: '', password: '' })
   const inputRegisterInfo = (e) => {
     setRegisterInfo({ ...registerInfo, [e.target.name]: e.target.value })
   }
@@ -32,6 +32,9 @@ const Login = (props) => {
         loginErr.password = '*パスワードを入力してください'
       }
     } else {
+      if (registerInfo.name === '') {
+        registerErr.name = '*ユーザネームを入力してください'
+      }
       if (registerInfo.email === '') {
         registerErr.email = '*メールアドレスを入力してください'
       }
@@ -67,18 +70,31 @@ const Login = (props) => {
       }
     } else {
       if (Object.keys(errs.registerErr).length === 0) {
-        dispatch(register(registerInfo.email, registerInfo.password))
-        setRegisterInfo({ email: '', password: '' })
+        dispatch(RegisterWithEmail(registerInfo.name, registerInfo.email, registerInfo.password))
+        setRegisterInfo({ name: '', email: '', password: '' })
       } else {
         showErr(errs.registerErr)
       }
     }
   }
-
+  console.log(registerInfo)
   return (
     <form className="login-form" onSubmit={submitInfo}>
     <p className="login-title">{isLoginForm ? 'ログイン' : 'アカウント登録'}</p>
     <div className="box">
+      {!isLoginForm &&
+        <div className="input-place">
+          <p>ユーザーネーム</p>
+          <input
+            type="text"
+            name="name"
+            placeholder="your name"
+            value={registerInfo.name}
+            onChange={(e) => inputRegisterInfo(e)}
+            autoFocus
+          />
+        </div>
+      }
       <div className="input-place">
         <p>メールアドレス</p>
         <input
@@ -87,7 +103,7 @@ const Login = (props) => {
           placeholder="email"
           value={isLoginForm ? loginInfo.email : registerInfo.email}
           onChange={isLoginForm ? inputLoginInfo : inputRegisterInfo}
-          autoFocus
+          autoFocus={isLoginForm}
         />
       </div>
       <div className="input-place">
@@ -101,9 +117,11 @@ const Login = (props) => {
         />
       </div>
     </div>
-    <div className="google-login">
-      <GoogleIcon />
-    </div>
+    {isLoginForm &&
+      <div className="google-login">
+        <GoogleIcon />
+      </div>
+    }
     {isLoginForm ?
       <button type="submit">ログイン</button>:
       <button type="submit">アカウント作成</button>

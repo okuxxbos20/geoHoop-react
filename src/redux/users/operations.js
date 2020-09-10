@@ -23,12 +23,13 @@ import { auth, db, FirebaseTimestamp } from '../../firebase/index'
 //   }
 // }
 
-export const register = (email, password) => {
-  return async (dispatch) => {
-    if (email === '' || password === '') {
+export const RegisterWithEmail = (name, email, password) => {
+  return async () => {
+    if (name === '' || email === '' || password === '') {
       alert('必須項目が未入力です')
       return false
     }
+    console.log('yo')
     return auth.createUserWithEmailAndPassword(email, password).then((result) => {
       const user = result.user
       if (user) {
@@ -44,7 +45,7 @@ export const register = (email, password) => {
           uid: uid,
           isAdmin: false,
           updatedAt: timestamp,
-          name: '',
+          name: name,
         }
 
         db.collection('users').doc(uid).set(userInitialData).then(() => {
