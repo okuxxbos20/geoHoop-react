@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import './Dashboard.scss'
 import DboardHeader from '../../component/DboardHeader'
 import { Avatar } from '../../assets/img/'
-import { FormIcon, GeoIcon, GraphIcon } from '../../assets/icons'
-import { AllCourt, Form, Report } from './pages'
+import { FormIcon, GeoIcon, GraphIcon, UsersIcon } from '../../assets/icons'
+import { AllCourt, Form, Report, AllUsers } from './pages'
 
 const DashBoard = () => {
   const [isAsideFold, setAside] = useState(false)
@@ -50,6 +50,15 @@ const DashBoard = () => {
          >
            <GeoIcon />
            <p>コート一覧</p>
+         </label>
+       </div>
+       <div className="options">
+         <label
+          style={currentPageName === 'all-users' ? style.labelStyle : {}}
+          onClick={() => changePage('all-users', <AllUsers />)}
+         >
+           <UsersIcon />
+           <p>ユーザ一覧</p>
          </label>
        </div>
        <div className="options">
