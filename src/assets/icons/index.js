@@ -9,6 +9,7 @@ import GraphIcon from './GraphIcon'
 import HeartEmptyIcon from './HeartEmptyIcon'
 import HeartIcon from './HeartIcon'
 import SearchIcon from './SearchIcon'
+import UsersIcon from './UsersIcon'
 
 export {
   ArrowLeftIcon,
@@ -21,5 +22,6 @@ export {
   GraphIcon,
   HeartEmptyIcon,
   HeartIcon,
-  SearchIcon
+  SearchIcon,
+  UsersIcon
 }
