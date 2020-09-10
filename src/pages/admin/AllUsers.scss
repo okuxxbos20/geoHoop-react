@@ -1,4 +1,4 @@
-.all-court {
+.all-users {
   width: 100%;
   height: 100%;
   header {
@@ -70,20 +70,20 @@
           }
         }
       }
-      .court-data {
+      .user-data {
         height: 30px;
         td {
           label { margin: 0 8px; }
-          .outside {
+          .admin-badge {
             color: #eee;
-            background: #3fc380;
+            background: #f03434;
             font-size: 14px;
             padding: 3px 8px;
             border-radius: 20px;
           }
-          .inside {
+          .user-badge {
             color: #eee;
-            background: #f9690e;
+            background: #2574a9;
             font-size: 14px;
             padding: 3px 8px;
             border-radius: 20px;

@@ -7,8 +7,8 @@ import { AllCourt, Form, Report, AllUsers } from './pages'
 
 const DashBoard = () => {
   const [isAsideFold, setAside] = useState(false)
-  const [currentPageComp, setPageComp] = useState(<AllCourt />)
-  const [currentPageName, setPageName] = useState('all-court')
+  const [currentPageComp, setPageComp] = useState(<AllUsers />)
+  const [currentPageName, setPageName] = useState('all-users')
 
   const changePage = (to, comp) => {
     setPageName(to)
