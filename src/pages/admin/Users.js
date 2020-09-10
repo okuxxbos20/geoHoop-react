@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './AllUsers.scss'
+import './Users.scss'
 import { ArrowLeftIcon, ArrowRightIcon } from '../../assets/icons/'
 
 const AllUsers = () => {

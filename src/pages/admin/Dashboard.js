@@ -3,12 +3,12 @@ import './Dashboard.scss'
 import DboardHeader from '../../component/DboardHeader'
 import { Avatar } from '../../assets/img/'
 import { FormIcon, GeoIcon, GraphIcon, UsersIcon } from '../../assets/icons'
-import { AllCourt, Form, Report, AllUsers } from './pages'
+import { AllCourt, Form, Report, Users } from './pages'
 
 const DashBoard = () => {
   const [isAsideFold, setAside] = useState(false)
-  const [currentPageComp, setPageComp] = useState(<AllUsers />)
-  const [currentPageName, setPageName] = useState('all-users')
+  const [currentPageComp, setPageComp] = useState(<Users />)
+  const [currentPageName, setPageName] = useState('users')
 
   const changePage = (to, comp) => {
     setPageName(to)
@@ -54,8 +54,8 @@ const DashBoard = () => {
        </div>
        <div className="options">
          <label
-          style={currentPageName === 'all-users' ? style.labelStyle : {}}
-          onClick={() => changePage('all-users', <AllUsers />)}
+          style={currentPageName === 'users' ? style.labelStyle : {}}
+          onClick={() => changePage('users', <Users />)}
          >
            <UsersIcon />
            <p>ユーザ一覧</p>
