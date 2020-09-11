@@ -44,6 +44,7 @@ const Header = (props) => {
         src={Avatar}
         alt="avatar"
         className="profile-img"
+        onClick={() => dispatch(push('/profile'))}
       />
       :
       <p
