@@ -5,7 +5,7 @@ main {
   background-color:rgba(#000, 0.1);
   background-blend-mode: darken;
   background-size: cover;
-  margin: 0;
+  margin-top: 85px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,6 +27,7 @@ main {
   .read-more {
     color: #ddd;
     position: absolute;
+    left: 10px;
     bottom: 10px;
     font-size: 14px;
     span {
@@ -58,7 +59,7 @@ main {
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 13px;
+      padding: 8px 13px;
       input {
         color: #262626;
         width: 100%;
