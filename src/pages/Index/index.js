@@ -24,8 +24,8 @@ const Index = () => {
   return (
     <div>
       <Header
-        color='#e8ecf1'
-        background='transparent'
+        color='#262626'
+        background='#fff'
         setDialog={() => setDialog(!isDialogOpen)}
       />
       <main style={style.mainStyle}>
