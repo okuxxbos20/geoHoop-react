@@ -24,22 +24,29 @@ const Index = () => {
   return (
     <div>
       <Header
-        color='#e8ecf1'
-        background='transparent'
         setDialog={() => setDialog(!isDialogOpen)}
       />
       <main style={style.mainStyle}>
         {!isDialogOpen ?
-          <Search
-            isOnFocus={isOnFocus}
-            setOnFocus={() => setOnFocus(!isOnFocus)}
-          />
+          <div className="box">
+            <div className="theme">
+              <h1 className="geohoop">geoHoop</h1>
+              <p className="discription">みんなで作るバスケットコート検索サイト</p>
+            </div>
+            <Search
+              isOnFocus={isOnFocus}
+              setOnFocus={() => setOnFocus(!isOnFocus)}
+            />
+          </div>
           :
           <Login
             isLoginForm={isLoginForm}
             setLoginForm={() => setLoginForm(!isLoginForm)}
           />
         }
+        <p className="read-more">
+          Read more about the <span>geoHoop License</span>
+        </p>
       </main>
       <div className="recommend">
         <p>this is recommend.</p>

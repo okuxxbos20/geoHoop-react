@@ -1,31 +1,55 @@
 .header {
-  background: var(--mainColor);
-  width: 100%;
-  height: 45px;
+  background: #fff;
+  color: #262626;
+  width: calc(100% - 20px);
   position: fixed;
   top: 0;
   left: 0;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  .geo-title {
-    color: var(--subColor);
-    margin-left: 20px;
-    &:hover {
-      cursor: pointer;
+  flex-direction: column;
+  height: 65px;
+  padding: 10px;
+  z-index: 100;
+  .upper-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+    .logo {
+      width: 32px;
+      height: 32px;
+      &:hover { cursor: pointer }
+    }
+    .profile-img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      &:hover { cursor: pointer }
     }
   }
-  .profile-img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 20px;
-    &:hover { cursor: pointer; }
-  }
-  .login {
-    color: var(--subColor);
-    margin-right: 20px;
-    &:hover { cursor: pointer; }
+  .lower-box {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar { display:none; }
+    ul {
+      padding: 0;
+      display: flex;
+      .feature-item {
+        color: #767676;
+        font-size: 14px;
+        font-weight: 500;
+        float: left;
+        clear: both;
+        // min-width: 42px;
+        margin-right: 20px;
+        transition: 200ms;
+        &:hover {
+          color: #262626;
+          cursor: pointer;
+        }
+      }
+    }
   }
 }

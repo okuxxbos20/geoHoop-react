@@ -2,19 +2,19 @@ import React from 'react'
 import './style.scss'
 import { SearchIcon } from '../../assets/icons'
 
-const Search = (props) => {
+const Searchbox = () => {
   return (
     <div className="search-box">
-      <div className="search-form">
+      <div class="wrapper">
         <SearchIcon />
         <input
           type="text"
+          className="inpot-area"
           placeholder="we all equal on the court."
-          onFocus={() => props.setOnFocus()}
         />
       </div>
     </div>
   )
 }
 
-export default Search
+export default Searchbox

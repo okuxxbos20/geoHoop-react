@@ -1,42 +1,73 @@
 main {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 85px);
   background-position: center;
+  background-color:rgba(#000, 0.1);
+  background-blend-mode: darken;
   background-size: cover;
-  margin: 0;
+  margin-top: 85px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  position: relative;
+  .box {
+    margin-top: 160px;
+    width: 80%;
+    max-width: 460px;
+    .theme {
+      color: #fff;
+      .geohoop {
+        margin-bottom: 5px;
+      }
+      .discription {
+        font-size: 0.8rem;
+      }
+    }
+  }
+  .read-more {
+    color: #ddd;
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    font-size: 14px;
+    span {
+      transition: 200ms;
+      &:hover {
+        cursor: pointer;
+        color: #fff;
+      }
+    }
+  }
   .search-box {
     color: var(--subColor);
-    background: rgba(#000, 0.85);
-    width: 80%;
+    background: #fff;
+    width: 100%;
     max-width: 460px;
     border: none;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 10px 0;
     .search-form {
       color: var(--subColor);
-      background: rgba(#000, 0.85);
-      width: 100%;
-      max-width: 460px;
+      background: #fff;
+      width: calc(100% - 26px);
       border: none;
-      // border-radius: 8px;
+      border-radius: 5px;
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 13px;
+      padding: 8px 13px;
       input {
-        color: var(--subColor);
+        color: #262626;
         width: 100%;
         height: 30px;
         background: transparent;
         border: none;
         font-size: 16px;
+        padding-left: 10px;
         &:focus { outline: none; }
       }
     }
