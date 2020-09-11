@@ -1,6 +1,54 @@
 import { LoginAction } from './actions'
 import { auth, db, FirebaseTimestamp } from '../../firebase/index'
 
+export const listenAuthState = () => {
+  return async (dispatch) => {
+    return auth.onAuthStateChanged((user) => {
+      if (user) {
+        const uid = user.uid
+        const timestamp = FirebaseTimestamp.now()
+
+        db.collection('users').doc(uid).get().then((snapshot) => {
+          const data = snapshot.data()
+          dispatch(LoginAction({
+            bookmarks: data.bookmarks,
+            createdAt: data.createdAt,
+            email: data.email,
+            img: data.img,
+            lastLogin: timestamp,
+            likes: data.likes,
+            loginCount: data.loginCount,
+            uid: uid,
+            isAdmin: data.isAdmin,
+            updatedAt: data.updatedAt,
+            name: data.name,
+          }))
+          console.log('hey yo')
+        }).catch((err) => console.log(err))
+
+        const uref = db.collection('users').doc(uid)
+        db.runTransaction((transaction) => {
+          return transaction.get(uref).then((data) => {
+            if (!data) {
+              console.log('data dose not exist.')
+            }
+            transaction.update(uref, {
+              lastLogin: timestamp,
+              loginCount: data.data().loginCount + 1
+            })
+          }).then(() => {
+            console.log('seccess to transaction!(auth)')
+          }).catch((err) => {
+            console.log(`err ${err}`)
+          })
+        })
+      } else {
+        console.log('plz login...')
+      }
+    })
+  }
+}
+
 export const LoginWithEmail = (email, password) => {
   return async (dispatch) => {
     if (email === '' || password === '') {
@@ -12,9 +60,8 @@ export const LoginWithEmail = (email, password) => {
       if (user) {
         const uid = user.uid
         const timestamp = FirebaseTimestamp.now()
-        var data
         db.collection('users').doc(uid).get().then((snapshot) => {
-          data = snapshot.data()
+          const data = snapshot.data()
           dispatch(LoginAction({
             bookmarks: data.bookmarks,
             createdAt: data.createdAt,
@@ -32,7 +79,7 @@ export const LoginWithEmail = (email, password) => {
           alert(err)
         })
 
-        const uref = db.collection('users').doc(uid);
+        const uref = db.collection('users').doc(uid)
         db.runTransaction((transaction) => {
           return transaction.get(uref).then((data) => {
             if (!data) {

@@ -1,15 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './style.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { push } from 'connected-react-router'
 import Avatar from '../../assets/img/avatar.png'
+import { getIsLogin } from '../../redux/users/selectors'
+import { listenAuthState } from '../../redux/users/operations'
 
 const Header = (props) => {
   const dispatch = useDispatch()
   const selector = useSelector((state) => state)
-  const user = selector.users
+  const isLogin = getIsLogin(selector)
+  // const user = selector.users
   // console.log(user)
-  // console.log(selector)
+
+  useEffect(() => {
+    if (!isLogin) {
+      dispatch(listenAuthState())
+    }
+  }, [dispatch, isLogin])
 
   const style = {
     header: {
@@ -31,7 +39,7 @@ const Header = (props) => {
       >
         geoHoop
       </p>
-      {user.isLogin ?
+      {isLogin ?
       <img
         src={Avatar}
         alt="avatar"

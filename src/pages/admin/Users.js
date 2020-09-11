@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './scss/Users.scss'
 import { ArrowLeftIcon, ArrowRightIcon } from '../../assets/icons/'
 
-const AllUsers = () => {
+const AllUsers = (props) => {
   let dammy = [
     {
       bookmarks: [],
@@ -47,7 +47,8 @@ const AllUsers = () => {
     },
   ]
   dammy.map((v) => v.isChecked = false)
-
+  console.log('give me users')
+  console.log(props.users)
   const [isAllUserChecked, setAllUserChecked] = useState(false)
   const [isIndeterminate, setIndeterminate] = useState(false)
   const [dammyData, setDammyData] = useState(dammy)

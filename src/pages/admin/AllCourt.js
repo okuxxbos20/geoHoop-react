@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './scss/AllCourt.scss'
 import { ArrowLeftIcon, ArrowRightIcon } from '../../assets/icons/'
 
-const AllCourt = () => {
+const AllCourt = (props) => {
   let dammy = [
     {
       name: 'aaa',
@@ -44,7 +44,7 @@ const AllCourt = () => {
   ]
 
   dammy.map((v) => v.isChecked = false)
-
+  console.log(props.court)
   const [isAllCourtChecked, setAllCourtChecked] = useState(false)
   const [isIndeterminate, setIndeterminate] = useState(false)
   const [dammyData, setDammyData] = useState(dammy)
