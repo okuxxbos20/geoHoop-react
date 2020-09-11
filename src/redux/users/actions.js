@@ -8,6 +8,7 @@ export const LoginAction = (userState) => {
       bookmarks: userState.bookmarks,
       createdAt: userState.createdAt,
       email: userState.email,
+      followingPrefecture: userState.followingPrefecture,
       img: userState.img,
       lastLogin: userState.lastLogin,
       loginCount: userState.loginCount,

@@ -4,6 +4,7 @@ const initialState = {
     bookmarks: [],
     createdAt: '',
     email: '',
+    followingPrefecture: [],
     img: '',
     lastLogin: '',
     likes: [],
