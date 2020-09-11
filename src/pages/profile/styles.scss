@@ -2,14 +2,36 @@
   background: #f7f7f7;
   width: 100%;
   height: 100vh;
-  .geo-hoop {
-    color: var(--mainColor);
-    font-weight: 500;
+  header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     width: 95%;
     max-width: 1000px;
-    height: 40px;
-    line-height: 40px;
     margin: 0 auto;
+    .geo-hoop {
+      color: var(--mainColor);
+      font-weight: 500;
+      height: 40px;
+      line-height: 40px;
+      margin: 0 auto;
+    }
+    .edit-profile {
+      color: #767676;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      transition: 200ms;
+      &:hover {
+        background: #eee;
+        cursor: pointer;
+      }
+    }
   }
   .basic-info {
     display: flex;

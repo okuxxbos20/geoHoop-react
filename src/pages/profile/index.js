@@ -1,23 +1,30 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import './styles.scss'
 import { Avatar } from '../../assets/img/'
+import { EditIcon } from '../../assets/icons'
 
 const Profile = () => {
-  const dammy = {
-    name: 'OKU FUJIYOSHI',
-    email: 'geohoop@example.com'
-  }
+  const selector = useSelector((state) => state)
+  const user = selector.users
+
   return (
     <div className="profile">
-      <Link to="/">
-        <p className="geo-hoop">geoHoop</p>
-      </Link>
+      <header>
+        <Link to="/">
+          <p className="geo-hoop">geoHoop</p>
+        </Link>
+        <div className="edit-profile">
+          <EditIcon />
+        </div>
+      </header>
       <div className="basic-info">
         <img src={Avatar} alt="avatar" />
         <div className="others">
-          <p className="name">{dammy.name}</p>
-          <p className="email">{dammy.email}</p>
+          <p className="name">{user.name}</p>
+          <p className="email">{user.email}</p>
+          <p>{user.followingPrefecture}</p>
         </div>
       </div>
     </div>

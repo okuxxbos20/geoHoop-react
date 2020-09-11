@@ -5,7 +5,7 @@ import { SearchIcon } from '../../assets/icons'
 const Searchbox = () => {
   return (
     <div className="search-box">
-      <div class="wrapper">
+      <div className="wrapper">
         <SearchIcon />
         <input
           type="text"
