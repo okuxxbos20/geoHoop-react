@@ -2,6 +2,7 @@ import ArrowLeftIcon from './ArrowLeftIcon'
 import ArrowRightIcon from './ArrowRightIcon'
 import BookmarkEmptyIcon from './BookmarkEmptyIcon'
 import BookmarkIcon from './BookmarkIcon'
+import EditIcon from './EditIcon'
 import FilterIcon from './FilterIcon'
 import FormIcon from './FormIcon'
 import GeoIcon from './GeoIcon'
@@ -17,6 +18,7 @@ export {
   ArrowRightIcon,
   BookmarkEmptyIcon,
   BookmarkIcon,
+  EditIcon,
   FilterIcon,
   FormIcon,
   GeoIcon,
