@@ -141,3 +141,13 @@ export const RegisterWithEmail = (name, email, password) => {
     })
   }
 }
+
+export const Logout = () => {
+  return async () => {
+    auth.signOut().then(() => {
+      console.log('success to log-out.')
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
+}

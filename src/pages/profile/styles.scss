@@ -57,4 +57,17 @@
       }
     }
   }
+  .log-out {
+    color: #999;
+    text-align: center;
+    width: 80px;
+    margin: 50px auto 0;
+    p {
+      font-size: 14px;
+      &:hover {
+        cursor: pointer;
+        border-bottom: 1px solid #999;
+      }
+    }
+  }
 }

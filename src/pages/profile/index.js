@@ -27,6 +27,9 @@ const Profile = () => {
           <p>{user.followingPrefecture}</p>
         </div>
       </div>
+      <div className="log-out">
+        <p>ログアウト</p>
+      </div>
     </div>
   )
 }
