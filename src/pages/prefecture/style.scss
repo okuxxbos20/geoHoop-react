@@ -1,0 +1,23 @@
+.prefecture {
+  overflow-x: hidden;
+  .window {
+    // background: #eee;
+    width: 100%;
+    max-width: 1200px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin: 85px auto 0;
+    .pre-result-title {
+      color: #262626;
+      font-size: 18px;
+      font-weight: 100;
+      span {
+        font-weight: 100;
+        font-size: 38px;
+      }
+    }
+  }
+}
