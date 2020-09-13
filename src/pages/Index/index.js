@@ -28,7 +28,7 @@ const Index = () => {
       />
       <main style={style.mainStyle}>
         {!isDialogOpen ?
-          <div className="box">
+          <div className="main-box">
             <div className="theme">
               <h1 className="geohoop">geoHoop</h1>
               <p className="discription">みんなで作るバスケットコート検索サイト</p>
