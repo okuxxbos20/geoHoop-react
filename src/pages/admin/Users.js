@@ -1,92 +1,73 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './scss/Users.scss'
 import { ArrowLeftIcon, ArrowRightIcon } from '../../assets/icons/'
 
-const AllUsers = (props) => {
-  let dammy = [
-    {
-      bookmarks: [],
-      createdAt: '',
-      email: 'aaa@gmail.com',
-      lastLogin: '',
-      likes: [],
-      loginCount: 0,
-      uid: '000001',
-      isAdmin: false,
-      name: 'aaa',
-    }, {
-      bookmarks: [],
-      createdAt: '',
-      email: 'bbb@gmail.com',
-      lastLogin: '',
-      likes: [],
-      loginCount: 5,
-      uid: '000002',
-      isAdmin: false,
-      name: 'bbb',
-    }, {
-      bookmarks: [],
-      createdAt: '',
-      email: 'ccc@gmail.com',
-      lastLogin: '',
-      likes: [],
-      loginCount: 11,
-      uid: '000003',
-      isAdmin: false,
-      name: 'ccc',
-    }, {
-      bookmarks: [],
-      createdAt: '',
-      email: 'ddd@gmail.com',
-      lastLogin: '',
-      likes: [],
-      loginCount: 23,
-      uid: '000004',
-      isAdmin: true,
-      name: 'ddd',
-    },
-  ]
-  dammy.map((v) => v.isChecked = false)
-  console.log('give me users')
-  console.log(props.users)
+const Users = (props) => {
+  let AllUsers = props.usersArrProps
   const [isAllUserChecked, setAllUserChecked] = useState(false)
   const [isIndeterminate, setIndeterminate] = useState(false)
-  const [dammyData, setDammyData] = useState(dammy)
+  const [usersData, setUsersData] = useState([])
   // eslint-disable-next-line
   const [selectedArr, setSelectedArr] = useState([])
 
+  const convertDate = (sec, nano) => {
+    const sum = sec * 1000 + nano / (1000 ** 2)
+    const d = new Date(sum);
+    const year = d.getFullYear();
+    let month = d.getMonth() + 1;
+    let date = d.getDate();
+    month = month < 10 ? `0${month}` : month
+    date = date < 10 ? `0${date}` : date
+    const result = `${year}/${month}/${date}`;
+    return result
+  }
+
+  if (AllUsers !== undefined) {
+    AllUsers.forEach((v) => {
+      v.isChecked = false
+      v.registerDate = convertDate(v.createdAt.seconds, v.createdAt.nanoseconds)
+      v.lastLoginDate = convertDate(v.lastLogin.seconds, v.lastLogin.nanoseconds)
+    })
+    console.log(AllUsers)
+  }
+
+  useEffect(() => {
+    setUsersData([...usersData, ...AllUsers])
+    // eslint-disable-next-line
+  }, [])
+
   const checkAll = () => {
     setIndeterminate(false)
-    let newDammyData = []
+    let newData = []
     if (!isAllUserChecked) {
       setAllUserChecked(true)
-      newDammyData = dammyData.map((v) => {
+      newData = usersData.map((v) => {
         v.isChecked = true
         return v
       })
     } else if (isAllUserChecked) {
       setAllUserChecked(false)
-      newDammyData = dammyData.map((v) => {
+      newData = usersData.map((v) => {
         v.isChecked = false
         return v
       })
     }
-    setDammyData(newDammyData)
+    setUsersData(newData)
   }
 
   const checkIndividualBox = (idx) => {
-    const newDammyData = dammyData.map((v, i) => {
+    const newData = usersData.map((v, i) => {
       v.isChecked = i === idx ? !v.isChecked : v.isChecked
       return v
     })
-    const newSelectedArr = newDammyData.filter((v) => v.isChecked)
-    setDammyData(newDammyData)
+    const newSelectedArr = newData.filter((v) => v.isChecked)
+    setUsersData(newData)
     setSelectedArr(newSelectedArr)
 
     if (newSelectedArr.length === 0) {
       setIndeterminate(false)
       setAllUserChecked(false)
-    } else if (newSelectedArr.length === dammyData.length) {
+    } else if (newSelectedArr.length === usersData.length) {
       setIndeterminate(false)
       setAllUserChecked(true)
     } else {
@@ -123,39 +104,41 @@ const AllUsers = (props) => {
             </tr>
           </thead>
           <tbody>
-            {dammyData.map((v, idx) => {
-              return (
-                <tr className={`user-data ${idx % 2 !== 0 ? 'odd' : ''}`} key={v.id}>
-                <td className="checkbox-place">
-                  <label
-                    className="individual-checkbox"
-                    onClick={() => checkIndividualBox(idx)}
-                  >
-                    <span className={`checkmark ${v.isChecked ? 'checked' : ''}`}></span>
-                  </label>
-                </td>
-                <td><label>{v.name}</label></td>
-                <td><label>{v.uid}</label></td>
-                <td><label>{v.email}</label></td>
-                <td>
-                  <label>
-                    <span className={v.isAdmin ? 'admin-badge' : 'user-badge'}>
-                      {v.isAdmin ? '管理者' : 'ユーザ'}
-                    </span>
-                  </label>
-                </td>
-                <td><label>{v.createdAt}</label></td>
-                <td><label>{v.lastLogin}</label></td>
-                <td><label>{v.loginCount}</label></td>
-                <td><label>{v.likes.length}</label></td>
-                <td><label>{v.bookmarks.length}</label></td>
-              </tr>
-              )
-            })}
+            {usersData !== undefined &&
+              usersData.map((v, idx) => {
+                return (
+                  <tr className={`user-data ${idx % 2 !== 0 ? 'odd' : ''}`} key={v.uid}>
+                    <td className="checkbox-place">
+                      <label
+                        className="individual-checkbox"
+                        onClick={() => checkIndividualBox(idx)}
+                      >
+                        <span className={`checkmark ${v.isChecked ? 'checked' : ''}`}></span>
+                      </label>
+                    </td>
+                    <td><label>{v.name}</label></td>
+                    <td><label>{v.uid}</label></td>
+                    <td><label>{v.email}</label></td>
+                    <td>
+                      <label>
+                        <span className={v.isAdmin ? 'admin-badge' : 'user-badge'}>
+                          {v.isAdmin ? '管理者' : 'ユーザ'}
+                        </span>
+                      </label>
+                    </td>
+                    <td><label>{v.registerDate}</label></td>
+                    <td><label>{v.lastLoginDate}</label></td>
+                    <td><label>{v.loginCount}</label></td>
+                    <td><label>{v.likes.length}</label></td>
+                    <td><label>{v.bookmarks.length}</label></td>
+                  </tr>
+                )
+              })
+            }
           </tbody>
         </table>
         <div className="table-footer">
-          <p>{dammyData.length}件中{dammyData.length}件のデータを表示中</p>
+          {/* <p>{usersData.length}件中{usersData.length}件のデータを表示中</p> */}
           <div className="pagenation">
             <label>
               <ArrowLeftIcon />
@@ -170,4 +153,4 @@ const AllUsers = (props) => {
   )
 }
 
-export default AllUsers
+export default Users
