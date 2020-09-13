@@ -8,7 +8,7 @@ import { BluePalm, Court, FenceBuildings, GlassBoard, Sunset, YellowPaint } from
 const Index = () => {
   const [isDialogOpen, setDialog] = useState(false)
   const [isOnFocus, setOnFocus] = useState(false)
-  const [isLoginForm, setLoginForm] = useState(true)
+  const [isLoginForm, setLoginForm] = useState(false)
   const randomImg = [BluePalm, Court, FenceBuildings, GlassBoard, Sunset, YellowPaint]
   const [ranNum, setRunNum] = useState(0)
 
