@@ -1,14 +1,16 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import './styles.scss'
 import { Avatar } from '../../assets/img/'
 import { EditIcon } from '../../assets/icons'
+import { Logout } from '../../redux/users/operations'
 
 const Profile = () => {
+  const dispatch = useDispatch()
   const selector = useSelector((state) => state)
   const user = selector.users
-
+  console.log(user)
   return (
     <div className="profile">
       <header>
@@ -26,6 +28,9 @@ const Profile = () => {
           <p className="email">{user.email}</p>
           <p>{user.followingPrefecture}</p>
         </div>
+      </div>
+      <div className="log-out" onClick={() => dispatch(Logout())}>
+        <p>ログアウト</p>
       </div>
     </div>
   )

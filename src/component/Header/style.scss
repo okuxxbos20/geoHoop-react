@@ -21,11 +21,29 @@
       height: 32px;
       &:hover { cursor: pointer }
     }
+    .login {
+      color: #777;
+      border: 1px solid #777;
+      border-radius: 5px;
+      font-size: 14px;
+      padding: 8px 20px;
+      transition: 400ms;
+      &:hover {
+        color: var(--subColor);
+        background: #111;
+        border: 1px solid #111;
+        cursor: pointer;
+      }
+    }
     .profile-img {
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      &:hover { cursor: pointer }
+      transition: 200ms;
+      &:hover {
+        transform: scale(1.13);
+        cursor: pointer
+      }
     }
   }
   .lower-box {

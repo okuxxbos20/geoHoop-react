@@ -78,54 +78,54 @@ const Login = (props) => {
   }
   return (
     <form className="login-form" onSubmit={submitInfo}>
-    <p className="login-title">{isLoginForm ? 'ログイン' : 'アカウント登録'}</p>
-    <div className="box">
-      {!isLoginForm &&
+      <p className="login-title">{isLoginForm ? 'Welcome' : 'アカウント登録'}</p>
+      <div className="box">
+        {!isLoginForm &&
+          <div className="input-place">
+            <p>ユーザーネーム</p>
+            <input
+              type="text"
+              name="name"
+              placeholder="your name"
+              value={registerInfo.name}
+              onChange={(e) => inputRegisterInfo(e)}
+              autoFocus
+            />
+          </div>
+        }
         <div className="input-place">
-          <p>ユーザーネーム</p>
+          <p>メールアドレス</p>
           <input
-            type="text"
-            name="name"
-            placeholder="your name"
-            value={registerInfo.name}
-            onChange={(e) => inputRegisterInfo(e)}
-            autoFocus
+            type="email"
+            name="email"
+            placeholder="email"
+            value={isLoginForm ? loginInfo.email : registerInfo.email}
+            onChange={isLoginForm ? inputLoginInfo : inputRegisterInfo}
+            autoFocus={isLoginForm}
           />
         </div>
-      }
-      <div className="input-place">
-        <p>メールアドレス</p>
-        <input
-          type="email"
-          name="email"
-          placeholder="email"
-          value={isLoginForm ? loginInfo.email : registerInfo.email}
-          onChange={isLoginForm ? inputLoginInfo : inputRegisterInfo}
-          autoFocus={isLoginForm}
-        />
+        <div className="input-place">
+          <p>パスワード</p>
+          <input
+            type="password"
+            name="password"
+            placeholder="password"
+            value={isLoginForm ? loginInfo.password : registerInfo.password}
+            onChange={isLoginForm ? inputLoginInfo : inputRegisterInfo}
+          />
+        </div>
       </div>
-      <div className="input-place">
-        <p>パスワード</p>
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          value={isLoginForm ? loginInfo.password : registerInfo.password}
-          onChange={isLoginForm ? inputLoginInfo : inputRegisterInfo}
-        />
-      </div>
-    </div>
     {isLoginForm &&
       <div className="google-login">
         <GoogleIcon />
       </div>
     }
     {isLoginForm ?
-      <button type="submit">ログイン</button>:
+      <button type="submit">Login</button>:
       <button type="submit">アカウント作成</button>
     }
     <p className="switch-method">
-      {isLoginForm ? '新規ユーザは' : 'ログインは'}
+      {isLoginForm ? 'アカウント登録は' : 'ログインは'}
       <span onClick={() => props.setLoginForm()}>こちら</span>
     </p>
   </form>

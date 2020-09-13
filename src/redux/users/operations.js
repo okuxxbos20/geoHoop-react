@@ -1,5 +1,6 @@
-import { LoginAction } from './actions'
+import { LoginAction, LogoutAction } from './actions'
 import { auth, db, FirebaseTimestamp } from '../../firebase/index'
+import { push } from 'connected-react-router'
 
 export const listenAuthState = () => {
   return async (dispatch) => {
@@ -138,6 +139,19 @@ export const RegisterWithEmail = (name, email, password) => {
       }
     }).catch((err) => {
       alert(err)
+    })
+  }
+}
+
+export const Logout = () => {
+  return async (dispatch) => {
+    auth.signOut().then(() => {
+      console.log('success to log-out.')
+      dispatch(LogoutAction())
+      console.log('hey ya')
+      dispatch(push('/'))
+    }).catch((err) => {
+      console.log(err)
     })
   }
 }

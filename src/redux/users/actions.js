@@ -1,5 +1,4 @@
 export const LOG_IN = 'LOG_IN'
-
 export const LoginAction = (userState) => {
   return {
     type: 'LOG_IN',
@@ -22,13 +21,22 @@ export const LoginAction = (userState) => {
 }
 
 export const LOG_OUT = 'LOG_OUT'
-
-export const LogOutAction = () => {
+export const LogoutAction = () => {
   return {
     type: 'LOG_OUT',
     payload: {
-      isSignedIn: false,
+      isLogin: false,
+      bookmarks: [],
+      createdAt: '',
+      email: '',
+      followingPrefecture: [],
+      img: '',
+      lastLogin: '',
+      loginCount: null,
+      likes: [],
       uid: '',
+      isAdmin: null,
+      updatedAt: '',
       name: ''
     }
   }
