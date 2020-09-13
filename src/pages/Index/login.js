@@ -78,7 +78,7 @@ const Login = (props) => {
   }
   return (
     <form className="login-form" onSubmit={submitInfo}>
-      <p className="login-title">{isLoginForm ? 'Welcome' : 'アカウント登録'}</p>
+      <p className="login-title">Welcome</p>
       <div className="box">
         {!isLoginForm &&
           <div className="input-place">

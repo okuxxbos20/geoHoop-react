@@ -53,7 +53,7 @@ const Header = (props) => {
           style={style.login}
           onClick={() => {props.setDialog()}}
         >
-          Login
+          SignUp
         </p>
         }
       </div>
