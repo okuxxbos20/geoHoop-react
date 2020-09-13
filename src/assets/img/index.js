@@ -5,6 +5,7 @@ import FenceBuildings from './fenceBuildings.jpg'
 import GeoHoopLogo from './geoHoop_01.png'
 import GlassBoard from './glassBoard.jpg'
 import Noimg from './noimg.png'
+import Palmtrees from './palmtrees.jpg'
 import Sunset from './sunset.jpg'
 import YellowPaint from './yellowPaint.jpg'
 
@@ -15,6 +16,7 @@ export {
   FenceBuildings,
   GeoHoopLogo,
   GlassBoard,
+  Palmtrees,
   Sunset,
   Noimg,
   YellowPaint
