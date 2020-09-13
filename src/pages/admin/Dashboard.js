@@ -84,7 +84,7 @@ const DashBoard = () => {
      </aside>
       <main style={style.mainStyle}>
         {currentPageName === 'form' && <Form />}
-        {currentPageName === 'all-court' && <AllCourt court={12}/>}
+        {currentPageName === 'all-court' && <AllCourt />}
         {currentPageName === 'users' && <Users usersArrProps={usersArr} />}
         {currentPageName === 'report' && <Report />}
       </main>

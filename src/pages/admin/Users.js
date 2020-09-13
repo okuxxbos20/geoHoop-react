@@ -7,8 +7,10 @@ const Users = (props) => {
   const [isAllUserChecked, setAllUserChecked] = useState(false)
   const [isIndeterminate, setIndeterminate] = useState(false)
   const [usersData, setUsersData] = useState([])
-  // eslint-disable-next-line
   const [selectedArr, setSelectedArr] = useState([])
+  const [isLoginCountAsc, setLoginCountAsc] = useState(null)
+  const [isLikesAsc, setLikesAsc] = useState(null)
+  const [isBookmarksAsc, setBookmarksAsc] = useState(null)
 
   const convertDate = (sec, nano) => {
     const sum = sec * 1000 + nano / (1000 ** 2)
@@ -22,16 +24,14 @@ const Users = (props) => {
     return result
   }
 
-  if (AllUsers !== undefined) {
-    AllUsers.forEach((v) => {
-      v.isChecked = false
-      v.registerDate = convertDate(v.createdAt.seconds, v.createdAt.nanoseconds)
-      v.lastLoginDate = convertDate(v.lastLogin.seconds, v.lastLogin.nanoseconds)
-    })
-    console.log(AllUsers)
-  }
-
   useEffect(() => {
+    if (AllUsers !== undefined) {
+      AllUsers.forEach((v) => {
+        v.isChecked = false
+        v.registerDate = convertDate(v.createdAt.seconds, v.createdAt.nanoseconds)
+        v.lastLoginDate = convertDate(v.lastLogin.seconds, v.lastLogin.nanoseconds)
+      })
+    }
     setUsersData([...usersData, ...AllUsers])
     // eslint-disable-next-line
   }, [])
@@ -62,7 +62,7 @@ const Users = (props) => {
     })
     const newSelectedArr = newData.filter((v) => v.isChecked)
     setUsersData(newData)
-    setSelectedArr(newSelectedArr)
+    setSelectedArr([...selectedArr, ...newSelectedArr])
 
     if (newSelectedArr.length === 0) {
       setIndeterminate(false)
@@ -73,6 +73,66 @@ const Users = (props) => {
     } else {
       setIndeterminate(true)
       setAllUserChecked(false)
+    }
+  }
+
+  const changeLoginCountOrder = () => {
+    if (isLoginCountAsc || isLoginCountAsc === null) {
+       const newData = usersData.sort((a, b) => {
+        return b.loginCount - a.loginCount
+      })
+      setUsersData(newData)
+      setLoginCountAsc(false)
+      setLikesAsc(null)
+      setBookmarksAsc(null)
+    } else if (!isLoginCountAsc) {
+      const newData = usersData.sort((a, b) => {
+        return a.loginCount - b.loginCount
+      })
+      setUsersData(newData)
+      setLoginCountAsc(true)
+      setLikesAsc(null)
+      setBookmarksAsc(null)
+    }
+  }
+
+  const changeLikesOrder = () => {
+    if (isLikesAsc || isLikesAsc === null) {
+       const newData = usersData.sort((a, b) => {
+        return b.likes.length - a.likes.length
+      })
+      setUsersData(newData)
+      setLoginCountAsc(null)
+      setLikesAsc(false)
+      setBookmarksAsc(null)
+    } else if (!isLikesAsc) {
+      const newData = usersData.sort((a, b) => {
+        return a.likes.length - b.likes.length
+      })
+      setUsersData(newData)
+      setLoginCountAsc(null)
+      setLikesAsc(true)
+      setBookmarksAsc(null)
+    }
+  }
+
+  const changeBookmarkOrder = () => {
+    if (isBookmarksAsc || isBookmarksAsc === null) {
+      const newData = usersData.sort((a, b) => {
+        return b.bookmarks.length - a.bookmarks.length
+      })
+      setUsersData(newData)
+      setLoginCountAsc(null)
+      setLikesAsc(null)
+      setBookmarksAsc(false)
+    } else if (!isBookmarksAsc) {
+      const newData = usersData.sort((a, b) => {
+        return a.bookmarks.length - b.bookmarks.length
+      })
+      setUsersData(newData)
+      setLoginCountAsc(null)
+      setLikesAsc(null)
+      setBookmarksAsc(true)
     }
   }
 
@@ -92,15 +152,34 @@ const Users = (props) => {
                   </span>
                 </label>
               </td>
-              <td><label>ユーザ名</label></td>
+              <td><label>name</label></td>
               <td><label>uid</label></td>
               <td><label>email</label></td>
               <td><label>isAdmin</label></td>
-              <td><label>登録日</label></td>
-              <td><label>最終ログイン</label></td>
-              <td><label>ログイン回数</label></td>
-              <td><label>likes数</label></td>
-              <td><label>bookmark数</label></td>
+              <td>
+                <label>RegisterDate</label>
+              </td>
+              <td>
+                <label>LastLoginDate</label>
+              </td>
+              <td
+                className={`add-triangle ${isLoginCountAsc === null ? '' : (isLoginCountAsc ? 'triangle-asc' : 'triangle-desc')}`}
+                onClick={() => changeLoginCountOrder()}
+              >
+                <label>LoginCount</label>
+              </td>
+              <td
+                className={`add-triangle ${isLikesAsc === null ? '' : (isLikesAsc ? 'triangle-asc' : 'triangle-desc')}`}
+                onClick={() => changeLikesOrder()}
+              >
+                <label>LikesCount</label>
+              </td>
+              <td
+                className={`add-triangle ${isBookmarksAsc === null ? '' : (isBookmarksAsc ? 'triangle-asc' : 'triangle-desc')}`}
+                onClick={() => changeBookmarkOrder()}
+              >
+                <label>BookmarksCount</label>
+              </td>
             </tr>
           </thead>
           <tbody>
