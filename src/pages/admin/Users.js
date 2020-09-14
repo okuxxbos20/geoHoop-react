@@ -3,7 +3,7 @@ import './scss/Users.scss'
 import { ArrowLeftIcon, ArrowRightIcon } from '../../assets/icons/'
 
 const Users = (props) => {
-  let AllUsers = props.usersArrProps
+  let AllUsers = props.usersArr
   const [isAllUserChecked, setAllUserChecked] = useState(false)
   const [isIndeterminate, setIndeterminate] = useState(false)
   const [usersData, setUsersData] = useState([])
