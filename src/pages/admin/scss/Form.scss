@@ -1,0 +1,29 @@
+.court-form {
+  width: 100%;
+  form {
+    color:  #333;
+    background: #fff;
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    .upper-side {
+      width: 50%;
+      margin: 0 auto;
+      .input-place {
+        margin-bottom: 20px;
+      }
+      .radio-place {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+    .lower-side {
+    }
+    .btn-place {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+}
