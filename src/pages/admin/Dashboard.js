@@ -8,11 +8,21 @@ import { db } from '../../firebase/index'
 
 const DashBoard = () => {
   const [isAsideFold, setAside] = useState(false)
-  // const [courtArr, setCourt] = useState([])
+  const [courtArr, setCourts] = useState([])
   const [usersArr, setUsers] = useState([])
   const [currentPageName, setPageName] = useState('form')
 
   useEffect(() => {
+    const getAllCourt = async() => {
+      const courtList = []
+      const courts = await db.collection('court').get()
+      if (courts.empty) {
+        return []
+      }
+      courts.forEach((c) => courtList.push(c.data()))
+      setCourts(courtList);
+    }
+
     const getAllUsers = async() => {
       const userList = []
       const users = await db.collection('users').get()
@@ -22,6 +32,7 @@ const DashBoard = () => {
       users.forEach((u) => userList.push(u.data()))
       setUsers(userList);
     }
+    getAllCourt()
     getAllUsers()
   }, [])
 
@@ -84,8 +95,8 @@ const DashBoard = () => {
      </aside>
       <main style={style.mainStyle}>
         {currentPageName === 'form' && <Form />}
-        {currentPageName === 'all-court' && <AllCourt />}
-        {currentPageName === 'users' && <Users usersArrProps={usersArr} />}
+        {currentPageName === 'all-court' && <AllCourt courtArr={courtArr} />}
+        {currentPageName === 'users' && <Users usersArr={usersArr} />}
         {currentPageName === 'report' && <Report />}
       </main>
    </div>
