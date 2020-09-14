@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './scss/Dashboard.scss'
 import DboardHeader from '../../component/DboardHeader'
 import { Avatar } from '../../assets/img/'
@@ -8,98 +8,95 @@ import { db } from '../../firebase/index'
 
 const DashBoard = () => {
   const [isAsideFold, setAside] = useState(false)
-  const [courtArr, setCourt] = useState([])
+  const [courtArr, setCourts] = useState([])
   const [usersArr, setUsers] = useState([])
-  const [currentPageComp, setPageComp] = useState(<Users users={usersArr}/>)
-  const [currentPageName, setPageName] = useState('users')
+  const [currentPageName, setPageName] = useState('form')
 
-  const getDataFromFirebase = (collection) => {
-    return db.collection(collection).get().then((result) => {
-      console.log('yoyo')
-      console.log(result)
-      if (collection === 'court') {
-        result.forEach((v) => {
-          setCourt(...courtArr, v.data())
-          console.log(v.data())
-        })
+  const optionsArr = [
+    {
+      label: 'form',
+      label_jp: 'フォーム',
+      icon: <FormIcon />
+    }, {
+      label: 'all-court',
+      label_jp: 'コート一覧',
+      icon: <GeoIcon />
+    }, {
+      label: 'users',
+      label_jp: 'ユーザ一覧',
+      icon: <UsersIcon />
+    }, {
+      label: 'report',
+      label_jp: 'レポート',
+      icon: <GraphIcon />
+    }
+  ]
+
+  useEffect(() => {
+    const getAllCourt = async() => {
+      const courtList = []
+      const courts = await db.collection('court').get()
+      if (courts.empty) {
+        return []
       }
-      if (collection === 'users') {
-        result.forEach((v) => {
-          setUsers(...usersArr, v.data())
-          console.log(v.data())
-        })
+      courts.forEach((c) => courtList.push(c.data()))
+      setCourts(courtList);
+    }
+
+    const getAllUsers = async() => {
+      const userList = []
+      const users = await db.collection('users').get()
+      if (users.empty) {
+        return []
       }
-    })
-  }
+      users.forEach((u) => userList.push(u.data()))
+      setUsers(userList);
+    }
+    getAllCourt()
+    getAllUsers()
+  }, [])
 
-  getDataFromFirebase('court')
-  getDataFromFirebase('users')
-
-  const changePage = (to, comp) => {
-    setPageName(to)
-    setPageComp(comp)
-  }
   const style = {
-    mainStyle: {
+    main: {
       width: (isAsideFold ? 'calc(100% - 260px)' : 'calc(100% - 108px)')
     },
-    labelStyle: {
+    label: {
       color: 'var(--subColor)',
       fontWeight: '500'
     }
- }
+  }
   return (
-   <div className="admin">
-     <DboardHeader setAside={() => setAside(!isAsideFold)} />
-     <aside>
-       <div className="admin-profile">
-         <img src={Avatar} alt="avatar"/>
-         <div className="detail">
-           <p className="name">徳川家康</p>
-           <p className="email">tokugawa@gmail.com</p>
-         </div>
-       </div>
-       <div className="options">
-         <label
-          style={currentPageName === 'form' ? style.labelStyle : {}}
-          onClick={() => changePage('from', <Form />)}
-         >
-           <FormIcon />
-           <p>フォーム</p>
-         </label>
-       </div>
-       <div className="options">
-         <label
-          style={currentPageName === 'all-court' ? style.labelStyle : {}}
-          onClick={() => changePage('all-court', <AllCourt court={courtArr} />)}
-         >
-           <GeoIcon />
-           <p>コート一覧</p>
-         </label>
-       </div>
-       <div className="options">
-         <label
-          style={currentPageName === 'users' ? style.labelStyle : {}}
-          onClick={() => changePage('users', <Users users={usersArr} />)}
-         >
-           <UsersIcon />
-           <p>ユーザ一覧</p>
-         </label>
-       </div>
-       <div className="options">
-         <label
-          style={currentPageName === 'report' ? style.labelStyle : {}}
-          onClick={() => changePage('report', <Report />)}
-         >
-           <GraphIcon />
-           <p>レポート</p>
-         </label>
-       </div>
-     </aside>
-     <main style={style.mainStyle}>
-       {currentPageComp}
-     </main>
-   </div>
+    <div className="admin">
+      <DboardHeader setAside={() => setAside(!isAsideFold)} />
+      <aside>
+        <div className="admin-profile">
+          <img src={Avatar} alt="avatar"/>
+          <div className="detail">
+            <p className="name">徳川家康</p>
+            <p className="email">tokugawa@gmail.com</p>
+          </div>
+        </div>
+        {optionsArr.map((v) => {
+          return (
+            <div className="options" key={v.label}>
+              <label
+                style={currentPageName === v.label ? style.label : {}}
+                onClick={() => setPageName(v.label)}
+              >
+                {v.icon}
+                <p>{v.label_jp}</p>
+              </label>
+            </div>
+          )
+         })}
+      </aside>
+      <main style={style.main}>
+        {currentPageName === 'form' && <Form />}
+        {currentPageName === 'all-court' && <AllCourt courtArr={courtArr} />}
+        {currentPageName === 'users' && <Users usersArr={usersArr} />}
+        {currentPageName === 'report' && <Report />}
+      </main>
+    </div>
  )
 }
 

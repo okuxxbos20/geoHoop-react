@@ -42,9 +42,8 @@ const AllCourt = (props) => {
       id: '9jsaha63h'
     }
   ]
-
+  console.log(props.courtArr)
   dammy.map((v) => v.isChecked = false)
-  console.log(props.court)
   const [isAllCourtChecked, setAllCourtChecked] = useState(false)
   const [isIndeterminate, setIndeterminate] = useState(false)
   const [dammyData, setDammyData] = useState(dammy)

@@ -5,7 +5,6 @@ import { Avatar, Palmtrees } from '../../assets/img/'
 import { EditIcon } from '../../assets/icons'
 import { Logout } from '../../redux/users/operations'
 import { push } from 'connected-react-router'
-// import { BluePalm, Court, FenceBuildings, GlassBoard, Sunset, YellowPaint } from '../../assets/img/'
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -15,7 +14,7 @@ const Profile = () => {
 
   const style = {
     header: {
-      // backgroundImage: `url(${Palmtrees})`
+      backgroundImage: `url(${Palmtrees})`
     }
   }
   return (

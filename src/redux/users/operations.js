@@ -146,12 +146,20 @@ export const RegisterWithEmail = (name, email, password) => {
 export const Logout = () => {
   return async (dispatch) => {
     auth.signOut().then(() => {
-      console.log('success to log-out.')
       dispatch(LogoutAction())
-      console.log('hey ya')
       dispatch(push('/'))
     }).catch((err) => {
       console.log(err)
     })
+  }
+}
+
+export const getAllUsers = () => {
+  return async () => {
+    db.collection('users').get().then((snapshot) => {
+      const data = snapshot.data()
+      console.log(data)
+      console.log('hey all user')
+    }).catch((err) => console.log(err))
   }
 }
