@@ -166,23 +166,25 @@
       color: #6c757d;
       width: 100%;
       padding: 10px 10px 0;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      .pagenation {
+      .table-footer-box {
         display: flex;
         flex-direction: row;
-        label {
-          width: 30px;
-          height: 30px;
-          border-radius: 50%;
+        justify-content: space-between;
+        .pagenation {
           display: flex;
-          justify-content: center;
-          align-items: center;
-          transition: 200ms;
-          &:hover {
-            background: #e8ecf1;
-            cursor: pointer;
+          flex-direction: row;
+          label {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 200ms;
+            &:hover {
+              background: #e8ecf1;
+              cursor: pointer;
+            }
           }
         }
       }

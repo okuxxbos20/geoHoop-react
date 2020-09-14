@@ -8,9 +8,13 @@ const Users = (props) => {
   const [isIndeterminate, setIndeterminate] = useState(false)
   const [usersData, setUsersData] = useState([])
   const [selectedArr, setSelectedArr] = useState([])
-  const [isLoginCountAsc, setLoginCountAsc] = useState(null)
-  const [isLikesAsc, setLikesAsc] = useState(null)
-  const [isBookmarksAsc, setBookmarksAsc] = useState(null)
+  const [ascList, setAscList] = useState({
+    isRegisterdateAsc: null,
+    isLastLoginAsc: null,
+    isLoginCountAsc: null,
+    isLikesAsc: null,
+    isBookmarksAsc: null
+  })
 
   const convertDate = (sec, nano) => {
     const sum = sec * 1000 + nano / (1000 ** 2)
@@ -76,64 +80,88 @@ const Users = (props) => {
     }
   }
 
-  const changeLoginCountOrder = () => {
-    if (isLoginCountAsc || isLoginCountAsc === null) {
-       const newData = usersData.sort((a, b) => {
-        return b.loginCount - a.loginCount
-      })
-      setUsersData(newData)
-      setLoginCountAsc(false)
-      setLikesAsc(null)
-      setBookmarksAsc(null)
-    } else if (!isLoginCountAsc) {
-      const newData = usersData.sort((a, b) => {
-        return a.loginCount - b.loginCount
-      })
-      setUsersData(newData)
-      setLoginCountAsc(true)
-      setLikesAsc(null)
-      setBookmarksAsc(null)
+  const changeRegitserdateOrder = () => {
+    let newData = []
+    let newAscList = {}
+    Object.keys(ascList).forEach((v) => newAscList[v] = null)
+    newData = usersData.sort((a, b) => {
+      const time_a = a.createdAt.seconds * 1000 + a.createdAt.nanoseconds / (1000 **2)
+      const time_b = b.createdAt.seconds * 1000 + b.createdAt.nanoseconds / (1000 **2)
+      return time_b - time_a
+    })
+    newAscList.isRegisterdateAsc = false
+    if (!ascList.isRegisterdateAsc) {
+      newData = newData.reverse()
+      newAscList.isRegisterdateAsc = true
     }
+    setUsersData(newData)
+    setAscList(newAscList)
+  }
+
+  const changeLastLoginOrder = () => {
+    let newData = []
+    let newAscList = {}
+    Object.keys(ascList).forEach((v) => newAscList[v] = null)
+    newData = usersData.sort((a, b) => {
+      const time_a = a.lastLogin.seconds * 1000 + a.lastLogin.nanoseconds / (1000 **2)
+      const time_b = b.lastLogin.seconds * 1000 + b.lastLogin.nanoseconds / (1000 **2)
+      return time_b - time_a
+    })
+    newAscList.isLastLoginAsc = false
+    if (!ascList.isLastLoginAsc) {
+      newData = newData.reverse()
+      newAscList.isLastLoginAsc = true
+    }
+    setUsersData(newData)
+    setAscList(newAscList)
+  }
+
+  const changeLoginCountOrder = () => {
+    let newData = []
+    let newAscList = {}
+    Object.keys(ascList).forEach((v) => newAscList[v] = null)
+    newData = usersData.sort((a, b) => {
+      return b.loginCount - a.loginCount
+    })
+    newAscList.isLoginCountAsc = false
+    if (!ascList.isLoginCountAsc) {
+      newData = newData.reverse()
+      newAscList.isLoginCountAsc = true
+    }
+    setUsersData(newData)
+    setAscList(newAscList)
   }
 
   const changeLikesOrder = () => {
-    if (isLikesAsc || isLikesAsc === null) {
-       const newData = usersData.sort((a, b) => {
-        return b.likes.length - a.likes.length
-      })
-      setUsersData(newData)
-      setLoginCountAsc(null)
-      setLikesAsc(false)
-      setBookmarksAsc(null)
-    } else if (!isLikesAsc) {
-      const newData = usersData.sort((a, b) => {
-        return a.likes.length - b.likes.length
-      })
-      setUsersData(newData)
-      setLoginCountAsc(null)
-      setLikesAsc(true)
-      setBookmarksAsc(null)
+    let newData = []
+    let newAscList = []
+    Object.keys(ascList).forEach((v) => newAscList[v] = null)
+    newData = usersData.sort((a, b) => {
+      return b.likes.length - a.likes.length
+    })
+    newAscList.isLikesAsc = false
+    if (!ascList.isLikesAsc) {
+      newData = newData.reverse()
+      newAscList.isLikesAsc = true
     }
+    setUsersData(newData)
+    setAscList(newAscList)
   }
 
   const changeBookmarkOrder = () => {
-    if (isBookmarksAsc || isBookmarksAsc === null) {
-      const newData = usersData.sort((a, b) => {
-        return b.bookmarks.length - a.bookmarks.length
-      })
-      setUsersData(newData)
-      setLoginCountAsc(null)
-      setLikesAsc(null)
-      setBookmarksAsc(false)
-    } else if (!isBookmarksAsc) {
-      const newData = usersData.sort((a, b) => {
-        return a.bookmarks.length - b.bookmarks.length
-      })
-      setUsersData(newData)
-      setLoginCountAsc(null)
-      setLikesAsc(null)
-      setBookmarksAsc(true)
+    let newData = []
+    let newAscList = []
+    Object.keys(ascList).forEach((v) => newAscList[v] = null)
+    newData = usersData.sort((a, b) => {
+      return b.bookmarks.length - a.bookmarks.length
+    })
+    newAscList.isBookmarksAsc = false
+    if (!ascList.isBookmarksAsc) {
+      newData = newData.reverse()
+      newAscList.isBookmarksAsc = true
     }
+    setUsersData(newData)
+    setAscList(newAscList)
   }
 
   return (
@@ -153,33 +181,39 @@ const Users = (props) => {
                 </label>
               </td>
               <td><label>name</label></td>
-              <td><label>uid</label></td>
               <td><label>email</label></td>
               <td><label>isAdmin</label></td>
-              <td>
+              <td
+                className={`add-triangle ${ascList.isRegisterdateAsc === null ? '' : (ascList.isRegisterdateAsc ? 'triangle-asc' : 'triangle-desc')}`}
+                onClick={() => changeRegitserdateOrder()}
+              >
                 <label>RegisterDate</label>
               </td>
-              <td>
+              <td
+                className={`add-triangle ${ascList.isLastLoginAsc === null ? '' : (ascList.isLastLoginAsc ? 'triangle-asc' : 'triangle-desc')}`}
+                onClick={() => changeLastLoginOrder()}
+              >
                 <label>LastLoginDate</label>
               </td>
               <td
-                className={`add-triangle ${isLoginCountAsc === null ? '' : (isLoginCountAsc ? 'triangle-asc' : 'triangle-desc')}`}
+                className={`add-triangle ${ascList.isLoginCountAsc === null ? '' : (ascList.isLoginCountAsc ? 'triangle-asc' : 'triangle-desc')}`}
                 onClick={() => changeLoginCountOrder()}
               >
                 <label>LoginCount</label>
               </td>
               <td
-                className={`add-triangle ${isLikesAsc === null ? '' : (isLikesAsc ? 'triangle-asc' : 'triangle-desc')}`}
+                className={`add-triangle ${ascList.isLikesAsc === null ? '' : (ascList.isLikesAsc ? 'triangle-asc' : 'triangle-desc')}`}
                 onClick={() => changeLikesOrder()}
               >
                 <label>LikesCount</label>
               </td>
               <td
-                className={`add-triangle ${isBookmarksAsc === null ? '' : (isBookmarksAsc ? 'triangle-asc' : 'triangle-desc')}`}
+                className={`add-triangle ${ascList.isBookmarksAsc === null ? '' : (ascList.isBookmarksAsc ? 'triangle-asc' : 'triangle-desc')}`}
                 onClick={() => changeBookmarkOrder()}
               >
                 <label>BookmarksCount</label>
               </td>
+              <td><label>uid</label></td>
             </tr>
           </thead>
           <tbody>
@@ -196,7 +230,6 @@ const Users = (props) => {
                       </label>
                     </td>
                     <td><label>{v.name}</label></td>
-                    <td><label>{v.uid}</label></td>
                     <td><label>{v.email}</label></td>
                     <td>
                       <label>
@@ -210,6 +243,7 @@ const Users = (props) => {
                     <td><label>{v.loginCount}</label></td>
                     <td><label>{v.likes.length}</label></td>
                     <td><label>{v.bookmarks.length}</label></td>
+                    <td><label>{`${v.uid.substring(0, 5)}...`}</label></td>
                   </tr>
                 )
               })
@@ -217,15 +251,15 @@ const Users = (props) => {
           </tbody>
         </table>
         <div className="table-footer">
-          {/* <p>{usersData.length}件中{usersData.length}件のデータを表示中</p> */}
-          <div className="pagenation">
-            <label>
-              <ArrowLeftIcon />
-            </label>
-            <label>
-              <ArrowRightIcon />
-            </label>
-          </div>
+          {usersData !== undefined &&
+            <div className="table-footer-box">
+              <p>{usersData.length}件中{usersData.length}件のデータを表示中</p>
+              <div className="pagenation">
+                <label><ArrowLeftIcon /></label>
+                <label><ArrowRightIcon /></label>
+              </div>
+            </div>
+          }
         </div>
       </div>
     </div>
