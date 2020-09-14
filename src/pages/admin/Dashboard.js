@@ -84,7 +84,7 @@ const DashBoard = () => {
                 onClick={() => setPageName(v.label)}
               >
                 {v.icon}
-                <p>v.label_jp</p>
+                <p>{v.label_jp}</p>
               </label>
             </div>
           )
