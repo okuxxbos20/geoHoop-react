@@ -12,6 +12,26 @@ const DashBoard = () => {
   const [usersArr, setUsers] = useState([])
   const [currentPageName, setPageName] = useState('form')
 
+  const optionsArr = [
+    {
+      label: 'form',
+      label_jp: 'フォーム',
+      icon: <FormIcon />
+    }, {
+      label: 'all-court',
+      label_jp: 'コート一覧',
+      icon: <GeoIcon />
+    }, {
+      label: 'users',
+      label_jp: 'ユーザ一覧',
+      icon: <UsersIcon />
+    }, {
+      label: 'report',
+      label_jp: 'レポート',
+      icon: <GraphIcon />
+    }
+  ]
+
   useEffect(() => {
     const getAllCourt = async() => {
       const courtList = []
@@ -37,69 +57,46 @@ const DashBoard = () => {
   }, [])
 
   const style = {
-    mainStyle: {
+    main: {
       width: (isAsideFold ? 'calc(100% - 260px)' : 'calc(100% - 108px)')
     },
-    labelStyle: {
+    label: {
       color: 'var(--subColor)',
       fontWeight: '500'
     }
   }
   return (
-   <div className="admin">
-     <DboardHeader setAside={() => setAside(!isAsideFold)} />
-     <aside>
-       <div className="admin-profile">
-         <img src={Avatar} alt="avatar"/>
-         <div className="detail">
-           <p className="name">徳川家康</p>
-           <p className="email">tokugawa@gmail.com</p>
-         </div>
-       </div>
-       <div className="options">
-         <label
-          style={currentPageName === 'form' ? style.labelStyle : {}}
-          onClick={() => setPageName('form')}
-         >
-           <FormIcon />
-           <p>フォーム</p>
-         </label>
-       </div>
-       <div className="options">
-         <label
-          style={currentPageName === 'all-court' ? style.labelStyle : {}}
-          onClick={() => setPageName('all-court')}
-         >
-           <GeoIcon />
-           <p>コート一覧</p>
-         </label>
-       </div>
-       <div className="options">
-         <label
-          style={currentPageName === 'users' ? style.labelStyle : {}}
-          onClick={() => setPageName('users')}
-         >
-           <UsersIcon />
-           <p>ユーザ一覧</p>
-         </label>
-       </div>
-       <div className="options">
-         <label
-          style={currentPageName === 'report' ? style.labelStyle : {}}
-          onClick={() => setPageName('report')}
-         >
-           <GraphIcon />
-           <p>レポート</p>
-         </label>
-       </div>
-     </aside>
-      <main style={style.mainStyle}>
+    <div className="admin">
+      <DboardHeader setAside={() => setAside(!isAsideFold)} />
+      <aside>
+        <div className="admin-profile">
+          <img src={Avatar} alt="avatar"/>
+          <div className="detail">
+            <p className="name">徳川家康</p>
+            <p className="email">tokugawa@gmail.com</p>
+          </div>
+        </div>
+        {optionsArr.map((v) => {
+          return (
+            <div className="options" key={v.label}>
+              <label
+                style={currentPageName === v.label ? style.label : {}}
+                onClick={() => setPageName(v.label)}
+              >
+                {v.icon}
+                <p>v.label_jp</p>
+              </label>
+            </div>
+          )
+         })}
+      </aside>
+      <main style={style.main}>
         {currentPageName === 'form' && <Form />}
         {currentPageName === 'all-court' && <AllCourt courtArr={courtArr} />}
         {currentPageName === 'users' && <Users usersArr={usersArr} />}
         {currentPageName === 'report' && <Report />}
       </main>
-   </div>
+    </div>
  )
 }
 
