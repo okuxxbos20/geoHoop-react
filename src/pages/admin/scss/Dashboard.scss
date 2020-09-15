@@ -55,9 +55,10 @@
   main {
     background: var(--subColor);
     width: calc(100% - 220px);
+    height: auto;
     padding: 20px;
     margin-top: 45px;
-    position: fixed;
+    position: absolute;
     top: 0;
     right: 0;
     transition: 150ms;
