@@ -4,21 +4,27 @@
     color:  #333;
     background: #fff;
     width: 50%;
-    margin: 0 auto;
+    margin: 20px auto 120px;
     padding: 20px;
-    .upper-side {
-      width: 50%;
-      margin: 0 auto;
-      .input-place {
-        margin-bottom: 20px;
+    .overwrap-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .upper-side {
+        width: 50%;
+        margin: 0 auto;
+        .input-place { margin: 0 5px 20px; }
+        .radio-place {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+        }
       }
-      .radio-place {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
+      .lower-side {
+        width: 50%;
+        margin: 0 auto;
+        .input-place { margin: 0 5px 20px; }
       }
-    }
-    .lower-side {
     }
     .btn-place {
       display: flex;

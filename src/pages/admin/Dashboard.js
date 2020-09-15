@@ -90,7 +90,7 @@ const DashBoard = () => {
           )
          })}
       </aside>
-      <main style={style.main}>
+      <main style={style.main} onClick={() => setAside(!isAsideFold)}>
         {currentPageName === 'form' && <Form />}
         {currentPageName === 'all-court' && <AllCourt courtArr={courtArr} />}
         {currentPageName === 'users' && <Users usersArr={usersArr} />}
