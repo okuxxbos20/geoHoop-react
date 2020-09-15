@@ -2,6 +2,7 @@ import ArrowLeftIcon from './ArrowLeftIcon'
 import ArrowRightIcon from './ArrowRightIcon'
 import BookmarkEmptyIcon from './BookmarkEmptyIcon'
 import BookmarkIcon from './BookmarkIcon'
+import CameraIcon from './CameraIcon'
 import EditIcon from './EditIcon'
 import FilterIcon from './FilterIcon'
 import FormIcon from './FormIcon'
@@ -18,6 +19,7 @@ export {
   ArrowRightIcon,
   BookmarkEmptyIcon,
   BookmarkIcon,
+  CameraIcon,
   EditIcon,
   FilterIcon,
   FormIcon,
