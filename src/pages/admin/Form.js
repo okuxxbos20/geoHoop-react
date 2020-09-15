@@ -96,7 +96,7 @@ const Form = () => {
             {/* 屋外or屋内 */}
             <div className="input-place">
               <FormControl fullWidth error={Boolean(errors.isOutside)}>
-                <FormLabel>屋内or屋外</FormLabel>
+                <FormLabel className="radio-label">屋内or屋外</FormLabel>
                 <Controller
                   as={
                     <RadioGroup name="isOutside" className="radio-place">
