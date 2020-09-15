@@ -55,6 +55,7 @@
   main {
     background: var(--subColor);
     width: calc(100% - 220px);
+    min-height: calc(100vh - 90px);
     height: auto;
     padding: 20px;
     margin-top: 45px;
