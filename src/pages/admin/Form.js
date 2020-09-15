@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import './scss/Form.scss'
 import { useForm, Controller } from "react-hook-form"
 import { createStyles, makeStyles } from '@material-ui/core/styles'
@@ -17,9 +17,12 @@ import {
 } from '@material-ui/core'
 import prejson from '../../assets/json/prefecture.json'
 // import cityjson from '../../assets/json/city.json'
+import { CameraIcon } from '../../assets/icons'
 
 const Form = () => {
+  const [previewImg, setPreviewImg] = useState('')
   const { register, handleSubmit, errors, control } = useForm({
+    onChange: true,
     submitFocusError: true
   })
 
@@ -32,11 +35,39 @@ const Form = () => {
     }
   }))
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     // ここでfirebaseにデータをsetする
     // TODO: 型が全て強制的にstringになってしまう
     console.log(data)
+    const file = data.img[0]
+    const imgValidationResult = checkFile(file)
+
+    if (imgValidationResult) {
+      const preview = await getBase64(file)
+      setPreviewImg(preview)
+    }
+
     alert(JSON.stringify(data))
+  }
+
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    })
+  }
+
+  const checkFile = (file) => {
+    let result = true
+    const sizeLimit = 5000 * 1000
+    if (!file) { result = false }
+    if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+      result = false
+    }
+    if (file.size > sizeLimit) { result = false }
+    return result
   }
 
   const classes = useStyles()
@@ -167,6 +198,20 @@ const Form = () => {
             </div> */}
           </div>
           <div className="lower-side">
+            {/* コート画像 */}
+            <div className="imgupload-place">
+              <label>
+              {previewImg ?
+                <img src={previewImg} alt="court-img" />
+              :
+                <div className="no-uploaded">
+                  <CameraIcon color={'#676767'} width={'45px'} height={'45px'} />
+                  <input ref={register} type="file" name="img" />
+                  <p className="sentence">画像をアップロード</p>
+                </div>
+              }
+              </label>
+            </div>
             {/* 参考URL */}
             <div className="input-place">
               <TextField

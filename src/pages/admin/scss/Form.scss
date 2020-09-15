@@ -25,6 +25,33 @@
         width: 50%;
         margin: 0 auto;
         .input-place { margin: 0 5px 20px; }
+        .imgupload-place {
+          border: 2px dashed #555;
+          border-radius: 5px;
+          label {
+            img {
+              width: 100%;
+              height: 100%;
+            }
+            .no-uploaded {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              padding: 30px;
+              transition: 200ms;
+              &:hover {
+                cursor: pointer;
+                background: rgba(#000, 0.1)
+              }
+              input { display: none; }
+            }
+          }
+          .sentence {
+            font-size: 14px;
+            margin-top: 10px;
+          }
+        }
       }
     }
     .btn-place {
