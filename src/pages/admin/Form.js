@@ -20,8 +20,23 @@ import prejson from '../../assets/json/prefecture.json'
 import { CameraIcon } from '../../assets/icons'
 
 const Form = () => {
+  const defaultValue = {
+    address: '',
+    courtname: '',
+    prefecture: '',
+    city: '',
+    isOutside: null,
+    googleMapsUrl: '',
+    goalCount: 0,
+    embedSrc: '',
+    refUrl: '',
+    tel: 0,
+    zipcode: 0
+  }
+
   const [previewImg, setPreviewImg] = useState('')
   const { register, handleSubmit, errors, control } = useForm({
+    defaultValues: defaultValue,
     onChange: true,
     submitFocusError: true
   })
@@ -44,6 +59,7 @@ const Form = () => {
 
     if (imgValidationResult) {
       const preview = await getBase64(file)
+      console.log(preview)
       setPreviewImg(preview)
     }
 
