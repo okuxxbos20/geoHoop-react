@@ -1,48 +1,58 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './style.scss'
 import Header from '../../component/Header/'
-import { BluePalm, Court, FenceBuildings, GlassBoard, Sunset, YellowPaint } from '../../assets/img/'
+import { Noimg } from '../../assets/img/'
 import { ArrowLeftIcon, ArrowRightIcon, BookmarkEmptyIcon, HeartEmptyIcon } from '../../assets/icons/'
+import { useSelector } from 'react-redux'
+import { db } from '../../firebase/index'
 
 const CourtData = () => {
-  const dammydata = {
-    name: '代々木公園',
-    prefecture: '東京都',
-    city: '渋谷区',
-    img: [BluePalm, Court, FenceBuildings, GlassBoard, Sunset, YellowPaint],
-    likes: 11,
-    bookmarks: 12,
-    address: '東京都渋谷区代々木神園町神南2丁目',
-    googleMapsUrl: 'https://www.google.com/maps/place/Basketball+courts/@35.6679925,139.6934377,15z/data=!4m5!3m4!1s0x60188cb241ddf563:0x7dcb15367b532b47!8m2!3d35.6673293!4d139.6948341',
-    refUrl: 'http://www.tokyo-park.or.jp/park/format/index039.html',
-    isOutside: true
-  }
+  const selector = useSelector((state) => state)
+  const path = selector.router.location.pathname
+  const id = path.split('/court/')[1]
+  const [courtData, setCourtData] = useState({})
+
+  useEffect(() => {
+    const getCourtData = async(id) => {
+      const data = await db.collection('court').doc(id).get()
+      setCourtData({ ...courtData, ...data.data() })
+    }
+    getCourtData(id)
+  // eslint-disable-next-line
+　}, [])
+  // console.log(courtData)
   return (
     <div>
       <Header color="var(--mainColor)" background="var(--subColor)" />
       <div className="court">
         <div className="upper">
           <div className="left">
-            <img src={dammydata.img[0]} alt="main-img" className="main-img" />
-            <div className="img-overlay">
-              <div className="arrowleft-icon">
-                <ArrowLeftIcon />
+            {(!courtData.img || courtData.img.length === 0) ?
+              <img src={Noimg} alt="main-no-img" className="main-img" />
+              :
+              <div>
+                <img src={courtData.img[0]} alt="main-img" className="main-img" />
+                <div className="img-overlay">
+                  <div className="arrowleft-icon">
+                    <ArrowLeftIcon />
+                  </div>
+                  <div className="arrowright-icon">
+                    <ArrowRightIcon />
+                  </div>
+                </div>
               </div>
-              <div className="arrowright-icon">
-                <ArrowRightIcon />
-              </div>
-            </div>
+            }
             <div className="box-footer">
             <div className="upper-row">
-              <p className="pre-city">#{dammydata.prefecture} #{dammydata.city}</p>
+              <p className="pre-city">#{courtData.prefecture} #{courtData.city}</p>
               <div className="likes-bookmarks">
                 <label>
                   <HeartEmptyIcon />
-                  <span>{dammydata.likes}</span>
+                  <span>{courtData.likes}</span>
                 </label>
                 <label>
                   <BookmarkEmptyIcon />
-                  <span>{dammydata.bookmarks}</span>
+                  <span>{courtData.bookmarks}</span>
                 </label>
               </div>
             </div>
@@ -55,23 +65,23 @@ const CourtData = () => {
               <tbody>
                 <tr>
                   <td className="name">住所</td>
-                  <td className="right">{dammydata.address}</td>
+                  <td className="right">{courtData.address}</td>
                 </tr>
                 <tr className="odd">
                   <td className="name">Google Maps</td>
                   <td className="right">
-                    <a href={dammydata.googleMapsUrl}>Google Mapsへ</a>
+                    <a href={courtData.googleMapsUrl}>Google Mapsへ</a>
                   </td>
                 </tr>
                 <tr>
                   <td className="name">参考URL</td>
                   <td className="right">
-                    <a href={dammydata.refUrl}>{dammydata.refUrl}</a>
+                    <a href={courtData.refUrl}>{courtData.refUrl}</a>
                   </td>
                 </tr>
                 <tr className="odd">
                   <td className="name">コートタイプ</td>
-                  <td className="right">{dammydata.isOutside}</td>
+                  <td className="right">{courtData.isOutside}</td>
                 </tr>
               </tbody>
             </table>

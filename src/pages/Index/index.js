@@ -4,6 +4,8 @@ import Header from '../../component/Header/'
 import Login from './login'
 import Search from './search'
 import { BluePalm, Court, FenceBuildings, GlassBoard, Sunset, YellowPaint } from '../../assets/img/'
+import { useDispatch } from 'react-redux'
+import { push } from 'connected-react-router'
 
 const Index = () => {
   const [isDialogOpen, setDialog] = useState(false)
@@ -11,6 +13,7 @@ const Index = () => {
   const [isLoginForm, setLoginForm] = useState(false)
   const randomImg = [BluePalm, Court, FenceBuildings, GlassBoard, Sunset, YellowPaint]
   const [ranNum, setRunNum] = useState(0)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     setRunNum(Math.floor(Math.random() * randomImg.length))
@@ -50,6 +53,7 @@ const Index = () => {
       </main>
       <div className="recommend">
         <p>this is recommend.</p>
+        <button onClick={() => dispatch(push('/court/rQ9T0Rww4dDbdEOH4S28'))}>go court</button>
       </div>
     </div>
   )
