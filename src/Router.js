@@ -6,7 +6,7 @@ const Router = () => {
   return (
     <Switch>
       <Route exact path={'/admin'} component={Admin} />
-      <Route exact path={'/court'} component={Court} />
+      <Route exact path={'/court/:id'} component={Court} />
       <Route exact path={'(/)?'} component={Index} />
       <Route exact path={'/prefecture'} component={Prefecture} />
       <Route exact path={'/profile'} component={Profile} />
