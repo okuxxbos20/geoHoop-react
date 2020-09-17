@@ -20,7 +20,7 @@ const CourtData = () => {
     getCourtData(id)
   // eslint-disable-next-line
 　}, [])
-  // console.log(courtData)
+  console.log(courtData)
   return (
     <div>
       <Header color="var(--mainColor)" background="var(--subColor)" />

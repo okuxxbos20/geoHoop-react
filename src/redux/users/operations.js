@@ -25,7 +25,6 @@ export const listenAuthState = () => {
             updatedAt: data.updatedAt,
             name: data.name,
           }))
-          console.log('hey yo')
         }).catch((err) => console.log(err))
 
         const uref = db.collection('users').doc(uid)
