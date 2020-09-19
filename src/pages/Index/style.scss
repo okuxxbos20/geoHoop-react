@@ -1,11 +1,9 @@
 main {
   width: 100%;
-  height: calc(100vh - 85px);
   background-position: center;
   background-color:rgba(#000, 0.1);
   background-blend-mode: darken;
   background-size: cover;
-  margin-top: 85px;
   display: flex;
   flex-direction: column;
   align-items: center;

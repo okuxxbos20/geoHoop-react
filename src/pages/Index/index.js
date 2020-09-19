@@ -4,7 +4,8 @@ import Header from '../../component/Header/'
 import Login from './login'
 import Search from './search'
 import { BluePalm, Court, FenceBuildings, GlassBoard, Sunset, YellowPaint } from '../../assets/img/'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { getIsLogin } from '../../redux/users/selectors'
 import { push } from 'connected-react-router'
 
 const Index = () => {
@@ -14,6 +15,9 @@ const Index = () => {
   const randomImg = [BluePalm, Court, FenceBuildings, GlassBoard, Sunset, YellowPaint]
   const [ranNum, setRunNum] = useState(0)
   const dispatch = useDispatch()
+  const selector = useSelector((state) => state)
+  const isLogin = getIsLogin(selector)
+  const user = selector.users
 
   useEffect(() => {
     setRunNum(Math.floor(Math.random() * randomImg.length))
@@ -21,16 +25,16 @@ const Index = () => {
 
   const style = {
     mainStyle : {
-      backgroundImage: `url(${randomImg[ranNum]})`
+      backgroundImage: `url(${randomImg[ranNum]})`,
+      height: ((isLogin && user.followingPrefecture.length !== 0) ? 'calc(100vh - 85px)' : 'calc(100vh)'),
+      marginTop: ((isLogin && user.followingPrefecture.length !== 0) && '85px')
     }
   }
   return (
     <div>
-      <Header
-        setDialog={() => setDialog(!isDialogOpen)}
-      />
+      <Header setDialog={() => setDialog(!isDialogOpen)} />
       <main style={style.mainStyle}>
-        {!isDialogOpen ?
+        {(!isDialogOpen || isLogin) ?
           <div className="main-box">
             <div className="theme">
               <h1 className="geohoop">geoHoop</h1>

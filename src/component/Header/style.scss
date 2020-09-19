@@ -7,7 +7,6 @@
   left: 0;
   display: flex;
   flex-direction: column;
-  height: 65px;
   padding: 10px;
   z-index: 100;
   .upper-box {
@@ -15,7 +14,6 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    margin-bottom: 10px;
     .logo {
       width: 32px;
       height: 32px;
@@ -49,6 +47,7 @@
   .lower-box {
     overflow-x: scroll;
     overflow-y: hidden;
+    margin-top: 10px;
     -ms-overflow-style: none;
     &::-webkit-scrollbar { display:none; }
     ul {

@@ -30,6 +30,7 @@ const Header = (props) => {
       color: props.color
     }
   }
+  console.log(user.followingPrefecture.length)
   return (
     <div className="header" style={style.header}>
       <div className="upper-box">
@@ -57,15 +58,17 @@ const Header = (props) => {
         </p>
         }
       </div>
-      <div className="lower-box">
+      {(isLogin && user.followingPrefecture.length !== 0) &&
+        <div className="lower-box">
         <ul>
-          {user.followingPrefecture.map((v) => {
-            return (
-              <li className="feature-item" key={v}>{v}</li>
-            )
-          })}
-        </ul>
-      </div>
+            {user.followingPrefecture.map((v) => {
+              return (
+                <li className="feature-item" key={v}>{v}</li>
+              )
+            })}
+          </ul>
+        </div>
+      }
     </div>
   )
 }
