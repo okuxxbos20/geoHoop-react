@@ -23,7 +23,7 @@ const CourtData = () => {
   console.log(courtData)
   return (
     <div>
-      <Header color="var(--mainColor)" background="var(--subColor)" />
+      <Header />
       <div className="court">
         <div className="upper">
           <div className="left">
