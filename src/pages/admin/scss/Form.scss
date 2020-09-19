@@ -9,11 +9,12 @@
     .overwrap-box {
       display: flex;
       flex-direction: column;
+      // flex-direction: row;
       justify-content: center;
       .upper-side {
         width: 50%;
         margin: 0 auto;
-        .input-place { margin: 0 5px 20px; }
+        .input-place { margin: 0 15px 20px; }
         .radio-label { margin-top: 20px; }
         .radio-place {
           display: flex;
@@ -24,10 +25,11 @@
       .lower-side {
         width: 50%;
         margin: 0 auto;
-        .input-place { margin: 0 5px 20px; }
+        .input-place { margin: 0 15px 20px; }
         .imgupload-place {
           border: 2px dashed #555;
           border-radius: 5px;
+          margin: 15px 0;
           label {
             img {
               width: 100%;

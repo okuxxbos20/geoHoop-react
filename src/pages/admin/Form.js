@@ -1,7 +1,5 @@
 import React, { useState } from "react"
 import './scss/Form.scss'
-import { useForm, Controller } from "react-hook-form"
-import { createStyles, makeStyles } from '@material-ui/core/styles'
 import {
   TextField,
   FormControl,
@@ -33,22 +31,7 @@ const Form = () => {
     tel: 0,
     zipcode: 0
   }
-
   const [previewImg, setPreviewImg] = useState('')
-  const { register, handleSubmit, errors, control } = useForm({
-    defaultValues: defaultValue,
-    onChange: true,
-    submitFocusError: true
-  })
-
-  const useStyles = makeStyles((theme) => createStyles({
-    root: {
-      '& > *': {
-        margin: theme.spacing(1),
-        width: '100'
-      }
-    }
-  }))
 
   const onSubmit = async (data) => {
     // ここでfirebaseにデータをsetする
@@ -85,11 +68,9 @@ const Form = () => {
     if (file.size > sizeLimit) { result = false }
     return result
   }
-
-  const classes = useStyles()
   return (
     <div className="court-form">
-      <form onSubmit={handleSubmit(onSubmit)}　className={classes.root}>
+      <form onSubmit={SubmitData}>
         <div className="overwrap-box">
           <div className="upper-side">
             {/* 住所 */}
