@@ -14,7 +14,7 @@ import {
   Button
 } from '@material-ui/core'
 import prejson from '../../assets/json/prefecture.json'
-// import cityjson from '../../assets/json/city.json'
+import cityjson from '../../assets/json/city.json'
 import { CameraIcon } from '../../assets/icons'
 
 const Form = () => {
@@ -31,22 +31,71 @@ const Form = () => {
     tel: 0,
     zipcode: 0
   }
+  const defaultError = {
+    address: '',
+    courtname: '',
+    prefecture: '',
+    city: '',
+    isOutside: '',
+    googleMapsUrl: '',
+    goalCount: '',
+    embedSrc: '',
+    refUrl: '',
+    tel: '',
+    zipcode: ''
+  }
+  const [val, setVal] = useState(defaultValue)
+  const [err, setErr] = useState(defaultError)
   const [previewImg, setPreviewImg] = useState('')
+  const [validationResult, setValidationResult] = useState(false)
+  const [cityArr, setCityArr] = useState([])
 
-  const onSubmit = async (data) => {
+  const submitData = async (e) => {
+    e.preventDefault()
+    const valName = e.target.name
+    const givenVal = e.target.value
+
+    if (valName === 'img') {
+      const file = valName.img[0]
+      const imgValidationResult = checkFile(file)
+      if (imgValidationResult) {
+        const preview = await getBase64(file)
+        setPreviewImg(preview)
+      }
+    } else {
+      setVal({ ...val, [valName]: givenVal})
+    }
     // ここでfirebaseにデータをsetする
     // TODO: 型が全て強制的にstringになってしまう
-    console.log(data)
-    const file = data.img[0]
-    const imgValidationResult = checkFile(file)
-
-    if (imgValidationResult) {
-      const preview = await getBase64(file)
-      console.log(preview)
-      setPreviewImg(preview)
+    setValidationResult(checkValidation(valName, givenVal))
+    // if (validationResult) {
+    //   console.log('yo')
+    //   alert(JSON.stringify(val))
+    // }
+  }
+  console.log(val)
+  const checkValidation = async(name, value) => {
+    let result = false
+    if (name === 'address') {
+      if (value.length === 0) {
+        setErr({ ...err, [name]: '*必須項目です'})
+      }
+      else if (value.length <= 3 || value.length >= 100) {
+        setErr({ ...err, [name]: '正しい住所を入力してください'})
+      } else {
+        setErr({ ...err, [name]: ''})
+      }
     }
+    return result
+  }
 
-    alert(JSON.stringify(data))
+  const selectPrefecture = (e) => {
+    const code = e.target.value
+    const pre = prejson.filter((v) => v.code === code)[0].name
+    const newCityArr = cityjson.filter((v) => v.id === code)[0].cities;
+    setVal({ ...val, prefecture: pre})
+    setCityArr(newCityArr)
+    console.log(cityArr)
   }
 
   const getBase64 = (file) => {
@@ -68,9 +117,10 @@ const Form = () => {
     if (file.size > sizeLimit) { result = false }
     return result
   }
+
   return (
     <div className="court-form">
-      <form onSubmit={SubmitData}>
+      <form onSubmit={submitData}>
         <div className="overwrap-box">
           <div className="upper-side">
             {/* 住所 */}
@@ -78,10 +128,13 @@ const Form = () => {
               <TextField
                 label="住所"
                 name="address"
+                value={val.address}
+                onChange={submitData}
+                type="text"
                 fullWidth
-                inputRef={register({ required: true })}
-                error={Boolean(errors.address)}
-                helperText={errors.address && '*必須項目です'}
+                autoFocus
+                error={err.address !== '' && true}
+                helperText={err.address}
               />
             </div>
             {/* コート名称 */}
@@ -89,57 +142,70 @@ const Form = () => {
               <TextField
                 label="コート名称"
                 name="courtname"
+                value={val.courtname}
+                onChange={submitData}
+                type="text"
                 fullWidth
-                inputRef={register({ required: true, minLength: 3 })}
-                error={Boolean(errors.courtname)}
-                helperText={errors.courtname && '*必須項目です'}
               />
             </div>
             {/* 都道府県 */}
             <div className="input-place">
-              <FormControl fullWidth error={Boolean(errors.prefecture)}>
-                <InputLabel>都道府県</InputLabel>
-                <Controller
-                  as={
-                    <Select>
-                      {prejson.map((v) => {
-                        return (
-                          <MenuItem value={v.name} key={v.code}>
-                            {v.name}
-                          </MenuItem>
-                        )
-                      })}
-                    </Select>
-                  }
+              <FormControl
+                type="select"
+                fullWidth
+                // error
+              >
+                <InputLabel id="prefecture">都道府県</InputLabel>
+                <Select
                   name="prefecture"
-                  rules={{ required: '*必須項目です' }}
-                  control={control}
-                  defaultValue=""
-                />
-                <FormHelperText>
-                  {errors.prefecture && errors.prefecture.message}
-                </FormHelperText>
+                  value={val.prefecture}
+                  onChange={selectPrefecture}
+                >
+                  {prejson.map((v) => {
+                    return (<MenuItem value={v.code} key={v.name}>{v.name}</MenuItem>)
+                  })}
+                </Select>
+                {err.prefcture !== '' &&
+                  <FormHelperText>{err.prefecture}</FormHelperText>
+                }
+              </FormControl>
+            </div>
+            {/* 市町村区 */}
+            <div className="input-place">
+              <FormControl
+                type="select"
+                fullWidth
+                // error
+              >
+                <InputLabel id="prefecture">市町村区</InputLabel>
+                <Select
+                  name="city"
+                  value={val.city}
+                  onChange={submitData}
+                >
+                  {cityArr.map((v) => {
+                    return (<MenuItem value={v.name} key={v.name}>{v.name}</MenuItem>)
+                  })}
+                </Select>
+                {err.prefcture !== '' &&
+                  <FormHelperText>{err.prefecture}</FormHelperText>
+                }
               </FormControl>
             </div>
             {/* 屋外or屋内 */}
             <div className="input-place">
-              <FormControl fullWidth error={Boolean(errors.isOutside)}>
-                <FormLabel className="radio-label">屋内or屋外</FormLabel>
-                <Controller
-                  as={
-                    <RadioGroup name="isOutside" className="radio-place">
-                      <FormControlLabel value="false" control={<Radio />} label='屋内' />
-                      <FormControlLabel value="true" control={<Radio />} label='屋外' />
-                    </RadioGroup>
-                  }
+              <FormControl>
+                <FormLabel>屋内or屋外</FormLabel>
+                <RadioGroup
+                  row
+                  aria-label="isOutside"
                   name="isOutside"
-                  rules={{ required: '*どちらか選択してください' }}
-                  control={control}
-                  defaultValue={null}
-                />
-                <FormHelperText>
-                  {errors.isOutside && errors.isOutside.message}
-                </FormHelperText>
+                  value={val.isOutside}
+                  onChange={submitData}
+                >
+                  <FormControlLabel value={true} control={<Radio />} label="屋外" />
+                  <FormControlLabel value={false} control={<Radio />} label="屋内" />
+                </RadioGroup>
               </FormControl>
             </div>
             {/* googleMapsUrl */}
@@ -147,10 +213,10 @@ const Form = () => {
               <TextField
                 label="googleMapsUrl"
                 name="googleMapsUrl"
+                value={val.googleMapsUrl}
+                onChange={submitData}
+                type="text"
                 fullWidth
-                inputRef={register({ required: true })}
-                error={Boolean(errors.googleMapsUrl)}
-                helperText={errors.googleMapsUrl && '*必須項目です'}
               />
             </div>
             {/* ゴールの数 */}
@@ -158,41 +224,22 @@ const Form = () => {
               <TextField
                 label="ゴールの数"
                 name="goalCount"
+                value={val.goalCount}
+                onChange={submitData}
                 type="number"
                 fullWidth
-                inputRef={register({
-                  required: true,
-                  validate: {
-                    moreThanOne: (num) => parseInt(num, 10) > 0 || '1以上の数を入力してください'
-                  }
-                })}
-                error={Boolean(errors.goalCount)}
-                helperText={
-                  errors.goalCount?.type === 'required' ? '*必須項目です' :
-                  (errors.goalCount?.type === 'moreThanOne' && errors.goalCount?.message)
-                }
               />
-              {console.log(errors)}
             </div>
             {/* embedSrc */}
-            {/* <div className="input-place">
+            <div className="input-place">
               <TextField
-                  label="iflame用の埋め込みリンク"
-                  name="embedSrc"
-                  fullWidth
-                  inputRef={register({
-                    required: true,
-                    validate: {
-                      startWithHttps: (str) => str.substring(0, 33) === 'https://www.google.com/maps/embed' || '正しいURLを入力してください'
-                    }
-                  })}
-                  error={Boolean(errors.embedSrc)}
-                  helperText={
-                    errors.embedSrc?.type === 'required' ? '*必須項目です' :
-                    (errors.embedSrc?.type === 'startWithHttps' && errors.embedSrc?.message)
-                  }
-                />
-            </div> */}
+                label="iflame用の埋め込みリンク"
+                name="embedSrc"                value={val.embedSrc}
+                onChange={submitData}
+                type="text"
+                fullWidth
+              />
+            </div>
           </div>
           <div className="lower-side">
             {/* コート画像 */}
@@ -203,7 +250,7 @@ const Form = () => {
               :
                 <div className="no-uploaded">
                   <CameraIcon color={'#676767'} width={'45px'} height={'45px'} />
-                  <input ref={register} type="file" name="img" />
+                  <input type="file" name="img" />
                   <p className="sentence">画像をアップロード</p>
                 </div>
               }
@@ -214,15 +261,10 @@ const Form = () => {
               <TextField
                 label="参考URL"
                 name="refUrl"
+                value={val.refUrl}
+                onChange={submitData}
+                type="text"
                 fullWidth
-                inputRef={register({
-                  required: false,
-                  validate: {
-                    startWithHttp: (str) => (str === '' || str.substring(0, 4) === 'http') || '正しいURLを入力してください'
-                  }
-                })}
-                error={Boolean(errors.refUrl)}
-                helperText={errors.refUrl?.type === 'startWithHttp' && errors.refUrl?.message}
               />
             </div>
             {/* 電話番号 */}
@@ -230,17 +272,10 @@ const Form = () => {
               <TextField
                 label="電話番号"
                 name="tel"
+                value={val.tel}
+                onChange={submitData}
+                type="tel"
                 fullWidth
-                inputRef={register({
-                  required: false,
-                  // validate: {
-                  //   isTypeNum: (str) => {
-
-                  //   } || '数字で入力してください'
-                  // }
-                })}
-                error={Boolean(errors.tel)}
-                helperText={errors.tel?.type === 'isTypeNum' && errors.tel?.message}
               />
             </div>
             {/* 郵便番号 */}
@@ -248,17 +283,10 @@ const Form = () => {
               <TextField
                 label="郵便番号"
                 name="zipcode"
+                value={val.zipcode}
+                onChange={submitData}
+                type="number"
                 fullWidth
-                inputRef={register({
-                  required: false,
-                  // validate: {
-                  //   isTypeNum: (str) => {
-
-                  //   } || '数字で入力してください'
-                  // }
-                })}
-                error={Boolean(errors.zipcode)}
-                helperText={errors.zipcode?.type === 'isTypeNum' && errors.zipcode?.message}
               />
             </div>
           </div>
@@ -267,7 +295,7 @@ const Form = () => {
           <Button
             variant="contained"
             color="primary"
-            disabled={Boolean(false)}
+            disabled={!validationResult}
             type="submit"
           >
             submit
