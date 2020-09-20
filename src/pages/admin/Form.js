@@ -20,20 +20,20 @@ import { CameraIcon } from '../../assets/icons'
 const Form = () => {
   const defaultValue = {
     address: '',
-    courtname: '',
+    courtName: '',
     prefecture: '',
     city: '',
     isOutside: null,
     googleMapsUrl: '',
-    goalCount: 0,
+    goalCount: '',
     embedSrc: '',
     refUrl: '',
-    tel: 0,
-    zipcode: 0
+    tel: '',
+    zipcode: ''
   }
   const defaultError = {
     address: '',
-    courtname: '',
+    courtName: '',
     prefecture: '',
     city: '',
     isOutside: '',
@@ -73,6 +73,7 @@ const Form = () => {
     //   alert(JSON.stringify(val))
     // }
   }
+
   console.log(val)
   const checkValidation = async(name, value) => {
     let result = false
@@ -80,7 +81,7 @@ const Form = () => {
       if (value.length === 0) {
         setErr({ ...err, [name]: '*必須項目です'})
       }
-      else if (value.length <= 3 || value.length >= 100) {
+      else if (value.length >= 100) {
         setErr({ ...err, [name]: '正しい住所を入力してください'})
       } else {
         setErr({ ...err, [name]: ''})
@@ -88,16 +89,112 @@ const Form = () => {
     }
     return result
   }
-
+  // addess
+  const addressValidation = (e) => {
+    const value = e.target.value
+    setVal({ ...val, [e.target.name]: value })
+    if (value.length === 0) {
+      setErr({ ...err, [e.target.name]: '*入力項目は必須です'})
+    } else if (value.length > 99) {
+      setErr({ ...err, [e.target.name]: '*99文字以内で入力してください'})
+    } else {
+      setErr({ ...err, [e.target.name]: ''})
+    }
+  }
+  // courtName
+  const courtNameValidation = (e) => {
+    const value = e.target.value
+    setVal({ ...val, [e.target.name]: value })
+    if (value.length === 0) {
+      setErr({ ...err, [e.target.name]: '*入力項目は必須です'})
+    } else if (value.length > 99) {
+      setErr({ ...err, [e.target.name]: '*99文字以内で入力してください'})
+    } else {
+      setErr({ ...err, [e.target.name]: ''})
+    }
+  }
+  // prefecture
   const selectPrefecture = (e) => {
     const code = e.target.value
     const pre = prejson.filter((v) => v.code === code)[0].name
     const newCityArr = cityjson.filter((v) => v.id === code)[0].cities;
     setVal({ ...val, prefecture: pre})
-    setCityArr(newCityArr)
+    console.log(newCityArr)
+    setCityArr([...newCityArr])
     console.log(cityArr)
   }
-
+  // isOutside
+  const isOutsideValidation = (e) => {
+    const value = e.target.value === 'true' ? true : false
+    setVal({ ...val, [e.target.name]: value })
+  }
+  // googleMapsUrl
+  const googleMapsUrlValidation = (e) => {
+    const value = e.target.value
+    setVal({ ...val, [e.target.name]: value })
+    if (value.length === 0) {
+      setErr({ ...err, [e.target.name]: '*入力項目は必須です'})
+    } else if (!value.startsWith('https://www.google.com/maps/')) {
+      setErr({ ...err, [e.target.name]: '*正しいURLを入力してください'})
+    } else {
+      setErr({ ...err, [e.target.name]: ''})
+    }
+  }
+  // goalCount
+  const goalCountValidation = (e) => {
+    const value = Number(e.target.value)
+    console.log(typeof(value))
+    setVal({ ...val, [e.target.name]: value })
+    if (isNaN(value)) {
+      setVal({ ...val, [e.target.name]: '' })
+      setErr({ ...err, [e.target.name]: '*半角数字で入力してください'})
+    } else if (value < 0) {
+      setErr({ ...err, [e.target.name]: '*1以上の数を入力してください'})
+    } else {
+      setErr({ ...err, [e.target.name]: ''})
+    }
+  }
+  // embedSrcValidation
+  const embedSrcValidation = (e) => {
+    const value = e.target.value
+    setVal({ ...val, [e.target.name]: value })
+    if (value.length === 0) {
+      setErr({ ...err, [e.target.name]: '*入力項目は必須です'})
+    } else if (!value.startsWith('https://www.google.com/maps/embed?')) {
+      setErr({ ...err, [e.target.name]: '*正しいURLを入力してください'})
+    } else {
+      setErr({ ...err, [e.target.name]: ''})
+    }
+  }
+  // refUrl
+  const refUrlValidation = (e) => {
+    const value = e.target.value
+    setVal({ ...val, [e.target.name]: value })
+    if (value.length > 0 && !value.startsWith('http')) {
+      setErr({ ...err, [e.target.name]: '*正しいURLを入力してください'})
+    } else {
+      setErr({ ...err, [e.target.name]: ''})
+    }
+  }
+  // tel
+  const telValidation = (e) => {
+    const value = e.target.value
+    setVal({ ...val, [e.target.name]: value })
+    // if (value.length > 0 && !value.startsWith('http')) {
+    //   setErr({ ...err, [e.target.name]: '*正しい電話番号を入力してください'})
+    // } else {
+    //   setErr({ ...err, [e.target.name]: ''})
+    // }
+  }
+  const zipcodeValidation = (e) => {
+    const value = e.target.value
+    setVal({ ...val, [e.target.name]: value })
+    // if (value.length > 0 && !value.startsWith('http')) {
+    //   setErr({ ...err, [e.target.name]: '*正しい郵便番号を入力してください'})
+    // } else {
+    //   setErr({ ...err, [e.target.name]: ''})
+    // }
+  }
   const getBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader()
@@ -129,7 +226,7 @@ const Form = () => {
                 label="住所"
                 name="address"
                 value={val.address}
-                onChange={submitData}
+                onChange={addressValidation}
                 type="text"
                 fullWidth
                 autoFocus
@@ -141,11 +238,13 @@ const Form = () => {
             <div className="input-place">
               <TextField
                 label="コート名称"
-                name="courtname"
-                value={val.courtname}
-                onChange={submitData}
+                name="courtName"
+                value={val.courtName}
+                onChange={courtNameValidation}
                 type="text"
                 fullWidth
+                error={err.courtName !== '' && true}
+                helperText={err.courtName}
               />
             </div>
             {/* 都道府県 */}
@@ -153,10 +252,11 @@ const Form = () => {
               <FormControl
                 type="select"
                 fullWidth
-                // error
+                error={val.prefecture !== '' && true}
               >
                 <InputLabel id="prefecture">都道府県</InputLabel>
                 <Select
+                  labelId="prefecture"
                   name="prefecture"
                   value={val.prefecture}
                   onChange={selectPrefecture}
@@ -175,10 +275,11 @@ const Form = () => {
               <FormControl
                 type="select"
                 fullWidth
-                // error
+                error={val.city !== '' && true}
               >
-                <InputLabel id="prefecture">市町村区</InputLabel>
+                <InputLabel id="city">市町村区</InputLabel>
                 <Select
+                  labelId="city"
                   name="city"
                   value={val.city}
                   onChange={submitData}
@@ -187,8 +288,8 @@ const Form = () => {
                     return (<MenuItem value={v.name} key={v.name}>{v.name}</MenuItem>)
                   })}
                 </Select>
-                {err.prefcture !== '' &&
-                  <FormHelperText>{err.prefecture}</FormHelperText>
+                {err.city !== '' &&
+                  <FormHelperText>{err.city}</FormHelperText>
                 }
               </FormControl>
             </div>
@@ -201,7 +302,7 @@ const Form = () => {
                   aria-label="isOutside"
                   name="isOutside"
                   value={val.isOutside}
-                  onChange={submitData}
+                  onChange={isOutsideValidation}
                 >
                   <FormControlLabel value={true} control={<Radio />} label="屋外" />
                   <FormControlLabel value={false} control={<Radio />} label="屋内" />
@@ -214,9 +315,11 @@ const Form = () => {
                 label="googleMapsUrl"
                 name="googleMapsUrl"
                 value={val.googleMapsUrl}
-                onChange={submitData}
+                onChange={googleMapsUrlValidation}
                 type="text"
                 fullWidth
+                error={err.googleMapsUrl !== '' && true}
+                helperText={err.googleMapsUrl}
               />
             </div>
             {/* ゴールの数 */}
@@ -225,19 +328,24 @@ const Form = () => {
                 label="ゴールの数"
                 name="goalCount"
                 value={val.goalCount}
-                onChange={submitData}
-                type="number"
+                onChange={goalCountValidation}
+                type="text"
                 fullWidth
+                error={err.goalCount !== '' && true}
+                helperText={err.goalCount}
               />
             </div>
             {/* embedSrc */}
             <div className="input-place">
               <TextField
                 label="iflame用の埋め込みリンク"
-                name="embedSrc"                value={val.embedSrc}
-                onChange={submitData}
+                name="embedSrc"
+                value={val.embedSrc}
+                onChange={embedSrcValidation}
                 type="text"
                 fullWidth
+                error={err.embedSrc !== '' && true}
+                helperText={err.embedSrc}
               />
             </div>
           </div>
@@ -262,9 +370,11 @@ const Form = () => {
                 label="参考URL"
                 name="refUrl"
                 value={val.refUrl}
-                onChange={submitData}
+                onChange={refUrlValidation}
                 type="text"
                 fullWidth
+                error={err.refUrl !== '' && true}
+                helperText={err.refUrl}
               />
             </div>
             {/* 電話番号 */}
@@ -273,9 +383,11 @@ const Form = () => {
                 label="電話番号"
                 name="tel"
                 value={val.tel}
-                onChange={submitData}
-                type="tel"
+                onChange={telValidation}
+                type="text"
                 fullWidth
+                error={err.tel !== '' && true}
+                helperText={err.tel}
               />
             </div>
             {/* 郵便番号 */}
@@ -284,9 +396,11 @@ const Form = () => {
                 label="郵便番号"
                 name="zipcode"
                 value={val.zipcode}
-                onChange={submitData}
-                type="number"
+                onChange={zipcodeValidation}
+                type="text"
                 fullWidth
+                error={err.zipcode !== '' && true}
+                helperText={err.zipcode}
               />
             </div>
           </div>
