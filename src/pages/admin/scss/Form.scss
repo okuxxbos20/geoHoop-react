@@ -53,6 +53,13 @@
             margin-top: 10px;
           }
         }
+        .img-uppload-err {
+          .err-text {
+            color: #f44336;
+            margin-bottom: 15px;
+            font-size: 12px;
+          }
+        }
       }
     }
     .isTwoColumn { flex-direction: row; }

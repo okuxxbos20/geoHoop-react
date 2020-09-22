@@ -28,6 +28,7 @@ const Form = () => {
     googleMapsUrl: '',
     goalCount: '',
     embedSrc: '',
+    imgArr: [],
     refUrl: '',
     tel: '',
     zipcode: ''
@@ -41,13 +42,14 @@ const Form = () => {
     googleMapsUrl: '',
     goalCount: '',
     embedSrc: '',
+    imgArr: '',
     refUrl: '',
     tel: '',
     zipcode: ''
   }
   const [val, setVal] = useState(defaultValue)
   const [err, setErr] = useState(defaultError)
-  const [previewImg, setPreviewImg] = useState('')
+  const [previewImg, setPreviewImg] = useState([''])
   const [validationResult, setValidationResult] = useState(false)
   const [cityArr, setCityArr] = useState([])
   const [isTwoColumn, setIsTwoColumn] = useState(false)
@@ -168,6 +170,50 @@ const Form = () => {
       setErr({ ...err, [e.target.name]: ''})
     }
   }
+  //image
+  const uploadImg = async(e) => {
+    const file = e.target.files[0]
+    const idx = e.target.name
+    console.log(file)
+    console.log(idx)
+    const imgValidationResult = checkFile(file)
+    if (imgValidationResult) {
+      const previewData = await getBase64(file)
+      let newPreviewImgArr = [...previewImg]
+      newPreviewImgArr[idx] = previewData
+      console.log(newPreviewImgArr)
+      setPreviewImg(newPreviewImgArr)
+    }
+  }
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    })
+  }
+
+  const checkFile = (file) => {
+    let result = true
+    const sizeLimit = 5000 * 1000
+    if (!file) { result = false }
+    if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+      result = false
+    }
+    if (file.size > sizeLimit) { result = false }
+    return result
+  }
+
+  const addMoreImage = () => {
+    if (previewImg.length < 6) {
+      setPreviewImg([ ...previewImg, ''])
+    } else {
+      setErr({ ...err, imgArr: '*一度に5枚以上の画像は投稿できません'})
+    }
+    console.log(previewImg)
+    console.log(err)
+  }
   // refUrl
   const refUrlValidation = (e) => {
     const value = e.target.value
@@ -197,26 +243,6 @@ const Form = () => {
     //   setErr({ ...err, [e.target.name]: ''})
     // }
   }
-  const getBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
-    })
-  }
-
-  const checkFile = (file) => {
-    let result = true
-    const sizeLimit = 5000 * 1000
-    if (!file) { result = false }
-    if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
-      result = false
-    }
-    if (file.size > sizeLimit) { result = false }
-    return result
-  }
-
   return (
     <div className="court-form">
       <form onSubmit={submitData}>
@@ -353,19 +379,42 @@ const Form = () => {
           </div>
           <div className="lower-side">
             {/* コート画像 */}
-            <div className="imgupload-place">
-              <label>
-              {previewImg ?
-                <img src={previewImg} alt="court-img" />
-              :
-                <div className="no-uploaded">
-                  <CameraIcon color={'#676767'} width={'45px'} height={'45px'} />
-                  <input type="file" name="img" />
-                  <p className="sentence">画像をアップロード</p>
+            {previewImg.map((preview, idx) => {
+              return (
+                <div className="imgupload-place" key={`${idx}:${preview}`}>
+                  <label>
+                  {preview ?
+                    <img src={preview} alt="court-img" />
+                  :
+                    <div className="no-uploaded">
+                      <CameraIcon color={'#676767'} width={'45px'} height={'45px'} />
+                      <input
+                        type="file"
+                        name={idx}
+                        value=""
+                        onChange={uploadImg}
+                        onClick={(e) => {e.target.value = ''}}
+                      />
+                      <p className="sentence">画像をアップロード</p>
+                    </div>
+                  }
+                  </label>
                 </div>
+              )
+            })}
+            <div className="img-uppload-err">
+              {err.imgArr !== '' &&
+                <p className="err-text">{err.imgArr}</p>
               }
-              </label>
             </div>
+            <Button
+              variant="contained"
+              color="secondary"
+              type="button"
+              onClick={addMoreImage}
+            >
+              add
+            </Button>
             {/* 参考URL */}
             <div className="input-place">
               <TextField
@@ -422,7 +471,6 @@ const Form = () => {
         <Switch
           checked={isTwoColumn}
           onChange={() => setIsTwoColumn(!isTwoColumn)}
-          name="column to row"
         />
       </div>
     </div>
