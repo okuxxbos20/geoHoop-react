@@ -11,7 +11,8 @@ import {
   RadioGroup,
   FormLabel,
   FormControlLabel,
-  Button
+  Button,
+  Switch
 } from '@material-ui/core'
 import prejson from '../../assets/json/prefecture.json'
 import cityjson from '../../assets/json/city.json'
@@ -49,6 +50,7 @@ const Form = () => {
   const [previewImg, setPreviewImg] = useState('')
   const [validationResult, setValidationResult] = useState(false)
   const [cityArr, setCityArr] = useState([])
+  const [isTwoColumn, setIsTwoColumn] = useState(false)
 
   const submitData = async (e) => {
     e.preventDefault()
@@ -218,7 +220,7 @@ const Form = () => {
   return (
     <div className="court-form">
       <form onSubmit={submitData}>
-        <div className="overwrap-box">
+        <div className={`${isTwoColumn ? 'isTwoColumn': ''} overwrap-box`}>
           <div className="upper-side">
             {/* 住所 */}
             <div className="input-place">
@@ -416,6 +418,13 @@ const Form = () => {
           </Button>
         </div>
       </form>
+      <div className="switch-place">
+        <Switch
+          checked={isTwoColumn}
+          onChange={() => setIsTwoColumn(!isTwoColumn)}
+          name="column to row"
+        />
+      </div>
     </div>
   )
 }

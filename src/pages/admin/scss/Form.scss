@@ -4,12 +4,11 @@
     color:  #333;
     background: #fff;
     width: 50%;
-    margin: 20px auto 120px;
+    margin: 20px auto 30px;
     padding: 20px;
     .overwrap-box {
       display: flex;
       flex-direction: column;
-      // flex-direction: row;
       justify-content: center;
       .upper-side {
         width: 50%;
@@ -56,10 +55,12 @@
         }
       }
     }
+    .isTwoColumn { flex-direction: row; }
     .btn-place {
       display: flex;
       flex-direction: row;
       justify-content: center;
     }
   }
+  .switch-place { text-align: right; }
 }
