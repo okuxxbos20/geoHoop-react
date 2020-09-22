@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import './scss/Form.scss'
 import {
   TextField,
@@ -20,6 +20,7 @@ import { CameraIcon } from '../../assets/icons'
 import { db, storage } from '../../firebase/index'
 
 const Form = () => {
+  // ここでdbに入れるデータを定義してしまう
   const defaultValue = {
     address: '',
     courtName: '',
@@ -55,24 +56,22 @@ const Form = () => {
   const [cityArr, setCityArr] = useState([])
   const [isTwoColumn, setIsTwoColumn] = useState(false)
 
-  const submitData = async (e) => {
-    e.preventDefault()
-    const valName = e.target.name
-    const givenVal = e.target.value
+  useEffect(() => {
+    // valに全てのデータが格納されている
+    // かつ全てのerrに文字列が格納されていないとき
+    // trueを返す
+    const arr = Object.keys(val)
+    arr.map((v) => {
+      console.log(Array.isArray(val[v]))
+    })
+    console.log('useEffect')
+    // ここでvalidationResultを監視する
+  }, [validationResult, val])
 
-    if (valName === 'img') {
-      const file = valName.img[0]
-      const imgValidationResult = checkFile(file)
-      if (imgValidationResult) {
-        const preview = await getBase64(file)
-        setPreviewImg(preview)
-      }
-    } else {
-      setVal({ ...val, [valName]: givenVal})
-    }
+  const submitData = (e) => {
+    e.preventDefault()
     // ここでfirebaseにデータをsetする
     // TODO: 型が全て強制的にstringになってしまう
-    setValidationResult(checkValidation(valName, givenVal))
     // if (validationResult) {
     //   console.log('yo')
     //   alert(JSON.stringify(val))
@@ -80,20 +79,6 @@ const Form = () => {
   }
 
   console.log(val)
-  const checkValidation = async(name, value) => {
-    let result = false
-    if (name === 'address') {
-      if (value.length === 0) {
-        setErr({ ...err, [name]: '*必須項目です'})
-      }
-      else if (value.length >= 100) {
-        setErr({ ...err, [name]: '正しい住所を入力してください'})
-      } else {
-        setErr({ ...err, [name]: ''})
-      }
-    }
-    return result
-  }
   // addess
   const addressValidation = (e) => {
     const value = e.target.value
@@ -257,8 +242,8 @@ const Form = () => {
   }
   return (
     <div className="court-form">
-      <form onSubmit={submitData}>
-        <div className={`${isTwoColumn ? 'isTwoColumn': ''} overwrap-box`}>
+      <form onSubmit={submitData} className={isTwoColumn ? 'expanded-form': ''}>
+        <div className={`${isTwoColumn ? 'two-column': ''} overwrap-box`}>
           <div className="upper-side">
             {/* 住所 */}
             <div className="input-place">
@@ -419,14 +404,16 @@ const Form = () => {
                 <p className="err-text">{err.imgArr}</p>
               }
             </div>
-            <Button
-              variant="contained"
-              color="secondary"
-              type="button"
-              onClick={addMoreImage}
-            >
-              add
-            </Button>
+            <div className="img-add-btn">
+              <Button
+                variant="contained"
+                color="secondary"
+                type="button"
+                onClick={addMoreImage}
+              >
+                add
+              </Button>
+            </div>
             {/* 参考URL */}
             <div className="input-place">
               <TextField
@@ -481,7 +468,7 @@ const Form = () => {
       </form>
       <div className="switch-place">
         <Switch
-          checked={isTwoColumn}
+          checked={validationResult}
           onChange={() => setIsTwoColumn(!isTwoColumn)}
         />
       </div>

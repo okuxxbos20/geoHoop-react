@@ -1,5 +1,6 @@
 .court-form {
   width: 100%;
+  .expanded-form { width: 90%; }
   form {
     color:  #333;
     background: #fff;
@@ -60,9 +61,10 @@
             font-size: 12px;
           }
         }
+        .img-add-btn { text-align: center; }
       }
     }
-    .isTwoColumn { flex-direction: row; }
+    .two-column { flex-direction: row; }
     .btn-place {
       display: flex;
       flex-direction: row;
