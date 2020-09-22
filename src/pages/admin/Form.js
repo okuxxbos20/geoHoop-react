@@ -17,6 +17,7 @@ import {
 import prejson from '../../assets/json/prefecture.json'
 import cityjson from '../../assets/json/city.json'
 import { CameraIcon } from '../../assets/icons'
+import { db, storage } from '../../firebase/index'
 
 const Form = () => {
   const defaultValue = {
@@ -174,24 +175,28 @@ const Form = () => {
   const uploadImg = async(e) => {
     const file = e.target.files[0]
     const idx = e.target.name
-    console.log(file)
-    console.log(idx)
     const imgValidationResult = checkFile(file)
+
     if (imgValidationResult) {
       const previewData = await getBase64(file)
       let newPreviewImgArr = [...previewImg]
       newPreviewImgArr[idx] = previewData
-      console.log(newPreviewImgArr)
       setPreviewImg(newPreviewImgArr)
     }
-  }
-  const getBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
-    })
+
+    // storage.ref().child(`article/${file.name}`).put(file)
+    // .then(snapshot => {
+    //   snapshot.ref.getDownloadURL().then((url) => {
+    //     let newImgArr = [...val.imgArr]
+    //     newImgArr[idx] = url
+    //     setVal({ ...val, [val.imgArr]: newImgArr})
+    //     console.log(val)
+    //     db.collection('courtImg').add(val)
+    //     .then(() => {
+    //       console.log('success to upload');
+    //     }).catch(error => console.log(error))
+    //   });
+    // }).catch(error => console.log(error))
   }
 
   const checkFile = (file) => {
@@ -205,14 +210,21 @@ const Form = () => {
     return result
   }
 
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    })
+  }
+
   const addMoreImage = () => {
     if (previewImg.length < 6) {
       setPreviewImg([ ...previewImg, ''])
     } else {
       setErr({ ...err, imgArr: '*一度に5枚以上の画像は投稿できません'})
     }
-    console.log(previewImg)
-    console.log(err)
   }
   // refUrl
   const refUrlValidation = (e) => {
